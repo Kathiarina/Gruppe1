@@ -38,7 +38,7 @@ CREATE TABLE Nationalitaet(
 
 CREATE TABLE Hauptsponsor(
 	sponsor_id SERIAL,
-	name VARCHAR(30) not null,
+	name VARCHAR(60) not null,
 	jaehrliche_sponsorsumme int not null,
 	PRIMARY KEY (sponsor_id)
 );
@@ -53,7 +53,7 @@ CREATE TABLE Fahrzeugtyp(
 
 CREATE TABLE Team(
 	team_id SERIAL,
-	name VARCHAR(30) not null,
+	name VARCHAR(60) not null,
 	gruendungsjahr INT not null,
 	nationalitaets_id INT not null,
 	sponsor_id INT not null,
@@ -131,10 +131,10 @@ INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) 
 INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'McLaron', 1966, 3, 2);
 INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Ferrari', 1946, 4, 3);
 INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Red Bull Racing', 2004, 8, 4);
-INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Ducati Lenovo Team, 2003, 4, 5);
-INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Prima Pramac Yamaha MotoGP, 2002, 4, 6);
-INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Red Bull KTM Factory Racing, 2017, 8, 7);
-INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Pertamina Enduro VR46 Racing Team, 2014, 4, 8);
+INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Ducati Lenovo Team', 2003, 4, 5);
+INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Prima Pramac Yamaha MotoGP', 2002, 4, 6);
+INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Red Bull KTM Factory Racing', 2017, 8, 7);
+INSERT INTO Team (team_id, name, gruendungsjahr, nationalitaets_id, sponsor_id) VALUES (default, 'Pertamina Enduro VR46 Racing Team', 2014, 4, 8);
 
 INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Mercedes-AMG F1 W15 E Performance', 'Mercedes 1.6 Liter V6-Turbomotor', 798);
 INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'McLaren MCL38', 'Mercedes-AMG F1 M15 E Performance 1.6L V6-Turbomotor', 798);
