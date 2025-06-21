@@ -22,12 +22,20 @@ public class Main {
         }
         Rennen.rennenLoeschen(3);
         Rennen.alleRennenAnzeigen();*/
-        Hauptsponsor hauptsponsor = new Hauptsponsor();
+        Hauptsponsor hauptsponsor = Hauptsponsor.hauptsponsorAuswaehlen();
         hauptsponsor.hauptsponsorHinzufuegen("ONYX", 50000000);
         hauptsponsor.alleHauptsponsorenAnzeigen();
-        Nationalitaet nationalitaet = new Nationalitaet();
+        Nationalitaet nationalitaet = Nationalitaet.nationalitaetAuswaehlen();
         nationalitaet.nationalitaetHinzufuegen("Österreich");
         nationalitaet.alleNationalitaetenAnzeigen();
+        Team team = new Team();
+        if (nationalitaet != null && hauptsponsor != null) {
+            team.teamHinzufuegen("Ferrari", 1993, nationalitaet, hauptsponsor);
+            team.alleTeamsAnzeigen();
+        } else {
+            System.err.println("Team konnte nicht erstellt werden.");
+        }
+
 
     }
 

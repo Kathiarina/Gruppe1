@@ -171,7 +171,7 @@ public class Rennstrecke {
 
     @Override
     public String toString() {
-        return String.format("Rennstrecke %d: %s, %s", this.rennstreckeId, this.ort, this.bundesland);
+        return String.format("Rennstrecke: %s, %s", this.ort, this.bundesland);
     }
 }
 

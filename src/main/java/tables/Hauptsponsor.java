@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Scanner;
 
 @Entity(name = "Hauptsponsor")
 @Table(name = "hauptsponsor")
 public class Hauptsponsor {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
+    private static Scanner scanner = new Scanner(System.in);
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sponsorId", updatable = false, nullable = false)
@@ -70,6 +72,26 @@ public class Hauptsponsor {
         }
     }
 
+    public static Hauptsponsor hauptsponsorAuswaehlen() {
+        alleHauptsponsorenAnzeigen();
+        System.out.println("Bitte gib die ID des gewünschten Hauptsponsors ein:");
+        int sponsorId = scanner.nextInt();
+        scanner.nextLine();
+        EntityManager em = EMF.createEntityManager();
+        Hauptsponsor ausgewaehlterHauptsponsor = null;
+        try {
+            ausgewaehlterHauptsponsor = em.find(Hauptsponsor.class, sponsorId);
+            if (ausgewaehlterHauptsponsor == null) {
+                System.err.println("Kein Hauptsponsor mit dieser ID gefunden.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return ausgewaehlterHauptsponsor;
+    }
+
     public static void alleHauptsponsorenAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT hs FROM Hauptsponsor hs";
@@ -113,6 +135,6 @@ public class Hauptsponsor {
 
     @Override
     public String toString() {
-        return String.format("Hauptsponsor %d: %s, %d ", this.sponsorId, this.sponsorName, this.jaehrlicheSponsorsumme);
+        return String.format("Hauptsponsor: %s, %d ", this.sponsorName, this.jaehrlicheSponsorsumme);
     }
 }

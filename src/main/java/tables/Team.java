@@ -102,7 +102,7 @@ public class Team {
         try {
             teamsListe = tq.getResultList();
             for (Team team : teamsListe) {
-                System.out.println("Team Nr: " + team.getTeamId() + ", " + team.getTeamName() + ", Gründungsjahr " + team.getGruendungsjahr() + ", Nationalität " + team.getNationalitaet() + ", Hauptsponsor " + team.getHauptsponsor());
+                System.out.println("Team Nr: " + team.getTeamId() + ", " + team.getTeamName() + ", Gründungsjahr " + team.getGruendungsjahr() + ", " + team.getNationalitaet() + ", " + team.getHauptsponsor());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,6 +135,6 @@ public class Team {
 
     @Override
     public String toString() {
-        return String.format("Team %d: %s, Gründungsjahr %d, Nationalität ", this.teamId, this.teamName, this.gruendungsjahr, this.nationalitaet, this.hauptsponsor);
+        return String.format("Team: %s, Gründungsjahr %d, %s, %s", this.teamName, this.gruendungsjahr, this.nationalitaet, this.hauptsponsor);
     }
 }

@@ -2,11 +2,13 @@ package tables;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 @Entity(name = "Nationalitaet")
 @Table(name = "nationalitaet")
 public class Nationalitaet {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
+    private static Scanner scanner = new Scanner(System.in);
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nationalitaetsId", updatable = false, nullable = false)
@@ -75,6 +77,26 @@ public class Nationalitaet {
         }
     }
 
+    public static Nationalitaet nationalitaetAuswaehlen() {
+        alleNationalitaetenAnzeigen();
+        System.out.println("Bitte gib die ID der gewünschten Nationalität ein:");
+        int nationalitätsId = scanner.nextInt();
+        scanner.nextLine();
+        EntityManager em = EMF.createEntityManager();
+        Nationalitaet ausgewaehlteNationalität = null;
+        try {
+            ausgewaehlteNationalität = em.find(Nationalitaet.class, nationalitätsId);
+            if (ausgewaehlteNationalität == null) {
+                System.err.println("Keine Nationalität mit dieser ID gefunden.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return ausgewaehlteNationalität;
+    }
+
     public static void nationalitaetLoeschen(int nationalitaetsId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -99,6 +121,6 @@ public class Nationalitaet {
 
     @Override
     public String toString() {
-        return String.format("Nationalität %d: %s", this.nationalitaetsId, this.nationalitaetsBeschreibung);
+        return String.format("Nationalität: %s", this.nationalitaetsBeschreibung);
     }
 }
