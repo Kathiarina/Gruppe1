@@ -1,4 +1,4 @@
-package at.fhburgenland;
+package tables;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
