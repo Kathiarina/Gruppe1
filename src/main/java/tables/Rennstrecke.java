@@ -13,8 +13,8 @@ public class Rennstrecke {
     private static Scanner scanner = new Scanner(System.in);
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rennstrecken_id", updatable = false, nullable = false)
-    private int rennstrecken_id;
+    @Column(name = "rennstreckenId", updatable = false, nullable = false)
+    private int rennstreckeId;
 
     @Column(name = "ort", nullable = false, length = 30)
     private String ort;
@@ -49,8 +49,8 @@ public class Rennstrecke {
         return bundesland;
     }
 
-    public int getRennstrecken_id() {
-        return rennstrecken_id;
+    public int getRennstreckenId() {
+        return rennstreckeId;
     }
 
     public static void rennstreckeHinzufuegen(String ort, String bundesland) {
@@ -82,7 +82,7 @@ public class Rennstrecke {
         try {
             rennstreckenListe = tq.getResultList();
             for (Rennstrecke rennstrecke : rennstreckenListe) {
-                System.out.println("Nr: " + rennstrecke.getRennstrecken_id() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
+                System.out.println("Rennstrecke Nr: " + rennstrecke.getRennstreckenId() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +101,7 @@ public class Rennstrecke {
         try {
             ausgewaehlteRennstrecke = em.find(Rennstrecke.class, rennstreckenId);
             if (ausgewaehlteRennstrecke == null) {
-                System.out.println("Keine Rennstrecke mit dieser ID gefunden.");
+                System.err.println("Keine Rennstrecke mit dieser ID gefunden.");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +111,7 @@ public class Rennstrecke {
         return ausgewaehlteRennstrecke;
     }
 
-    public static void rennstreckeLoeschen(int rennstrecken_id) {
+    public static void rennstreckeLoeschen(int rennstreckenId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         Rennstrecke rennstrecke = null;
@@ -119,10 +119,10 @@ public class Rennstrecke {
         try {
             et = em.getTransaction();
             et.begin();
-            rennstrecke = em.find(Rennstrecke.class, rennstrecken_id);
+            rennstrecke = em.find(Rennstrecke.class, rennstreckenId);
             em.remove(rennstrecke);
             et.commit();
-            System.out.format("Rennstrecke %d erfolgreich gelöscht.\n", rennstrecken_id);
+            System.out.format("Rennstrecke %d erfolgreich gelöscht.\n", rennstreckenId);
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
@@ -135,7 +135,7 @@ public class Rennstrecke {
 
     @Override
     public String toString() {
-        return String.format("Rennstrecke %d: %s, %s", this.rennstrecken_id, this.ort, this.bundesland);
+        return String.format("Rennstrecke %d: %s, %s", this.rennstreckeId, this.ort, this.bundesland);
     }
 }
 

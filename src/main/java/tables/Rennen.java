@@ -3,7 +3,6 @@ package tables;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity(name = "Rennen")
@@ -12,51 +11,51 @@ public class Rennen {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rennen_id", updatable = false, nullable = false)
-    private int rennen_id;
+    @Column(name = "rennenId", updatable = false, nullable = false)
+    private int rennenId;
 
-    @Column(name = "datum_uhrzeit", nullable = false)
-    private LocalDateTime datum_uhrzeit;
+    @Column(name = "datumUhrzeit", nullable = false)
+    private LocalDateTime datumUhrzeit;
 
     @ManyToOne
-    @JoinColumn(name = "rennstrecken_id", nullable = false)
+    @JoinColumn(name = "rennstreckenId", nullable = false)
     private Rennstrecke rennstrecke;
 
     public Rennen() {
     }
 
-    public Rennen(LocalDateTime datum_uhrzeit, Rennstrecke rennstrecke) {
-        this.datum_uhrzeit = datum_uhrzeit;
+    public Rennen(LocalDateTime datumUhrzeit, Rennstrecke rennstrecke) {
+        this.datumUhrzeit = datumUhrzeit;
         this.rennstrecke = rennstrecke;
     }
 
-    public int getRennen_id() {
-        return rennen_id;
+    public int getRennenId() {
+        return rennenId;
     }
 
-    public LocalDateTime getDatum_uhrzeit() {
-        return datum_uhrzeit;
+    public LocalDateTime getDatumUhrzeit() {
+        return datumUhrzeit;
     }
 
     public Rennstrecke getRennstrecke() {
         return rennstrecke;
     }
 
-    public void setDatum_uhrzeit(LocalDateTime datum_uhrzeit) {
-        this.datum_uhrzeit = datum_uhrzeit;
+    public void setDatumUhrzeit(LocalDateTime datumUhrzeit) {
+        this.datumUhrzeit = datumUhrzeit;
     }
 
     public void setRennstrecke(Rennstrecke rennstrecke) {
         this.rennstrecke = rennstrecke;
     }
 
-    public static void rennenHinzufuegen(LocalDateTime datum_uhrzeit, Rennstrecke rennstrecke) {
+    public static void rennenHinzufuegen(LocalDateTime datumUhrzeit, Rennstrecke rennstrecke) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         try {
             et = em.getTransaction();
             et.begin();
-            Rennen rennen = new Rennen(datum_uhrzeit, rennstrecke);
+            Rennen rennen = new Rennen(datumUhrzeit, rennstrecke);
             System.out.println("Neues Rennen wurde angelegt: " + rennen);
             em.persist(rennen);
             et.commit();
@@ -79,7 +78,7 @@ public class Rennen {
         try {
             rennenListe = tq.getResultList();
             for (Rennen rennen : rennenListe) {
-                System.out.println("Rennen Nr: " + rennen.getRennen_id() + ", Datum und Uhrzeit " + rennen.getDatum_uhrzeit() + ", " + rennen.getRennstrecke());
+                System.out.println("Rennen Nr: " + rennen.getRennenId() + ", Datum und Uhrzeit " + rennen.getDatumUhrzeit() + ", " + rennen.getRennstrecke());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +87,7 @@ public class Rennen {
         }
     }
 
-    public static void rennenLoeschen(int rennen_id) {
+    public static void rennenLoeschen(int rennenId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         Rennen rennen = null;
@@ -96,10 +95,10 @@ public class Rennen {
         try {
             et = em.getTransaction();
             et.begin();
-            rennen = em.find(Rennen.class, rennen_id);
+            rennen = em.find(Rennen.class, rennenId);
             em.remove(rennen);
             et.commit();
-            System.out.format("Rennen %d erfolgreich gelöscht.\n", rennen_id);
+            System.out.format("Rennen %d erfolgreich gelöscht.\n", rennenId);
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
@@ -112,6 +111,6 @@ public class Rennen {
 
     @Override
     public String toString() {
-        return String.format("Rennen: %s, %s", this.datum_uhrzeit, this.rennstrecke);
+        return String.format("Rennen: %s, %s", this.datumUhrzeit, this.rennstrecke);
     }
 }

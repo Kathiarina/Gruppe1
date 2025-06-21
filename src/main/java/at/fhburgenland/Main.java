@@ -13,8 +13,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("tables2");
         Rennstrecke rennstrecke = Rennstrecke.rennstreckeAuswaehlen();
-        //rennstrecke.rennstreckeHinzufuegen("Spielefeld", "Steiermark");
-        rennstrecke.rennstreckeLoeschen(4);
+        rennstrecke.rennstreckeHinzufuegen("Spielefeld", "Steiermark");
+        //rennstrecke.rennstreckeLoeschen(4);
         rennstrecke.alleRennstreckenAnzeigen();
         if (rennstrecke != null) {
             Rennen.rennenHinzufuegen(LocalDateTime.now(), rennstrecke);
@@ -22,6 +22,9 @@ public class Main {
         } else {
             System.err.println("Rennen konnte nicht erstellt werden.");
         }
+
+        Rennen.rennenLoeschen(3);
+        Rennen.alleRennenAnzeigen();
     }
 /*
     public static void addPerson(String vorname, String nachname, int gehalt){
