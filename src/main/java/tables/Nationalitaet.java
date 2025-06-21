@@ -15,7 +15,7 @@ public class Nationalitaet {
     @Column(name = "nationalitaetsBeschreibung", updatable = false, nullable = false, length = 30)
     private String nationalitaetsBeschreibung;
 
-    @OneToOne(mappedBy = "team")
+    @OneToOne(mappedBy = "nationalitaet")
     private Team team;
 
     public Nationalitaet() {

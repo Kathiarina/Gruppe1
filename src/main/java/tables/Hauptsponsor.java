@@ -20,7 +20,7 @@ public class Hauptsponsor {
     @Column(name = "jaehrlicheSponsorsumme", updatable = true, nullable = false)
     private int jaehrlicheSponsorsumme;
 
-    @OneToOne(mappedBy = "team")
+    @OneToOne(mappedBy = "hauptsponsor")
     private Team team;
 
     public Hauptsponsor() {

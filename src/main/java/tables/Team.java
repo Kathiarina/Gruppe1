@@ -19,18 +19,12 @@ public class Team {
     @Column(name = "gruendungsjahr", nullable = false)
     private int gruendungsjahr;
 
-    @Column(name = "nationalitaetsId", updatable = false, nullable = false)
-    private int nationalitaetsId;
-
-    @Column(name = "sponsorId", updatable = false, nullable = false)
-    private int sponsorId;
-
     @OneToOne
-    @JoinColumn(name = "sponsorId")
+    @JoinColumn(name = "sponsorId", nullable = false)
     private Hauptsponsor hauptsponsor;
 
     @OneToOne
-    @JoinColumn(name = "nationalitaetsId")
+    @JoinColumn(name = "nationalitaetsId", nullable = false)
     private Nationalitaet nationalitaet;
 
     public Team() {
@@ -87,7 +81,7 @@ public class Team {
             et.begin();
             Team team = new Team(teamName, gruendungsjahr, nationalitaet, hauptsponsor);
             System.out.println("Neues Team wurde angelegt: " + team);
-            em.persist(nationalitaet);
+            em.persist(team);
             et.commit();
         } catch (Exception e) {
             if (et != null) {
@@ -141,6 +135,6 @@ public class Team {
 
     @Override
     public String toString() {
-        return String.format("Team %d: %s, Gründungsjahr %d, Nationalität ", this.nationalitaetsId, this.teamName, this.gruendungsjahr, this.nationalitaet, this.hauptsponsor);
+        return String.format("Team %d: %s, Gründungsjahr %d, Nationalität ", this.teamId, this.teamName, this.gruendungsjahr, this.nationalitaet, this.hauptsponsor);
     }
 }
