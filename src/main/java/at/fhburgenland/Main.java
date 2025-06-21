@@ -22,7 +22,7 @@ public class Main {
         }
         Rennen.rennenLoeschen(3);
         Rennen.alleRennenAnzeigen();*/
-        Hauptsponsor hauptsponsor = Hauptsponsor.hauptsponsorAuswaehlen();
+        /*Hauptsponsor hauptsponsor = Hauptsponsor.hauptsponsorAuswaehlen();
         hauptsponsor.hauptsponsorHinzufuegen("ONYX", 50000000);
         hauptsponsor.alleHauptsponsorenAnzeigen();
         Nationalitaet nationalitaet = Nationalitaet.nationalitaetAuswaehlen();
@@ -34,7 +34,10 @@ public class Main {
             team.alleTeamsAnzeigen();
         } else {
             System.err.println("Team konnte nicht erstellt werden.");
-        }
+        }*/
+        Fahrzeugtyp fahrzeugtyp = new Fahrzeugtyp();
+        fahrzeugtyp.fahrzeugtypHinzufuegen("McLaren", "Turbomotor", 789);
+        fahrzeugtyp.alleFahrzeugtypenAnzeigen();
 
 
     }
