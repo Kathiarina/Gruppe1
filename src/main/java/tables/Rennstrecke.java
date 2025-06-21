@@ -1,4 +1,5 @@
 package tables;
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 @Entity(name = "Rennstrecke")
 @Table(name = "rennstrecke")
 public class Rennstrecke {
+    private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rennstrecken_id", updatable = false, nullable = false)
@@ -21,16 +23,21 @@ public class Rennstrecke {
     @OneToMany(mappedBy = "rennstrecke")
     List<Rennen> rennen = new ArrayList<>();
 
-    public Rennstrecke() {}
+    public Rennstrecke() {
+    }
 
-    public Rennstrecke(String ort, String bundesland){
+    public Rennstrecke(String ort, String bundesland) {
         this.ort = ort;
         this.bundesland = bundesland;
     }
 
-    public void setRennen(List<Rennen> rennen){this.rennen = rennen;}
+    public void setRennen(List<Rennen> rennen) {
+        this.rennen = rennen;
+    }
 
-    public List<Rennen> getRennen(){return rennen;}
+    public List<Rennen> getRennen() {
+        return rennen;
+    }
 
     public String getOrt() {
         return ort;
@@ -44,7 +51,42 @@ public class Rennstrecke {
         return rennstrecken_id;
     }
 
+    public static void rennstreckeHinzufuegen(String ort, String bundesland) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Rennstrecke rennstrecke = new Rennstrecke(ort, bundesland);
+            System.out.println("Neue Rennstrecke wurde angelegt: " + rennstrecke);
+            em.persist(rennstrecke);
+            et.commit();
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+            }
+        } finally {
+            em.close();
 
+        }
+    }
 
-    // TODO Implement body of Rennstrecke
+    public static void alleRennstreckenAnzeigen() {
+        EntityManager em = EMF.createEntityManager();
+        String query = "SELECT rs FROM Rennstrecke rs";
+        TypedQuery<Rennstrecke> tq = em.createQuery(query, Rennstrecke.class);
+
+        List<Rennstrecke> rennstreckenListe = null;
+
+        try {
+            rennstreckenListe = tq.getResultList();
+            for (Rennstrecke rennstrecke : rennstreckenListe) {
+                System.out.println("Nr: " + rennstrecke.getRennstrecken_id() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }

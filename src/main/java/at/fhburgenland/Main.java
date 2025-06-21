@@ -1,36 +1,22 @@
 package at.fhburgenland;
 
 import jakarta.persistence.*;
+import tables.Rennstrecke;
+
 import java.util.List;
 
 public class Main {
 
-    private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
     public static void main(String[] args) {
         System.out.println("tables2");
-        EntityManager em = EMF.createEntityManager();
-        addPerson("Ion", "Tanse", 4300);
-        /*printAllPersons();
-        updatePerson(2, "Katharina", "Lebegern-Bachl", 3100);
-        printAllPersons();
-        deletePerson(3);
-        printAllPersons();
-        readPerson("Katharina");
-        /* TO DO
-            -) Connect Database
-            -) Klasse zur Tabelle erstellen!
-            -) Create Methods for
-                -) addPerson
-                -) readPerson
-                -) readAllPersons --> Ausgabe ganze Tabelle
-                -) update Person
-                -) delete Person
-         */
+        Rennstrecke rennstrecke = new Rennstrecke();
+        rennstrecke.rennstreckeHinzufuegen("Spielefeld", "Steiermark");
+        rennstrecke.alleRennstreckenAnzeigen();
 
-        em.close();
+
     }
-
+/*
     public static void addPerson(String vorname, String nachname, int gehalt){
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -153,9 +139,9 @@ public class Main {
             } finally {
                 em.close();
             }
-        }
+        }*/
 
-        }
+}
 
 
 

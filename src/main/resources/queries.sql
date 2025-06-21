@@ -141,10 +141,10 @@ INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (defa
 INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ferrari SF-24', '1,6-Liter-V6-Turbomotor ', 798);
 INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Red Bull RB19', 'Honda RBPTH001 1,6-Liter V6-Turbomotor', 798);
 INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ferrari SF-23', 'Ferrari 066/10 1,6-Liter V6-Turbomotor', 798);
-INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ducati Desmosedici GP23, V4-Viertaktmotor', 157);
-INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ducati Desmosedici GP24, V4-Viertaktmotor', 157);
-INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ducati Desmosedici GP22, V4-Viertaktmotor', 157);
-INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'KTM RC16, V4-Viertaktmotor', 157);
+INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ducati Desmosedici GP23', 'V4-Viertaktmotor', 157);
+INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ducati Desmosedici GP24', 'V4-Viertaktmotor', 157);
+INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'Ducati Desmosedici GP22', 'V4-Viertaktmotor', 157);
+INSERT INTO Fahrzeugtyp (fahrzeugtyp_id, modell, motor, gewicht_kg) VALUES (default, 'KTM RC16', 'V4-Viertaktmotor', 157);
 
 INSERT INTO Fahrzeug (fahrzeug_id, fahrzeugtyp_id, team_id) VALUES (default, 1, 1);
 INSERT INTO Fahrzeug (fahrzeug_id, fahrzeugtyp_id, team_id) VALUES (default, 2, 2);
@@ -166,9 +166,9 @@ INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id
 INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Max', 'Verstappen', 7, 5);
 INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Charles', 'Leclerc', 6, 6);
 INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Sergio', 'Pèrez', 5, 7);
-INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Francesco, sBagnaia', 4, 8);
+INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Francesco', 'Bagnaia', 4, 8);
 INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Brad', 'Binder', 10, 12);
-INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Marco', 'Bezzecchi', 4. 11);
+INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Marco', 'Bezzecchi', 4, 11);
 INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Jorge', 'Martin', 9, 9);
 INSERT INTO Fahrer (fahrer_id, vorname, nachname, nationalitaets_id, fahrzeug_id) VALUES (default, 'Enea', 'Bastianini', 4, 10);
 
@@ -187,7 +187,7 @@ INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (6, 1, 
 INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (7, 1, 4, '1 hour 25 minutes 17.470 seconds');
 INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (4, 2, 4, '1 hour 25 minutes 59.934 seconds');
 INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (8, 3, 1, '0 hour 42 minutes 11.173 seconds');
-INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES 11, 3, 2, '0 hour 42 minutes 14.405 seconds');
+INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (11, 3, 2, '0 hour 42 minutes 14.405 seconds');
 INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (12, 3, 3, '0 hour 42 minutes 18.530 seconds');
 INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (8, 4, 1, '0 hour 42 minutes 23.315 seconds');
 INSERT INTO Rennen_Fahrer (fahrer_id, rennen_id, status_id, zeit) VALUES (9, 4, 2, '0 hour 42 minutes 28.506 seconds');
