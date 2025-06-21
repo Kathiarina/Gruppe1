@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @Entity(name = "Rennstrecke")
 @Table(name = "rennstrecke")
 public class Rennstrecke {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
+    private static Scanner scanner = new Scanner(System.in);
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rennstrecken_id", updatable = false, nullable = false)
@@ -67,7 +69,6 @@ public class Rennstrecke {
             }
         } finally {
             em.close();
-
         }
     }
 
@@ -90,6 +91,26 @@ public class Rennstrecke {
         }
     }
 
+    public static Rennstrecke rennstreckeAuswaehlen(){
+        alleRennstreckenAnzeigen();
+        System.out.println("Bitte gib die ID der gewünschten Rennstrecke ein:");
+        int rennstreckenId = scanner.nextInt();
+        scanner.nextLine();
+        EntityManager em = EMF.createEntityManager();
+        Rennstrecke ausgewaehlteRennstrecke = null;
+        try {
+            ausgewaehlteRennstrecke = em.find(Rennstrecke.class, rennstreckenId);
+            if (ausgewaehlteRennstrecke == null) {
+                System.out.println("Keine Rennstrecke mit dieser ID gefunden.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return ausgewaehlteRennstrecke;
+    }
+
     public static void rennstreckeLoeschen(int rennstrecken_id) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -101,7 +122,7 @@ public class Rennstrecke {
             rennstrecke = em.find(Rennstrecke.class, rennstrecken_id);
             em.remove(rennstrecke);
             et.commit();
-            System.out.println("Rennstrecke erfolgreich gelöscht.");
+            System.out.format("Rennstrecke %d erfolgreich gelöscht.\n", rennstrecken_id);
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
@@ -114,7 +135,7 @@ public class Rennstrecke {
 
     @Override
     public String toString() {
-        return String.format("Rennstrecke: %s, %s", this.ort, this.bundesland);
+        return String.format("Rennstrecke %d: %s, %s", this.rennstrecken_id, this.ort, this.bundesland);
     }
 }
 

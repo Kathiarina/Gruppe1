@@ -1,8 +1,10 @@
 package at.fhburgenland;
 
 import jakarta.persistence.*;
+import tables.Rennen;
 import tables.Rennstrecke;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
@@ -10,12 +12,16 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("tables2");
-        Rennstrecke rennstrecke = new Rennstrecke();
-        rennstrecke.rennstreckeHinzufuegen("Spielefeld", "Steiermark");
-        rennstrecke.rennstreckeLoeschen(1);
+        Rennstrecke rennstrecke = Rennstrecke.rennstreckeAuswaehlen();
+        //rennstrecke.rennstreckeHinzufuegen("Spielefeld", "Steiermark");
+        rennstrecke.rennstreckeLoeschen(4);
         rennstrecke.alleRennstreckenAnzeigen();
-
-
+        if (rennstrecke != null) {
+            Rennen.rennenHinzufuegen(LocalDateTime.now(), rennstrecke);
+            Rennen.alleRennenAnzeigen();
+        } else {
+            System.err.println("Rennen konnte nicht erstellt werden.");
+        }
     }
 /*
     public static void addPerson(String vorname, String nachname, int gehalt){
