@@ -1,43 +1,14 @@
-package tables;
+package at.fhburgenland.service;
+
+import at.fhburgenland.model.Nationalitaet;
 import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Scanner;
 
-@Entity(name = "Nationalitaet")
-@Table(name = "nationalitaet")
-public class Nationalitaet {
+public class NationalitaetService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
     private static Scanner scanner = new Scanner(System.in);
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "nationalitaetsId", updatable = false, nullable = false)
-    private int nationalitaetsId;
-
-    @Column(name = "nationalitaetsBeschreibung", updatable = false, nullable = false, length = 30)
-    private String nationalitaetsBeschreibung;
-
-    @OneToOne(mappedBy = "nationalitaet")
-    private Team team;
-
-    public Nationalitaet() {
-    }
-
-    public Nationalitaet(String nationalitaetsBeschreibung) {
-        this.nationalitaetsBeschreibung = nationalitaetsBeschreibung;
-    }
-
-    public int getNationalitaetsId() {
-        return nationalitaetsId;
-    }
-
-    public String getNationalitaetsBeschreibung() {
-        return nationalitaetsBeschreibung;
-    }
-
-    public void setNationalitaetsBeschreibung(String nationalitaetsBeschreibung) {
-        this.nationalitaetsBeschreibung = nationalitaetsBeschreibung;
-    }
 
     public static void nationalitaetHinzufuegen(String nationalitaetsBeschreibung) {
         EntityManager em = EMF.createEntityManager();
@@ -117,10 +88,5 @@ public class Nationalitaet {
         } finally {
             em.close();
         }
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Nationalität: %s", this.nationalitaetsBeschreibung);
     }
 }

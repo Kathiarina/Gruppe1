@@ -8,8 +8,12 @@
             <!-- Create Persistence-Unit -->
     <persistence-unit name="project" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>tables.Rennstrecke</class>
-        <class>tables.Rennen</class>
+        <class>at.fhburgenland.model.Rennstrecke</class>
+        <class>at.fhburgenland.model.Rennen</class>
+        <class>at.fhburgenland.model.Hauptsponsor</class>
+        <class>at.fhburgenland.model.Fahrzeugtyp</class>
+        <class>at.fhburgenland.model.Fahrzeug</class>
+        <class>at.fhburgenland.model.Team</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>

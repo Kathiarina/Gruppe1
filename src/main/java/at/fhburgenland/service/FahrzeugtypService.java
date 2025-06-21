@@ -1,63 +1,15 @@
-package tables;
+package at.fhburgenland.service;
+
+import at.fhburgenland.model.Fahrzeugtyp;
+import at.fhburgenland.model.Rennstrecke;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Scanner;
 
-@Entity(name = "Fahrzeugtyp")
-@Table(name = "fahrzeugtyp")
-public class Fahrzeugtyp {
+public class FahrzeugtypService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "fahrzeugtypId", updatable = false, nullable = false)
-    private int fahrzeugtypId;
-
-    @Column(name = "modell", nullable = false, length = 60)
-    private String modell;
-
-    @Column(name = "motor", nullable = false, length = 60)
-    private String motor;
-
-    @Column(name = "gewichtKg", nullable = false)
-    private int gewichtKg;
-
-
-    public Fahrzeugtyp() {
-    }
-
-    public Fahrzeugtyp(String modell, String motor, int gewichtKg) {
-        this.modell = modell;
-        this.motor = motor;
-        this.gewichtKg = gewichtKg;
-    }
-
-    public int getFahrzeugtypId() {
-        return fahrzeugtypId;
-    }
-
-    public String getModell() {
-        return modell;
-    }
-
-    public String getMotor() {
-        return motor;
-    }
-
-    public int getGewichtKg() {
-        return gewichtKg;
-    }
-
-    public void setModell(String modell) {
-        this.modell = modell;
-    }
-
-    public void setMotor(String motor) {
-        this.motor = motor;
-    }
-
-    public void setGewichtKg(int gewichtKg) {
-        this.gewichtKg = gewichtKg;
-    }
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void fahrzeugtypHinzufuegen(String modell, String motor, int gewichtKg) {
         EntityManager em = EMF.createEntityManager();
@@ -97,6 +49,26 @@ public class Fahrzeugtyp {
         }
     }
 
+    public static Fahrzeugtyp fahrzeugtypAuswaehlen() {
+        alleFahrzeugtypenAnzeigen();
+        System.out.println("Bitte gib die ID des gewünschten Fahrzeugtyps ein:");
+        int fahrzeugtypId = scanner.nextInt();
+        scanner.nextLine();
+        EntityManager em = EMF.createEntityManager();
+        Fahrzeugtyp ausgewaehlterFahrzeugtyp = null;
+        try {
+            ausgewaehlterFahrzeugtyp = em.find(Fahrzeugtyp.class, fahrzeugtypId);
+            if (ausgewaehlterFahrzeugtyp == null) {
+                System.err.println("Kein Fahrzeugtyp mit dieser ID gefunden.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return ausgewaehlterFahrzeugtyp;
+    }
+
     public static void fahrzeugtypLoeschen(int fahrzeugtypId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -117,10 +89,5 @@ public class Fahrzeugtyp {
         } finally {
             em.close();
         }
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Fahrzeugtyp: Modell %s, Motor %s, Gewicht %dkg", this.modell, this.motor, this.gewichtKg);
     }
 }

@@ -1,10 +1,7 @@
 package at.fhburgenland;
 
-import jakarta.persistence.*;
-import tables.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import at.fhburgenland.model.*;
+import at.fhburgenland.service.*;
 
 public class Main {
 
@@ -22,6 +19,7 @@ public class Main {
         }
         Rennen.rennenLoeschen(3);
         Rennen.alleRennenAnzeigen();*/
+
         /*Hauptsponsor hauptsponsor = Hauptsponsor.hauptsponsorAuswaehlen();
         hauptsponsor.hauptsponsorHinzufuegen("ONYX", 50000000);
         hauptsponsor.alleHauptsponsorenAnzeigen();
@@ -35,11 +33,28 @@ public class Main {
         } else {
             System.err.println("Team konnte nicht erstellt werden.");
         }*/
-        Fahrzeugtyp fahrzeugtyp = new Fahrzeugtyp();
+
+       /* Fahrzeugtyp fahrzeugtyp = new Fahrzeugtyp();
         fahrzeugtyp.fahrzeugtypHinzufuegen("McLaren", "Turbomotor", 789);
-        fahrzeugtyp.alleFahrzeugtypenAnzeigen();
+        fahrzeugtyp.alleFahrzeugtypenAnzeigen();*/
 
+        Fahrzeugtyp fahrzeugtyp = FahrzeugtypService.fahrzeugtypAuswaehlen();
+        Team team = TeamService.teamAuswaehlen();
+        if (fahrzeugtyp != null && team != null) {
+            FahrzeugService.fahrzeugHinzufuegen(fahrzeugtyp, team);
+            FahrzeugService.alleFahrzeugeAnzeigen();
+        } else {
+            System.err.println("Fahrzeug konnte nicht erstellt werden.");
+        }
 
+        Nationalitaet nationalitaet = NationalitaetService.nationalitaetAuswaehlen();
+        Fahrzeug fahrzeug = FahrzeugService.fahrzeugAuswaehlen();
+        if (nationalitaet != null && fahrzeug != null) {
+            FahrerService.fahrerHinzufuegen("Louis", "Hamilton", nationalitaet, fahrzeug);
+            FahrerService.alleFahrerAnzeigen();
+        } else {
+            System.err.println("Fahrer konnte nicht erstellt werden.");
+        }
     }
 
 
