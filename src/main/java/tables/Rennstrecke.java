@@ -18,7 +18,7 @@ public class Rennstrecke {
     @Column(name = "bundesland", nullable = false, length = 30)
     private String bundesland;
 
-    @OneToMany(mappedBy = "rennstrecken_id")
+    @OneToMany(mappedBy = "rennstrecke")
     List<Rennen> rennen = new ArrayList<>();
 
     public Rennstrecke() {}

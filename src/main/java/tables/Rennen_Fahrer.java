@@ -6,11 +6,8 @@ import java.time.Duration;
 @Table(name = "rennen_fahrer")
 public class Rennen_Fahrer {
 
-    @Column(name = "fahrer_id", updatable = false, nullable = false)
-    private int fahrer_id;
-
-    @Column(name = "rennen_id", updatable = false, nullable = false)
-    private int rennen_id;
+    @EmbeddedId
+    private RennenFahrerId id;
 
     @Column(name = "status_id", updatable = false, nullable = false)
     private int status_id;

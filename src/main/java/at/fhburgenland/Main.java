@@ -8,10 +8,10 @@ public class Main {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
     public static void main(String[] args) {
-        System.out.println("Test");
-        EMF.createEntityManager();
+        System.out.println("tables2");
+        EntityManager em = EMF.createEntityManager();
         addPerson("Ion", "Tanse", 4300);
-        printAllPersons();
+        /*printAllPersons();
         updatePerson(2, "Katharina", "Lebegern-Bachl", 3100);
         printAllPersons();
         deletePerson(3);
@@ -28,7 +28,7 @@ public class Main {
                 -) delete Person
          */
 
-        EMF.close();
+        em.close();
     }
 
     public static void addPerson(String vorname, String nachname, int gehalt){
