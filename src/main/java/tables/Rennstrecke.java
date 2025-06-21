@@ -33,10 +33,6 @@ public class Rennstrecke {
         this.bundesland = bundesland;
     }
 
-    public void setRennen(List<Rennen> rennen) {
-        this.rennen = rennen;
-    }
-
     public List<Rennen> getRennen() {
         return rennen;
     }
@@ -51,6 +47,18 @@ public class Rennstrecke {
 
     public int getRennstreckenId() {
         return rennstreckeId;
+    }
+
+    public void setRennen(List<Rennen> rennen) {
+        this.rennen = rennen;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    public void setBundesland(String bundesland) {
+        this.bundesland = bundesland;
     }
 
     public static void rennstreckeHinzufuegen(String ort, String bundesland) {
@@ -91,7 +99,7 @@ public class Rennstrecke {
         }
     }
 
-    public static Rennstrecke rennstreckeAuswaehlen(){
+    public static Rennstrecke rennstreckeAuswaehlen() {
         alleRennstreckenAnzeigen();
         System.out.println("Bitte gib die ID der gewünschten Rennstrecke ein:");
         int rennstreckenId = scanner.nextInt();
@@ -110,6 +118,34 @@ public class Rennstrecke {
         }
         return ausgewaehlteRennstrecke;
     }
+
+/*
+    public static void updateRennstrecke(int rennstreckeId, String ort, String bundesland, Rennen rennen) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+        Rennstrecke rennstrecke = null;
+
+        try {
+            et = em.getTransaction();
+            et.begin();
+            rennstrecke = em.find(Rennstrecke.class, rennstreckeId);
+            rennstrecke.setOrt(ort);
+            rennstrecke.setBundesland(bundesland);
+            rennstrecke.setRennen(rennen);
+
+
+            em.persist(rennstrecke);
+            et.commit();
+            System.out.println("Rennstrecke erfolgreich upgedated: " + rennstrecke);
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+                System.out.println(e.getMessage());
+            }
+        } finally {
+            em.close();
+        }
+    }*/
 
     public static void rennstreckeLoeschen(int rennstreckenId) {
         EntityManager em = EMF.createEntityManager();

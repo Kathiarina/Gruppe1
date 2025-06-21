@@ -111,6 +111,6 @@ public class Rennen {
 
     @Override
     public String toString() {
-        return String.format("Rennen: %s, %s", this.datumUhrzeit, this.rennstrecke);
+        return String.format("Rennen %d: %s, %s", this.rennenId, this.datumUhrzeit, this.rennstrecke);
     }
 }
