@@ -89,4 +89,32 @@ public class Rennstrecke {
             em.close();
         }
     }
+
+    public static void rennstreckeLoeschen(int rennstrecken_id) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+        Rennstrecke rennstrecke = null;
+
+        try {
+            et = em.getTransaction();
+            et.begin();
+            rennstrecke = em.find(Rennstrecke.class, rennstrecken_id);
+            em.remove(rennstrecke);
+            et.commit();
+            System.out.println("Rennstrecke erfolgreich gelöscht.");
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+                System.out.println(e.getMessage());
+            }
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Rennstrecke: %s, %s", this.ort, this.bundesland);
+    }
 }
+

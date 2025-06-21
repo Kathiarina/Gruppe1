@@ -12,6 +12,7 @@ public class Main {
         System.out.println("tables2");
         Rennstrecke rennstrecke = new Rennstrecke();
         rennstrecke.rennstreckeHinzufuegen("Spielefeld", "Steiermark");
+        rennstrecke.rennstreckeLoeschen(1);
         rennstrecke.alleRennstreckenAnzeigen();
 
 
