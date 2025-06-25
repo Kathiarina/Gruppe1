@@ -40,6 +40,10 @@ public class Hauptsponsor {
         return jaehrlicheSponsorsumme;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     public void setHauptsponsorName(String hauptsponsorName) {
         this.hauptsponsorName = hauptsponsorName;
     }
@@ -50,6 +54,6 @@ public class Hauptsponsor {
 
     @Override
     public String toString() {
-        return String.format("Hauptsponsor: %s, %d ", this.hauptsponsorName, this.jaehrlicheSponsorsumme);
+        return String.format("Hauptsponsor: %s, %d€ ", this.hauptsponsorName, this.jaehrlicheSponsorsumme);
     }
 }

@@ -1,5 +1,6 @@
 package at.fhburgenland;
 
+import at.fhburgenland.ui.FahrerUI;
 import at.fhburgenland.ui.HauptsponsorUI;
 import at.fhburgenland.ui.Menu;
 import at.fhburgenland.ui.RennstreckeUI;
@@ -11,6 +12,7 @@ public class RennverwaltungDriver {
     private final Menu menu = new Menu();
     private final RennstreckeUI rennstreckeUI = new RennstreckeUI(scanner, menu);
     private final HauptsponsorUI hauptsponsorUI = new HauptsponsorUI(scanner, menu);
+    private final FahrerUI fahrerUI = new FahrerUI(scanner, menu);
     private boolean systemRunning = true;
 
     public void rennverwaltungStart() {
@@ -19,6 +21,7 @@ public class RennverwaltungDriver {
             String userEingabe = scanner.nextLine();
             switch (userEingabe) {
                 case "1" -> rennstreckeUI.rennstreckeMenu();
+                case "3" -> fahrerUI.fahrerMenu();
                 case "6" -> hauptsponsorUI.hauptsponsorMenu();
                 case "8" -> {
                     System.out.println("Auf Wiedersehen!");
@@ -26,8 +29,6 @@ public class RennverwaltungDriver {
                 }
                 default -> System.err.println("Ungültige Eingabe, bitte erneut versuchen.");
             }
-
         }
     }
-
 }

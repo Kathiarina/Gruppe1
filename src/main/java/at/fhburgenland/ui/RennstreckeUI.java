@@ -1,6 +1,8 @@
 package at.fhburgenland.ui;
 
+import at.fhburgenland.model.Hauptsponsor;
 import at.fhburgenland.model.Rennstrecke;
+import at.fhburgenland.service.HauptsponsorService;
 import at.fhburgenland.service.RennstreckeService;
 
 import java.util.List;
@@ -22,24 +24,17 @@ public class RennstreckeUI {
 
             switch (userEingabe) {
                 case "1":
-                    List<Rennstrecke> rennstrecken = RennstreckeService.alleRennstreckenAnzeigen();
-                    if (!rennstrecken.isEmpty()) {
-                        for (Rennstrecke rennstrecke : rennstrecken) {
-                            System.out.println("Rennstrecke Nr: " + rennstrecke.getRennstreckenId() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
-                        }
-                    } else {
-                        System.err.println("Es wurde keine Rennstrecke gefunden.");
-                    }
+                    alleRennstreckenAnzeigen();
                     break;
                 case "2":
                     createRennstrecke();
                     break;
                 case "3":
-                    RennstreckeService.alleRennstreckenAnzeigen();
+                    alleRennstreckenAnzeigen();
                     updateRennstrecke();
                     break;
                 case "4":
-                    RennstreckeService.alleRennstreckenAnzeigen();
+                    alleRennstreckenAnzeigen();
                     deleteRennstrecke();
                     break;
                 case "5":
@@ -93,12 +88,12 @@ public class RennstreckeUI {
                 return;
             }
 
-            System.out.println("Neuen Ort eingeben:");
+            System.out.println("Neuen Ort eingeben (Enter zum überspringen):");
             String neuerOrt = scanner.nextLine();
             if (!neuerOrt.isBlank()) {
                 rennstrecke.setOrt(neuerOrt);
             }
-            System.out.println("Neues Bundesland eingeben:");
+            System.out.println("Neues Bundesland eingeben (Enter zum überspringen):");
             String neuesBundesland = scanner.nextLine();
             if (!neuesBundesland.isBlank()) {
                 rennstrecke.setBundesland(neuesBundesland);
@@ -125,10 +120,27 @@ public class RennstreckeUI {
                 System.err.println("Rennstrecke nicht gefunden.");
                 return;
             }
+
+            if(!rennstrecke.getRennen().isEmpty()) {
+                System.err.println("Rennstrecke ist einem Rennen zugeordnet und kann daher nicht gelöscht werden.");
+                return;
+            }
+
             RennstreckeService.rennstreckeLoeschen(id);
             System.out.printf("Rennstrecke mit ID %d erfolgreich gelöscht.%n", id);
         } catch (Exception e) {
             System.err.println("Rennstrecke konnte nicht gelöscht werden." + e.getMessage());
+        }
+    }
+
+    private void alleRennstreckenAnzeigen() {
+        List<Rennstrecke> rennstrecken = RennstreckeService.alleRennstreckenAnzeigen();
+        if (rennstrecken != null && !rennstrecken.isEmpty()) {
+            for (Rennstrecke rennstrecke : rennstrecken) {
+                System.out.println("Rennstrecke Nr: " + rennstrecke.getRennstreckenId() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
+            }
+        } else {
+            System.err.println("Keine Rennstrecken gefunden.");
         }
     }
 }

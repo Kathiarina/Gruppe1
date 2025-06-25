@@ -26,7 +26,7 @@ public class Team {
     @JoinColumn(name = "sponsorId", nullable = false)
     private Hauptsponsor hauptsponsor;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "nationalitaetsId", nullable = false)
     private Nationalitaet nationalitaet;
 

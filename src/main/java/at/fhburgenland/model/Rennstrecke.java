@@ -21,7 +21,7 @@ public class Rennstrecke {
     @Column(name = "bundesland", nullable = false, length = 30)
     private String bundesland;
 
-    @OneToMany(mappedBy = "rennstrecke")
+    @OneToMany(mappedBy = "rennstrecke", fetch = FetchType.EAGER)
     List<Rennen> rennen = new ArrayList<>();
 
     public Rennstrecke() {

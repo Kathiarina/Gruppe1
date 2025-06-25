@@ -2,6 +2,7 @@ package at.fhburgenland.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,11 +18,11 @@ public class Nationalitaet {
     @Column(name = "nationalitaetsBeschreibung", updatable = false, nullable = false, length = 30)
     private String nationalitaetsBeschreibung;
 
-    @OneToOne(mappedBy = "nationalitaet")
-    private Team team;
+    @OneToMany(mappedBy = "nationalitaet", fetch = FetchType.EAGER)
+    private List<Team> team = new ArrayList<>();
 
-    @OneToOne(mappedBy = "nationalitaet")
-    private Fahrer fahrer;
+    @OneToMany(mappedBy = "nationalitaet", fetch = FetchType.EAGER)
+    private List<Fahrer> fahrer = new ArrayList<>();
 
     public Nationalitaet() {
     }
@@ -36,6 +37,22 @@ public class Nationalitaet {
 
     public String getNationalitaetsBeschreibung() {
         return nationalitaetsBeschreibung;
+    }
+
+    public List<Team> getTeam() {
+        return team;
+    }
+
+    public List<Fahrer> getFahrer() {
+        return fahrer;
+    }
+
+    public void setTeam(List<Team> team) {
+        this.team = team;
+    }
+
+    public void setFahrer(List<Fahrer> fahrer) {
+        this.fahrer = fahrer;
     }
 
     public void setNationalitaetsBeschreibung(String nationalitaetsBeschreibung) {

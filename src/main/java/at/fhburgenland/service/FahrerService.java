@@ -98,6 +98,16 @@ public class FahrerService {
             et.begin();
             Fahrer fahrer = em.find(Fahrer.class, fahrerId);
             if (fahrer != null) {
+                if(fahrer.getNationalitaet() != null){
+                    System.err.println("Fahrer kann nicht gelöscht werden, da er einer Nationalität zugeordnet ist.");
+                    et.rollback();
+                    return;
+                }
+                if(fahrer.getFahrzeug() != null){
+                    System.err.println("Fahrer kann nicht gelöscht werden, da er einem Fahrzeug zugeordnet ist.");
+                    et.rollback();
+                    return;
+                }
                 em.remove(fahrer);
                 et.commit();
             } else {

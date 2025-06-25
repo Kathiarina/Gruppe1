@@ -23,24 +23,17 @@ public class HauptsponsorUI {
 
             switch (userEingabe) {
                 case "1":
-                    List<Hauptsponsor> hauptsponsoren = HauptsponsorService.alleHauptsponsorenAnzeigen();
-                    if (!hauptsponsoren.isEmpty()) {
-                        for (Hauptsponsor hauptsponsor : hauptsponsoren) {
-                            System.out.println("Hauptsponsor Nr: " + hauptsponsor.getHauptsponsorId() + ", Hauptsponsorname " + hauptsponsor.getHauptsponsorName() + ", Jährliche Sponsorsumme " + hauptsponsor.getJaehrlicheSponsorsumme());
-                        }
-                    } else {
-                        System.err.println("Es wurde kein Hauptsponsor gefunden.");
-                    }
+                    alleHauptsponsorenAnzeigen();
                     break;
                 case "2":
                     createHauptsponsor();
                     break;
                 case "3":
-                    HauptsponsorService.alleHauptsponsorenAnzeigen();
+                    alleHauptsponsorenAnzeigen();
                     updateHauptsponsor();
                     break;
                 case "4":
-                    HauptsponsorService.alleHauptsponsorenAnzeigen();
+                    alleHauptsponsorenAnzeigen();
                     deleteHauptsponsor();
                     break;
                 case "5":
@@ -98,12 +91,12 @@ public class HauptsponsorUI {
                 return;
             }
 
-            System.out.println("Neuen Hauptsponsornamen eingeben:");
+            System.out.println("Neuen Hauptsponsornamen eingeben (Enter zum überspringen):");
             String neuerHauptsponsorname = scanner.nextLine();
             if (!neuerHauptsponsorname.isBlank()) {
                 hauptsponsor.setHauptsponsorName(neuerHauptsponsorname);
             }
-            System.out.println("Neue jährliche Sponsorsumme eingeben:");
+            System.out.println("Neue jährliche Sponsorsumme eingeben (Enter zum überspringen):");
             String sponsorsummeEingabe = scanner.nextLine();
             if (!sponsorsummeEingabe.isBlank()) {
                 try {
@@ -140,10 +133,25 @@ public class HauptsponsorUI {
                 System.err.println("Hauptsponsor nicht gefunden.");
                 return;
             }
+
+            if(hauptsponsor.getTeam() != null) {
+                System.err.println("Hauptsponsor ist einem Team zugeordnet und kann daher nicht gelöscht werden.");
+                return;
+            }
             HauptsponsorService.hauptsponsorLoeschen(id);
             System.out.printf("Hauptsponsor mit ID %d erfolgreich gelöscht.%n", id);
         } catch (Exception e) {
             System.err.println("Hauptsponsor konnte nicht gelöscht werden." + e.getMessage());
+        }
+    }
+
+    private void alleHauptsponsorenAnzeigen() {
+        List<Hauptsponsor> hauptsponsoren = HauptsponsorService.alleHauptsponsorenAnzeigen();
+        if (hauptsponsoren != null && !hauptsponsoren.isEmpty()) {
+            for (Hauptsponsor hauptsponsor : hauptsponsoren) {
+                    System.out.println("Hauptsponsor Nr: " + hauptsponsor.getHauptsponsorId() + ", Hauptsponsorname " + hauptsponsor.getHauptsponsorName() + ", Jährliche Sponsorsumme " + hauptsponsor.getJaehrlicheSponsorsumme() + "€");}
+        } else {
+            System.err.println("Keine Hauptsponsoren gefunden.");
         }
     }
 }

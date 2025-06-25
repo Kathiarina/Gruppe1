@@ -96,6 +96,11 @@ public class RennstreckeService {
             et.begin();
             Rennstrecke rennstrecke = em.find(Rennstrecke.class, rennstreckenId);
             if (rennstrecke != null) {
+                if(!rennstrecke.getRennen().isEmpty()){
+                    System.err.println("Rennstrecke kann nicht gelöscht werden, da sie einem Rennen zugeordnet ist.");
+                    et.rollback();
+                    return;
+                }
                 em.remove(rennstrecke);
                 et.commit();
             } else {

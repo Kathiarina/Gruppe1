@@ -96,6 +96,11 @@ public class HauptsponsorService {
             et.begin();
             Hauptsponsor hauptsponsor = em.find(Hauptsponsor.class, hauptsponsorId);
             if (hauptsponsor != null) {
+                if(hauptsponsor.getTeam() != null){
+                    System.err.println("Hauptsponsor kann nicht gelöscht werden, da er einem Team zugeordnet ist.");
+                    et.rollback();
+                    return;
+                }
                 em.remove(hauptsponsor);
                 et.commit();
             } else {

@@ -37,10 +37,10 @@ CREATE TABLE Nationalitaet(
 );
 
 CREATE TABLE Hauptsponsor(
-	sponsorId SERIAL,
-	sponsorName VARCHAR(60) not null,
+	hauptsponsorId SERIAL,
+	hauptsponsorName VARCHAR(60) not null,
 	jaehrlicheSponsorsumme int not null,
-	PRIMARY KEY (sponsorId)
+	PRIMARY KEY (hauptsponsorId)
 );
 
 CREATE TABLE Fahrzeugtyp(
@@ -59,7 +59,7 @@ CREATE TABLE Team(
 	sponsorId INT not null,
 	PRIMARY KEY (teamId),
 	FOREIGN KEY (nationalitaetsId) REFERENCES Nationalitaet (nationalitaetsId),
-	FOREIGN KEY (sponsorId) REFERENCES Hauptsponsor (sponsorId)
+	FOREIGN KEY (sponsorId) REFERENCES Hauptsponsor (hauptsponsorId)
 );
 
 CREATE TABLE Fahrzeug(
@@ -94,14 +94,14 @@ CREATE TABLE Rennen_Fahrer(
 );
 
 
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Ineos', 23000000);
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'OKX', 28000000);
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Hewlett-Packard', 80000000);
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Oracle', 89000000);
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Lenovo', 15000000);
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Prima Assicurazioni', 10000000);
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Red Bull', 20000000);
-INSERT INTO Hauptsponsor (sponsorId, sponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Pertamina Lubricants', 20000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Ineos', 23000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'OKX', 28000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Hewlett-Packard', 80000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Oracle', 89000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Lenovo', 15000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Prima Assicurazioni', 10000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Red Bull', 20000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Pertamina Lubricants', 20000000);
 
 INSERT INTO Status (statusId, beschreibung)VALUES (default, 'Erster Platz');
 INSERT INTO Status (statusId, beschreibung)VALUES (default, 'Zweiter Platz');

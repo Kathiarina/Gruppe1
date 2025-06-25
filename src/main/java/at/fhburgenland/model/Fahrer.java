@@ -20,7 +20,7 @@ public class Fahrer {
     @JoinColumn(name = "fahrzeugId", nullable = false)
     private Fahrzeug fahrzeug;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "nationalitaetsId", nullable = false)
     private Nationalitaet nationalitaet;
 
