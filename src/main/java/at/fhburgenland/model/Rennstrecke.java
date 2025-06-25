@@ -62,7 +62,7 @@ public class Rennstrecke {
 
     @Override
     public String toString() {
-        return String.format("Rennstrecke: %s, %s", this.ort, this.bundesland);
+        return String.format("Rennstrecke: Ort: %-10s | Bundesland: %-10s", this.ort, this.bundesland);
     }
 }
 

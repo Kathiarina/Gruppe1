@@ -4,19 +4,16 @@ import at.fhburgenland.model.Rennstrecke;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class RennstreckeService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
-    private static Scanner scanner = new Scanner(System.in);
 
-    public static void rennstreckeHinzufuegen(String ort, String bundesland) {
+    public static void rennstreckeHinzufuegen(Rennstrecke rennstrecke) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         try {
             et = em.getTransaction();
             et.begin();
-            Rennstrecke rennstrecke = new Rennstrecke(ort, bundesland);
             System.out.println("Neue Rennstrecke wurde angelegt: " + rennstrecke);
             em.persist(rennstrecke);
             et.commit();
@@ -29,7 +26,7 @@ public class RennstreckeService {
         }
     }
 
-    public static void alleRennstreckenAnzeigen() {
+    public static List<Rennstrecke> alleRennstreckenAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT rs FROM Rennstrecke rs";
         TypedQuery<Rennstrecke> tq = em.createQuery(query, Rennstrecke.class);
@@ -46,18 +43,21 @@ public class RennstreckeService {
         } finally {
             em.close();
         }
+        return rennstreckenListe;
     }
 
-    public static Rennstrecke rennstreckeAuswaehlen() {
-        alleRennstreckenAnzeigen();
-        System.out.println("Bitte gib die ID der gewünschten Rennstrecke ein:");
-        int rennstreckenId = scanner.nextInt();
-        scanner.nextLine();
+    public static Rennstrecke rennstreckeAnzeigenNachId(int rennstreckenId) {
         EntityManager em = EMF.createEntityManager();
-        Rennstrecke ausgewaehlteRennstrecke = null;
+        Rennstrecke rennstrecke = null;
+
         try {
-            ausgewaehlteRennstrecke = em.find(Rennstrecke.class, rennstreckenId);
-            if (ausgewaehlteRennstrecke == null) {
+            rennstrecke = em.find(Rennstrecke.class, rennstreckenId);
+            if (rennstrecke != null) {
+                System.out.println("Rennstrecke gefunden:");
+                System.out.println("ID: " + rennstrecke.getRennstreckenId());
+                System.out.println("Ort: " + rennstrecke.getOrt());
+                System.out.println("Bundesland: " + rennstrecke.getBundesland());
+            } else {
                 System.err.println("Keine Rennstrecke mit dieser ID gefunden.");
             }
         } catch (Exception e) {
@@ -65,49 +65,45 @@ public class RennstreckeService {
         } finally {
             em.close();
         }
-        return ausgewaehlteRennstrecke;
+        return rennstrecke;
     }
 
-/*
-    public static void updateRennstrecke(int rennstreckeId, String ort, String bundesland, Rennen rennen) {
+    public static void rennstreckeUpdaten(Rennstrecke rennstrecke) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
-        Rennstrecke rennstrecke = null;
 
         try {
             et = em.getTransaction();
             et.begin();
-            rennstrecke = em.find(Rennstrecke.class, rennstreckeId);
-            rennstrecke.setOrt(ort);
-            rennstrecke.setBundesland(bundesland);
-            rennstrecke.setRennen(rennen);
 
-
-            em.persist(rennstrecke);
+            em.merge(rennstrecke);
             et.commit();
-            System.out.println("Rennstrecke erfolgreich upgedated: " + rennstrecke);
+            System.out.println("Rennstrecke erfolgreich aktualisiert: " + rennstrecke);
+
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println(e.getMessage());
             }
+            e.printStackTrace();
         } finally {
             em.close();
         }
-    }*/
+    }
 
     public static void rennstreckeLoeschen(int rennstreckenId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
-        Rennstrecke rennstrecke = null;
 
         try {
             et = em.getTransaction();
             et.begin();
-            rennstrecke = em.find(Rennstrecke.class, rennstreckenId);
-            em.remove(rennstrecke);
-            et.commit();
-            System.out.format("Rennstrecke %d erfolgreich gelöscht.\n", rennstreckenId);
+            Rennstrecke rennstrecke = em.find(Rennstrecke.class, rennstreckenId);
+            if (rennstrecke != null) {
+                em.remove(rennstrecke);
+                et.commit();
+            } else {
+                System.err.println("Rennstrecke nicht gefunden.");
+            }
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();

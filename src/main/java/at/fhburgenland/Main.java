@@ -1,12 +1,12 @@
 package at.fhburgenland;
 
-import at.fhburgenland.model.*;
-import at.fhburgenland.service.*;
-
 public class Main {
 
 
     public static void main(String[] args) {
+        RennverwaltungDriver rennverwaltung = new RennverwaltungDriver();
+        rennverwaltung.rennverwaltungStart();
+
         //Rennstrecke rennstrecke = Rennstrecke.rennstreckeAuswaehlen();
         //rennstrecke.rennstreckeHinzufuegen("Spielefeld", "Steiermark");
         //rennstrecke.rennstreckeLoeschen(4);
@@ -37,7 +37,7 @@ public class Main {
        /* Fahrzeugtyp fahrzeugtyp = new Fahrzeugtyp();
         fahrzeugtyp.fahrzeugtypHinzufuegen("McLaren", "Turbomotor", 789);
         fahrzeugtyp.alleFahrzeugtypenAnzeigen();*/
-
+/*
         Fahrzeugtyp fahrzeugtyp = FahrzeugtypService.fahrzeugtypAuswaehlen();
         Team team = TeamService.teamAuswaehlen();
         if (fahrzeugtyp != null && team != null) {
@@ -54,7 +54,7 @@ public class Main {
             FahrerService.alleFahrerAnzeigen();
         } else {
             System.err.println("Fahrer konnte nicht erstellt werden.");
-        }
+        }*/
     }
 
 
