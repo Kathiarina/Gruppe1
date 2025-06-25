@@ -4,19 +4,17 @@ import at.fhburgenland.model.Nationalitaet;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Scanner;
+
 
 public class NationalitaetService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
-    private static Scanner scanner = new Scanner(System.in);
 
-    public static void nationalitaetHinzufuegen(String nationalitaetsBeschreibung) {
+    public static void nationalitaetHinzufuegen(Nationalitaet nationalitaet) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         try {
             et = em.getTransaction();
             et.begin();
-            Nationalitaet nationalitaet = new Nationalitaet(nationalitaetsBeschreibung);
             System.out.println("Neue Nationalität wurde angelegt: " + nationalitaet);
             em.persist(nationalitaet);
             et.commit();
@@ -29,7 +27,7 @@ public class NationalitaetService {
         }
     }
 
-    public static void alleNationalitaetenAnzeigen() {
+    public static List<Nationalitaet> alleNationalitaetenAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT n FROM Nationalitaet n";
         TypedQuery<Nationalitaet> tq = em.createQuery(query, Nationalitaet.class);
@@ -38,26 +36,25 @@ public class NationalitaetService {
 
         try {
             nationalitaetenListe = tq.getResultList();
-            for (Nationalitaet nationalitaet : nationalitaetenListe) {
-                System.out.println("Nationalität Nr: " + nationalitaet.getNationalitaetsId() + ", " + nationalitaet.getNationalitaetsBeschreibung());
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             em.close();
         }
+        return nationalitaetenListe;
     }
 
-    public static Nationalitaet nationalitaetAuswaehlen() {
-        alleNationalitaetenAnzeigen();
-        System.out.println("Bitte gib die ID der gewünschten Nationalität ein:");
-        int nationalitätsId = scanner.nextInt();
-        scanner.nextLine();
+    public static Nationalitaet nationalitaetAnzeigenNachId(int nationalitaetId) {
         EntityManager em = EMF.createEntityManager();
-        Nationalitaet ausgewaehlteNationalität = null;
+        Nationalitaet nationalitaet = null;
+
         try {
-            ausgewaehlteNationalität = em.find(Nationalitaet.class, nationalitätsId);
-            if (ausgewaehlteNationalität == null) {
+            nationalitaet = em.find(Nationalitaet.class, nationalitaetId);
+            if (nationalitaet != null) {
+                System.out.println("Nationalität gefunden:");
+                System.out.println("ID: " + nationalitaet.getNationalitaetsId());
+                System.out.println("Nationalität: " + nationalitaet.getNationalitaetsBeschreibung());
+            } else {
                 System.err.println("Keine Nationalität mit dieser ID gefunden.");
             }
         } catch (Exception e) {
@@ -65,25 +62,50 @@ public class NationalitaetService {
         } finally {
             em.close();
         }
-        return ausgewaehlteNationalität;
+        return nationalitaet;
+    }
+
+    public static void nationalitaetUpdaten(Nationalitaet nationalitaet) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+
+        try {
+            et = em.getTransaction();
+            et.begin();
+
+            em.merge(nationalitaet);
+            et.commit();
+            System.out.println("Nationalität erfolgreich aktualisiert: " + nationalitaet);
+
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     public static void nationalitaetLoeschen(int nationalitaetsId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
-        Nationalitaet nationalitaet = null;
 
         try {
             et = em.getTransaction();
             et.begin();
-            nationalitaet = em.find(Nationalitaet.class, nationalitaetsId);
-            em.remove(nationalitaet);
-            et.commit();
-            System.out.format("Nationalität %d erfolgreich gelöscht.\n", nationalitaetsId);
+            Nationalitaet nationalitaet = em.find(Nationalitaet.class, nationalitaetsId);
+            if (nationalitaet != null) {
+                em.remove(nationalitaet);
+                et.commit();
+            } else {
+                System.err.println("Nationalität nicht gefunden.");
+            }
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println(e.getMessage());
+                System.out.println("Fehler beim Löschen der Nationalitaet.");
+                e.printStackTrace();
             }
         } finally {
             em.close();

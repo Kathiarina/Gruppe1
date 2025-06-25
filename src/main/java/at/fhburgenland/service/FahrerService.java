@@ -1,8 +1,6 @@
 package at.fhburgenland.service;
 
 import at.fhburgenland.model.Fahrer;
-import at.fhburgenland.model.Fahrzeug;
-import at.fhburgenland.model.Nationalitaet;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -10,13 +8,12 @@ import java.util.List;
 public class FahrerService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
-    public static void fahrerHinzufuegen(String vorname, String nachname, Nationalitaet nationalitaet, Fahrzeug fahrzeug) {
+    public static void fahrerHinzufuegen(Fahrer fahrer) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         try {
             et = em.getTransaction();
             et.begin();
-            Fahrer fahrer = new Fahrer(vorname, nachname, nationalitaet, fahrzeug);
             System.out.println("Neuer Fahrer wurde angelegt: " + fahrer);
             em.persist(fahrer);
             et.commit();
@@ -29,7 +26,7 @@ public class FahrerService {
         }
     }
 
-    public static void alleFahrerAnzeigen() {
+    public static List<Fahrer> alleFahrerAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT f FROM Fahrer f";
         TypedQuery<Fahrer> tq = em.createQuery(query, Fahrer.class);
@@ -38,10 +35,54 @@ public class FahrerService {
 
         try {
             fahrerListe = tq.getResultList();
-            for (Fahrer fahrer : fahrerListe) {
-                System.out.println("Fahrer Nr: " + fahrer.getFahrerId() + ", Vorname " + fahrer.getVorname() + ", Nachname " + fahrer.getNachname() + ", " + fahrer.getNationalitaet() + ", " + fahrer.getFahrzeug());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return fahrerListe;
+    }
+
+    public static Fahrer fahrerAnzeigenNachId(int fahrerId) {
+        EntityManager em = EMF.createEntityManager();
+        Fahrer fahrer = null;
+
+        try {
+            fahrer = em.find(Fahrer.class, fahrerId);
+            if (fahrer != null) {
+                System.out.println("Fahrer gefunden:");
+                System.out.println("ID: " + fahrer.getFahrerId());
+                System.out.println("Vorname: " + fahrer.getVorname());
+                System.out.println("Nachname: " + fahrer.getNachname());
+                System.out.println("Nationalität: " + fahrer.getNationalitaet());
+                System.out.println("Fahrzeug:" + fahrer.getFahrzeug());
+            } else {
+                System.err.println("Kein Fahrer mit dieser ID gefunden.");
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return fahrer;
+    }
+
+    public static void fahrerUpdaten(Fahrer fahrer) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+
+        try {
+            et = em.getTransaction();
+            et.begin();
+
+            em.merge(fahrer);
+            et.commit();
+            System.out.println("Fahrer erfolgreich aktualisiert: " + fahrer);
+
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+            }
             e.printStackTrace();
         } finally {
             em.close();
@@ -51,19 +92,22 @@ public class FahrerService {
     public static void fahrerLoeschen(int fahrerId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
-        Fahrer fahrer = null;
 
         try {
             et = em.getTransaction();
             et.begin();
-            fahrer = em.find(Fahrer.class, fahrerId);
-            em.remove(fahrer);
-            et.commit();
-            System.out.format("Fahrer %d erfolgreich gelöscht.\n", fahrerId);
+            Fahrer fahrer = em.find(Fahrer.class, fahrerId);
+            if (fahrer != null) {
+                em.remove(fahrer);
+                et.commit();
+            } else {
+                System.err.println("Fahrer nicht gefunden.");
+            }
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println(e.getMessage());
+                System.out.println("Fehler beim Löschen des Fahrers.");
+                e.printStackTrace();
             }
         } finally {
             em.close();

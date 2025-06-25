@@ -10,7 +10,7 @@ public class Menu {
             3 - Fahrer verwalten
             4 - Fahrzeuge verwalten
             5 - Teams verwalten
-            6 - Sponsoren verwalten
+            6 - Hauptsponsoren verwalten
             7 - Abfragen
             8 - Rennverwaltung beenden
             """;
@@ -66,14 +66,14 @@ public class Menu {
             4 - Team löschen
             5 - Zurück zum Hauptmenü
             """;
-    private static final String sponsorMenu = """
-            *** SPONSOREN ***
+    private static final String hauptsponsorMenu = """
+            *** HAUPTSPONSOREN ***
             
             Bitte eine Zahl zwischen 1 und 5 auswählen:
-            1 - Alle Sponsoren anzeigen
-            2 - Neuen Sponsor anlegen
-            3 - Sponsor bearbeiten
-            4 - Sponsor löschen
+            1 - Alle Hauptsponsoren anzeigen
+            2 - Neuen Hauptsponsor anlegen
+            3 - Hauptsponsor bearbeiten
+            4 - Hauptsponsor löschen
             5 - Zurück zum Hauptmenü
             """;
 
@@ -101,7 +101,7 @@ public class Menu {
         System.out.println(teamMenu);
     }
 
-    protected static void zeigeSponsorMenu() {
-        System.out.println(sponsorMenu);
+    protected static void zeigeHauptsponsorMenu() {
+        System.out.println(hauptsponsorMenu);
     }
 }

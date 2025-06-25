@@ -4,19 +4,16 @@ import at.fhburgenland.model.Hauptsponsor;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class HauptsponsorService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
-    private static Scanner scanner = new Scanner(System.in);
 
-    public static void hauptsponsorHinzufuegen(String sponsorName, int jaehrlicheSponsorsumme) {
+    public static void hauptsponsorHinzufuegen(Hauptsponsor hauptsponsor) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         try {
             et = em.getTransaction();
             et.begin();
-            Hauptsponsor hauptsponsor = new Hauptsponsor(sponsorName, jaehrlicheSponsorsumme);
             System.out.println("Neuer Hauptsponsor wurde angelegt: " + hauptsponsor);
             em.persist(hauptsponsor);
             et.commit();
@@ -29,27 +26,7 @@ public class HauptsponsorService {
         }
     }
 
-    public static Hauptsponsor hauptsponsorAuswaehlen() {
-        alleHauptsponsorenAnzeigen();
-        System.out.println("Bitte gib die ID des gewünschten Hauptsponsors ein:");
-        int sponsorId = scanner.nextInt();
-        scanner.nextLine();
-        EntityManager em = EMF.createEntityManager();
-        Hauptsponsor ausgewaehlterHauptsponsor = null;
-        try {
-            ausgewaehlterHauptsponsor = em.find(Hauptsponsor.class, sponsorId);
-            if (ausgewaehlterHauptsponsor == null) {
-                System.err.println("Kein Hauptsponsor mit dieser ID gefunden.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-        return ausgewaehlterHauptsponsor;
-    }
-
-    public static void alleHauptsponsorenAnzeigen() {
+    public static List<Hauptsponsor> alleHauptsponsorenAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT hs FROM Hauptsponsor hs";
         TypedQuery<Hauptsponsor> tq = em.createQuery(query, Hauptsponsor.class);
@@ -58,10 +35,52 @@ public class HauptsponsorService {
 
         try {
             hauptsponsorenListe = tq.getResultList();
-            for (Hauptsponsor hauptsponsor : hauptsponsorenListe) {
-                System.out.println("Hauptsponsor Nr: " + hauptsponsor.getSponsorId() + ", Hauptsponsorname " + hauptsponsor.getSponsorName() + ", Jährliche Sponsorsumme " + hauptsponsor.getJaehrlicheSponsorsumme());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return hauptsponsorenListe;
+    }
+
+    public static Hauptsponsor hauptsponsorAnzeigenNachId(int hauptsponsorId) {
+        EntityManager em = EMF.createEntityManager();
+        Hauptsponsor hauptsponsor = null;
+
+        try {
+            hauptsponsor = em.find(Hauptsponsor.class, hauptsponsorId);
+            if (hauptsponsor != null) {
+                System.out.println("Hauptsponsor gefunden:");
+                System.out.println("ID: " + hauptsponsor.getHauptsponsorId());
+                System.out.println("Name: " + hauptsponsor.getHauptsponsorName());
+                System.out.println("Jährliche Sponsorsumme: " + hauptsponsor.getJaehrlicheSponsorsumme());
+            } else {
+                System.err.println("Kein Hauptsponsor mit dieser ID gefunden.");
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return hauptsponsor;
+    }
+
+    public static void hauptsponsorUpdaten(Hauptsponsor hauptsponsor) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+
+        try {
+            et = em.getTransaction();
+            et.begin();
+
+            em.merge(hauptsponsor);
+            et.commit();
+            System.out.println("Hauptsponsor erfolgreich aktualisiert: " + hauptsponsor);
+
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+            }
             e.printStackTrace();
         } finally {
             em.close();
@@ -71,19 +90,22 @@ public class HauptsponsorService {
     public static void hauptsponsorLoeschen(int hauptsponsorId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
-        Hauptsponsor hauptsponsor = null;
 
         try {
             et = em.getTransaction();
             et.begin();
-            hauptsponsor = em.find(Hauptsponsor.class, hauptsponsorId);
-            em.remove(hauptsponsor);
-            et.commit();
-            System.out.format("Hauptsponsor %d erfolgreich gelöscht.\n", hauptsponsorId);
+            Hauptsponsor hauptsponsor = em.find(Hauptsponsor.class, hauptsponsorId);
+            if (hauptsponsor != null) {
+                em.remove(hauptsponsor);
+                et.commit();
+            } else {
+                System.err.println("Hauptsponsor nicht gefunden.");
+            }
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println(e.getMessage());
+                System.out.println("Fehler beim Löschen des Hauptsponsors.");
+                e.printStackTrace();
             }
         } finally {
             em.close();

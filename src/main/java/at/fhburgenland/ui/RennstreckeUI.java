@@ -23,7 +23,11 @@ public class RennstreckeUI {
             switch (userEingabe) {
                 case "1":
                     List<Rennstrecke> rennstrecken = RennstreckeService.alleRennstreckenAnzeigen();
-                    if (rennstrecken.isEmpty()) {
+                    if (!rennstrecken.isEmpty()) {
+                        for (Rennstrecke rennstrecke : rennstrecken) {
+                            System.out.println("Rennstrecke Nr: " + rennstrecke.getRennstreckenId() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
+                        }
+                    } else {
                         System.err.println("Es wurde keine Rennstrecke gefunden.");
                     }
                     break;
@@ -42,7 +46,7 @@ public class RennstreckeUI {
                     System.out.println("Zurück zum Hauptmenü");
                     return;
                 default:
-                    System.err.println("Ungültige Eingabe, bitte nocheinmal versuchen.");
+                    System.err.println("Ungültige Eingabe.");
                     break;
             }
         }
@@ -53,14 +57,14 @@ public class RennstreckeUI {
             Rennstrecke rennstrecke = new Rennstrecke();
             System.out.println("Bitte den Ort der Rennstrecke eingeben:");
             String ort = scanner.nextLine();
-            if(ort.isEmpty()) {
+            if (ort.isEmpty()) {
                 System.err.println("Ort darf nicht leer sein.");
                 return;
             }
             rennstrecke.setOrt(ort);
             System.out.println("Bitte das Bundesland der Rennstrecke eingeben:");
             String bundesland = scanner.nextLine();
-            if(bundesland.isEmpty()) {
+            if (bundesland.isEmpty()) {
                 System.err.println("Bundesland darf nicht leer sein.");
                 return;
             }
@@ -91,12 +95,12 @@ public class RennstreckeUI {
 
             System.out.println("Neuen Ort eingeben:");
             String neuerOrt = scanner.nextLine();
-            if(!neuerOrt.isBlank()){
+            if (!neuerOrt.isBlank()) {
                 rennstrecke.setOrt(neuerOrt);
             }
             System.out.println("Neues Bundesland eingeben:");
             String neuesBundesland = scanner.nextLine();
-            if(!neuesBundesland.isBlank()){
+            if (!neuesBundesland.isBlank()) {
                 rennstrecke.setBundesland(neuesBundesland);
             }
             RennstreckeService.rennstreckeUpdaten(rennstrecke);

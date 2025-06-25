@@ -2,20 +2,17 @@ package at.fhburgenland.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.Scanner;
-
 @Entity(name = "Hauptsponsor")
 @Table(name = "hauptsponsor")
 public class Hauptsponsor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sponsorId", updatable = false, nullable = false)
-    private int sponsorId;
+    @Column(name = "hauptsponsorId", updatable = false, nullable = false)
+    private int hauptsponsorId;
 
-    @Column(name = "sponsorName", nullable = false, length = 30)
-    private String sponsorName;
+    @Column(name = "hauptsponsorName", nullable = false, length = 30)
+    private String hauptsponsorName;
 
     @Column(name = "jaehrlicheSponsorsumme", updatable = true, nullable = false)
     private int jaehrlicheSponsorsumme;
@@ -26,25 +23,25 @@ public class Hauptsponsor {
     public Hauptsponsor() {
     }
 
-    public Hauptsponsor(String sponsorName, int jaehrlicheSponsorsumme) {
-        this.sponsorName = sponsorName;
+    public Hauptsponsor(String hauptsponsorName, int jaehrlicheSponsorsumme) {
+        this.hauptsponsorName = hauptsponsorName;
         this.jaehrlicheSponsorsumme = jaehrlicheSponsorsumme;
     }
 
-    public int getSponsorId() {
-        return sponsorId;
+    public int getHauptsponsorId() {
+        return hauptsponsorId;
     }
 
-    public String getSponsorName() {
-        return sponsorName;
+    public String getHauptsponsorName() {
+        return hauptsponsorName;
     }
 
     public int getJaehrlicheSponsorsumme() {
         return jaehrlicheSponsorsumme;
     }
 
-    public void setSponsorName(String sponsorName) {
-        this.sponsorName = sponsorName;
+    public void setHauptsponsorName(String hauptsponsorName) {
+        this.hauptsponsorName = hauptsponsorName;
     }
 
     public void setJaehrlicheSponsorsumme(int jaehrlicheSponsorsumme) {
@@ -53,6 +50,6 @@ public class Hauptsponsor {
 
     @Override
     public String toString() {
-        return String.format("Hauptsponsor: %s, %d ", this.sponsorName, this.jaehrlicheSponsorsumme);
+        return String.format("Hauptsponsor: %s, %d ", this.hauptsponsorName, this.jaehrlicheSponsorsumme);
     }
 }

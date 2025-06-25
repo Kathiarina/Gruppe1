@@ -4,19 +4,17 @@ import at.fhburgenland.model.*;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class FahrzeugService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
-    private static Scanner scanner = new Scanner(System.in);
 
-    public static void fahrzeugHinzufuegen(Fahrzeugtyp fahrzeugtyp, Team team) {
+
+    public static void fahrzeugHinzufuegen(Fahrzeug fahrzeug) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         try {
             et = em.getTransaction();
             et.begin();
-            Fahrzeug fahrzeug = new Fahrzeug(fahrzeugtyp, team);
             System.out.println("Neues Fahrzeug wurde angelegt: " + fahrzeug);
             em.persist(fahrzeug);
             et.commit();
@@ -29,7 +27,7 @@ public class FahrzeugService {
         }
     }
 
-    public static void alleFahrzeugeAnzeigen() {
+    public static List<Fahrzeug> alleFahrzeugeAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT fz FROM Fahrzeug fz";
         TypedQuery<Fahrzeug> tq = em.createQuery(query, Fahrzeug.class);
@@ -38,26 +36,26 @@ public class FahrzeugService {
 
         try {
             fahrzeugListe = tq.getResultList();
-            for (Fahrzeug fahrzeug : fahrzeugListe) {
-                System.out.println("Fahrzeug Nr: " + fahrzeug.getFahrzeugId() + ", " + fahrzeug.getFahrzeugtyp() + ", " + fahrzeug.getTeam());
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             em.close();
         }
+        return fahrzeugListe;
     }
 
-    public static Fahrzeug fahrzeugAuswaehlen() {
-        alleFahrzeugeAnzeigen();
-        System.out.println("Bitte gib die ID des gewünschten Fahrzeugs ein:");
-        int fahrzeugId = scanner.nextInt();
-        scanner.nextLine();
+    public static Fahrzeug fahrzeugAnzeigenNachId(int fahrzeugId) {
         EntityManager em = EMF.createEntityManager();
-        Fahrzeug ausgewaehltesFahrzeug = null;
+        Fahrzeug fahrzeug = null;
+
         try {
-            ausgewaehltesFahrzeug = em.find(Fahrzeug.class, fahrzeugId);
-            if (ausgewaehltesFahrzeug == null) {
+            fahrzeug = em.find(Fahrzeug.class, fahrzeugId);
+            if (fahrzeug != null) {
+                System.out.println("Fahrzeug gefunden:");
+                System.out.println("ID: " + fahrzeug.getFahrzeugId());
+                System.out.println("Fahrzeugtyp: " + fahrzeug.getFahrzeugtyp());
+                System.out.println("Team: " + fahrzeug.getTeam());
+            } else {
                 System.err.println("Kein Fahrzeug mit dieser ID gefunden.");
             }
         } catch (Exception e) {
@@ -65,25 +63,51 @@ public class FahrzeugService {
         } finally {
             em.close();
         }
-        return ausgewaehltesFahrzeug;
+        return fahrzeug;
     }
 
-    public static void fahrzeugLoeschen(int fahrzeugId) {
+    public static void fahrzeugUpdaten(Fahrzeug fahrzeug) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
-        Fahrzeug fahrzeug = null;
 
         try {
             et = em.getTransaction();
             et.begin();
-            fahrzeug = em.find(Fahrzeug.class, fahrzeugId);
-            em.remove(fahrzeug);
+
+            em.merge(fahrzeug);
             et.commit();
-            System.out.format("Fahrzeug %d erfolgreich gelöscht.\n", fahrzeugId);
+            System.out.println("Fahrzeug erfolgreich aktualisiert: " + fahrzeug);
+
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println(e.getMessage());
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+
+    public static void fahrzeugLoeschen(int fahrzeugId) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Fahrzeug fahrzeug = em.find(Fahrzeug.class, fahrzeugId);
+            if (fahrzeug != null) {
+                em.remove(fahrzeug);
+                et.commit();
+            } else {
+                System.err.println("Fahrzeug nicht gefunden.");
+            }
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+                System.out.println("Fehler beim Löschen des Fahrzeugs.");
+                e.printStackTrace();
             }
         } finally {
             em.close();

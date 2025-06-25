@@ -35,9 +35,6 @@ public class RennstreckeService {
 
         try {
             rennstreckenListe = tq.getResultList();
-            for (Rennstrecke rennstrecke : rennstreckenListe) {
-                System.out.println("Rennstrecke Nr: " + rennstrecke.getRennstreckenId() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -107,7 +104,8 @@ public class RennstreckeService {
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println(e.getMessage());
+                System.err.println("Fehler beim Löschen der Rennstrecke.");
+                e.printStackTrace();
             }
         } finally {
             em.close();
