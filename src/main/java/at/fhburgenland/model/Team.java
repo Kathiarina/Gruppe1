@@ -23,7 +23,7 @@ public class Team {
     List<Fahrzeug> fahrzeug = new ArrayList<>();
 
     @OneToOne
-    @JoinColumn(name = "sponsorId", nullable = false)
+    @JoinColumn(name = "hauptsponsorId", nullable = false)
     private Hauptsponsor hauptsponsor;
 
     @ManyToOne

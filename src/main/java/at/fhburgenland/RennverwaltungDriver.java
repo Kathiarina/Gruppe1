@@ -16,6 +16,7 @@ public class RennverwaltungDriver {
     private final FahrzeugUI fahrzeugUI = new FahrzeugUI(scanner, menu);
     private final RennenUI rennenUI = new RennenUI(scanner, menu);
     private final RennenFahrerUI rennenFahrerUI = new RennenFahrerUI(scanner, menu);
+    private final QueryUI queryUI = new QueryUI(scanner, menu);
     private boolean systemRunning = true;
 
     public void rennverwaltungStart() {
@@ -32,6 +33,7 @@ public class RennverwaltungDriver {
                 case "7" -> teamUI.teamMenu();
                 case "8" -> hauptsponsorUI.hauptsponsorMenu();
                 case "9" -> nationalitaetsUI.nationalitaetsMenu();
+                case "10" -> queryUI.queriesMenu();
                 case "11" -> {
                     System.out.println("Auf Wiedersehen!");
                     systemRunning = false;

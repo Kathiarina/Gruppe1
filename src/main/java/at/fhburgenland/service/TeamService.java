@@ -132,7 +132,7 @@ public class TeamService {
 
         try {
             String jpql = "SELECT COUNT(t) FROM Team t WHERE t.hauptsponsor = :hauptsponsor AND t.teamId != :id";
-            Long count = em.createQuery(jpql, Long.class)
+            int count = em.createQuery(jpql, int.class)
                     .setParameter("hauptsponsor", hauptsponsor)
                     .setParameter("id", ausgenommeneTeamId)
                     .getSingleResult();

@@ -56,10 +56,10 @@ CREATE TABLE Team(
 	teamName VARCHAR(60) not null,
 	gruendungsjahr INT not null,
 	nationalitaetsId INT not null,
-	sponsorId INT not null,
+	hauptsponsorId INT not null,
 	PRIMARY KEY (teamId),
 	FOREIGN KEY (nationalitaetsId) REFERENCES Nationalitaet (nationalitaetsId),
-	FOREIGN KEY (sponsorId) REFERENCES Hauptsponsor (hauptsponsorId)
+	FOREIGN KEY (hauptsponsorId) REFERENCES Hauptsponsor (hauptsponsorId)
 );
 
 CREATE TABLE Fahrzeug(
@@ -139,21 +139,21 @@ INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '202
 INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2024-08-18 14:00:00', 2);
 INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2023-08-20 14:00:00', 2);
 
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Mercedes', 2009, 2, 1);
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'McLaron', 1966, 3, 2);
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Ferrari', 1946, 4, 3);
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Red Bull Racing', 2004, 8, 4);
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Ducati Lenovo Team', 2003, 4, 5);
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Prima Pramac Yamaha MotoGP', 2002, 4, 6);
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Red Bull KTM Factory Racing', 2017, 8, 7);
-INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
+INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Pertamina Enduro VR46 Racing Team', 2014, 4, 8);
 
 INSERT INTO Fahrzeugtyp (fahrzeugtypId, modell, motor, gewichtKg)

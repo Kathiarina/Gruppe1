@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>2522</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2640</IntrospectionStateNumber>
       <ServerVersion>14.18</ServerVersion>
       <StartupTime>1749066306</StartupTime>
       <TimeZones>true ACDT
@@ -801,7 +801,7 @@ false Zulu
 13859||10|C|G
 13859||-9223372036854775808|U|G
 13859||10|U|G</Grants>
-      <IntrospectionStateNumber>2522</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2640</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>novak</OwnerName>
     </database>
@@ -4226,141 +4226,141 @@ false Zulu
     <schema id="261" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>2522</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2025-06-26.18:40:29</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>2640</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2025-06-26.19:32:56</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>526</StateNumber>
       <OwnerName>novak</OwnerName>
     </schema>
     <sequence id="262" parent="261" name="fahrer_fahrerid_seq">
-      <ObjectId>18262</ObjectId>
+      <ObjectId>18383</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2430</StateNumber>
+      <StateNumber>2548</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="263" parent="261" name="fahrzeug_fahrzeugid_seq">
-      <ObjectId>18245</ObjectId>
+      <ObjectId>18366</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2429</StateNumber>
+      <StateNumber>2547</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="264" parent="261" name="fahrzeugtyp_fahrzeugtypid_seq">
-      <ObjectId>18221</ObjectId>
+      <ObjectId>18342</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2427</StateNumber>
+      <StateNumber>2545</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="265" parent="261" name="hauptsponsor_hauptsponsorid_seq">
-      <ObjectId>18214</ObjectId>
+      <ObjectId>18335</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2426</StateNumber>
+      <StateNumber>2544</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="266" parent="261" name="nationalitaet_nationalitaetsid_seq">
-      <ObjectId>18207</ObjectId>
+      <ObjectId>18328</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2425</StateNumber>
+      <StateNumber>2543</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="267" parent="261" name="rennen_rennenid_seq">
-      <ObjectId>18188</ObjectId>
+      <ObjectId>18309</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2423</StateNumber>
+      <StateNumber>2541</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="268" parent="261" name="rennstrecke_rennstreckenid_seq">
-      <ObjectId>18181</ObjectId>
+      <ObjectId>18302</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2422</StateNumber>
+      <StateNumber>2540</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="269" parent="261" name="status_statusid_seq">
-      <ObjectId>18200</ObjectId>
+      <ObjectId>18321</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2424</StateNumber>
+      <StateNumber>2542</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <sequence id="270" parent="261" name="team_teamid_seq">
-      <ObjectId>18228</ObjectId>
+      <ObjectId>18349</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>2428</StateNumber>
+      <StateNumber>2546</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>novak</OwnerName>
     </sequence>
     <table id="271" parent="261" name="fahrer">
-      <ObjectId>18263</ObjectId>
-      <StateNumber>2430</StateNumber>
+      <ObjectId>18384</ObjectId>
+      <StateNumber>2548</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="272" parent="261" name="fahrzeug">
-      <ObjectId>18246</ObjectId>
-      <StateNumber>2429</StateNumber>
+      <ObjectId>18367</ObjectId>
+      <StateNumber>2547</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="273" parent="261" name="fahrzeugtyp">
-      <ObjectId>18222</ObjectId>
-      <StateNumber>2429</StateNumber>
+      <ObjectId>18343</ObjectId>
+      <StateNumber>2547</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="274" parent="261" name="hauptsponsor">
-      <ObjectId>18215</ObjectId>
-      <StateNumber>2428</StateNumber>
+      <ObjectId>18336</ObjectId>
+      <StateNumber>2546</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="275" parent="261" name="nationalitaet">
-      <ObjectId>18208</ObjectId>
-      <StateNumber>2428</StateNumber>
+      <ObjectId>18329</ObjectId>
+      <StateNumber>2546</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="276" parent="261" name="rennen">
-      <ObjectId>18189</ObjectId>
-      <StateNumber>2423</StateNumber>
+      <ObjectId>18310</ObjectId>
+      <StateNumber>2541</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="277" parent="261" name="rennenfahrer">
-      <ObjectId>18279</ObjectId>
-      <StateNumber>2431</StateNumber>
+      <ObjectId>18400</ObjectId>
+      <StateNumber>2549</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="278" parent="261" name="rennstrecke">
-      <ObjectId>18182</ObjectId>
-      <StateNumber>2423</StateNumber>
+      <ObjectId>18303</ObjectId>
+      <StateNumber>2541</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="279" parent="261" name="status">
-      <ObjectId>18201</ObjectId>
-      <StateNumber>2431</StateNumber>
+      <ObjectId>18322</ObjectId>
+      <StateNumber>2549</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
     <table id="280" parent="261" name="team">
-      <ObjectId>18229</ObjectId>
-      <StateNumber>2428</StateNumber>
+      <ObjectId>18350</ObjectId>
+      <StateNumber>2546</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>novak</OwnerName>
     </table>
@@ -4368,497 +4368,497 @@ false Zulu
       <DefaultExpression>nextval(&apos;fahrer_fahrerid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2430</StateNumber>
+      <StateNumber>2548</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18262</SequenceId>
+      <SequenceId>18383</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="282" parent="271" name="vorname">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2430</StateNumber>
+      <StateNumber>2548</StateNumber>
       <StoredType>varchar(30)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="283" parent="271" name="nachname">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2430</StateNumber>
+      <StateNumber>2548</StateNumber>
       <StoredType>varchar(30)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="284" parent="271" name="nationalitaetsid">
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>2430</StateNumber>
+      <StateNumber>2548</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="285" parent="271" name="fahrzeugid">
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>2430</StateNumber>
+      <StateNumber>2548</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <foreign-key id="286" parent="271" name="fahrer_nationalitaetsid_fkey">
       <ColNames>nationalitaetsid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18269</ObjectId>
-      <StateNumber>2430</StateNumber>
+      <ObjectId>18390</ObjectId>
+      <StateNumber>2548</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18208</RefTableId>
+      <RefTableId>18329</RefTableId>
     </foreign-key>
     <foreign-key id="287" parent="271" name="fahrer_fahrzeugid_fkey">
       <ColNames>fahrzeugid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18274</ObjectId>
-      <StateNumber>2430</StateNumber>
+      <ObjectId>18395</ObjectId>
+      <StateNumber>2548</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18246</RefTableId>
+      <RefTableId>18367</RefTableId>
     </foreign-key>
     <index id="288" parent="271" name="fahrer_pkey">
       <ColNames>fahrerid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18267</ObjectId>
+      <ObjectId>18388</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2430</StateNumber>
+      <StateNumber>2548</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="289" parent="271" name="fahrer_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18268</ObjectId>
+      <ObjectId>18389</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2430</StateNumber>
-      <UnderlyingIndexId>18267</UnderlyingIndexId>
+      <StateNumber>2548</StateNumber>
+      <UnderlyingIndexId>18388</UnderlyingIndexId>
     </key>
     <column id="290" parent="272" name="fahrzeugid">
       <DefaultExpression>nextval(&apos;fahrzeug_fahrzeugid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2429</StateNumber>
+      <StateNumber>2547</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18245</SequenceId>
+      <SequenceId>18366</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="291" parent="272" name="fahrzeugtypid">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2429</StateNumber>
+      <StateNumber>2547</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="292" parent="272" name="teamid">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2429</StateNumber>
+      <StateNumber>2547</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <foreign-key id="293" parent="272" name="fahrzeug_fahrzeugtypid_fkey">
       <ColNames>fahrzeugtypid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18252</ObjectId>
-      <StateNumber>2429</StateNumber>
+      <ObjectId>18373</ObjectId>
+      <StateNumber>2547</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18222</RefTableId>
+      <RefTableId>18343</RefTableId>
     </foreign-key>
     <foreign-key id="294" parent="272" name="fahrzeug_teamid_fkey">
       <ColNames>teamid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18257</ObjectId>
-      <StateNumber>2429</StateNumber>
+      <ObjectId>18378</ObjectId>
+      <StateNumber>2547</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18229</RefTableId>
+      <RefTableId>18350</RefTableId>
     </foreign-key>
     <index id="295" parent="272" name="fahrzeug_pkey">
       <ColNames>fahrzeugid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18250</ObjectId>
+      <ObjectId>18371</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2429</StateNumber>
+      <StateNumber>2547</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="296" parent="272" name="fahrzeug_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18251</ObjectId>
+      <ObjectId>18372</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2429</StateNumber>
-      <UnderlyingIndexId>18250</UnderlyingIndexId>
+      <StateNumber>2547</StateNumber>
+      <UnderlyingIndexId>18371</UnderlyingIndexId>
     </key>
     <column id="297" parent="273" name="fahrzeugtypid">
       <DefaultExpression>nextval(&apos;fahrzeugtyp_fahrzeugtypid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2427</StateNumber>
+      <StateNumber>2545</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18221</SequenceId>
+      <SequenceId>18342</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="298" parent="273" name="modell">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2427</StateNumber>
+      <StateNumber>2545</StateNumber>
       <StoredType>varchar(60)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="299" parent="273" name="motor">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2427</StateNumber>
+      <StateNumber>2545</StateNumber>
       <StoredType>varchar(60)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="300" parent="273" name="gewichtkg">
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>2427</StateNumber>
+      <StateNumber>2545</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <index id="301" parent="273" name="fahrzeugtyp_pkey">
       <ColNames>fahrzeugtypid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18226</ObjectId>
+      <ObjectId>18347</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2427</StateNumber>
+      <StateNumber>2545</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="302" parent="273" name="fahrzeugtyp_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18227</ObjectId>
+      <ObjectId>18348</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2427</StateNumber>
-      <UnderlyingIndexId>18226</UnderlyingIndexId>
+      <StateNumber>2545</StateNumber>
+      <UnderlyingIndexId>18347</UnderlyingIndexId>
     </key>
     <column id="303" parent="274" name="hauptsponsorid">
       <DefaultExpression>nextval(&apos;hauptsponsor_hauptsponsorid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2426</StateNumber>
+      <StateNumber>2544</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18214</SequenceId>
+      <SequenceId>18335</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="304" parent="274" name="hauptsponsorname">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2426</StateNumber>
+      <StateNumber>2544</StateNumber>
       <StoredType>varchar(60)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="305" parent="274" name="jaehrlichesponsorsumme">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2426</StateNumber>
+      <StateNumber>2544</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <index id="306" parent="274" name="hauptsponsor_pkey">
       <ColNames>hauptsponsorid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18219</ObjectId>
+      <ObjectId>18340</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2426</StateNumber>
+      <StateNumber>2544</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="307" parent="274" name="hauptsponsor_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18220</ObjectId>
+      <ObjectId>18341</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2426</StateNumber>
-      <UnderlyingIndexId>18219</UnderlyingIndexId>
+      <StateNumber>2544</StateNumber>
+      <UnderlyingIndexId>18340</UnderlyingIndexId>
     </key>
     <column id="308" parent="275" name="nationalitaetsid">
       <DefaultExpression>nextval(&apos;nationalitaet_nationalitaetsid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2425</StateNumber>
+      <StateNumber>2543</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18207</SequenceId>
+      <SequenceId>18328</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="309" parent="275" name="nationalitaetsbeschreibung">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2425</StateNumber>
+      <StateNumber>2543</StateNumber>
       <StoredType>varchar(30)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <index id="310" parent="275" name="nationalitaet_pkey">
       <ColNames>nationalitaetsid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18212</ObjectId>
+      <ObjectId>18333</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2425</StateNumber>
+      <StateNumber>2543</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="311" parent="275" name="nationalitaet_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18213</ObjectId>
+      <ObjectId>18334</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2425</StateNumber>
-      <UnderlyingIndexId>18212</UnderlyingIndexId>
+      <StateNumber>2543</StateNumber>
+      <UnderlyingIndexId>18333</UnderlyingIndexId>
     </key>
     <column id="312" parent="276" name="rennenid">
       <DefaultExpression>nextval(&apos;rennen_rennenid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2423</StateNumber>
+      <StateNumber>2541</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18188</SequenceId>
+      <SequenceId>18309</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="313" parent="276" name="datumuhrzeit">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2423</StateNumber>
+      <StateNumber>2541</StateNumber>
       <StoredType>timestamp|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
     <column id="314" parent="276" name="rennstreckenid">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2423</StateNumber>
+      <StateNumber>2541</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <foreign-key id="315" parent="276" name="rennen_rennstreckenid_fkey">
       <ColNames>rennstreckenid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18195</ObjectId>
-      <StateNumber>2423</StateNumber>
+      <ObjectId>18316</ObjectId>
+      <StateNumber>2541</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18182</RefTableId>
+      <RefTableId>18303</RefTableId>
     </foreign-key>
     <index id="316" parent="276" name="rennen_pkey">
       <ColNames>rennenid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18193</ObjectId>
+      <ObjectId>18314</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2423</StateNumber>
+      <StateNumber>2541</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="317" parent="276" name="rennen_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18194</ObjectId>
+      <ObjectId>18315</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2423</StateNumber>
-      <UnderlyingIndexId>18193</UnderlyingIndexId>
+      <StateNumber>2541</StateNumber>
+      <UnderlyingIndexId>18314</UnderlyingIndexId>
     </key>
     <column id="318" parent="277" name="fahrerid">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2431</StateNumber>
+      <StateNumber>2549</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="319" parent="277" name="rennenid">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2431</StateNumber>
+      <StateNumber>2549</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="320" parent="277" name="statusid">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2431</StateNumber>
+      <StateNumber>2549</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="321" parent="277" name="zeit">
       <Position>4</Position>
-      <StateNumber>2431</StateNumber>
+      <StateNumber>2549</StateNumber>
       <StoredType>text|0s</StoredType>
       <TypeId>25</TypeId>
     </column>
     <foreign-key id="322" parent="277" name="rennenfahrer_fahrerid_fkey">
       <ColNames>fahrerid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18291</ObjectId>
-      <StateNumber>2431</StateNumber>
+      <ObjectId>18412</ObjectId>
+      <StateNumber>2549</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18263</RefTableId>
+      <RefTableId>18384</RefTableId>
     </foreign-key>
     <foreign-key id="323" parent="277" name="rennenfahrer_rennenid_fkey">
       <ColNames>rennenid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18286</ObjectId>
-      <StateNumber>2431</StateNumber>
+      <ObjectId>18407</ObjectId>
+      <StateNumber>2549</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18189</RefTableId>
+      <RefTableId>18310</RefTableId>
     </foreign-key>
     <foreign-key id="324" parent="277" name="rennenfahrer_statusid_fkey">
       <ColNames>statusid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18296</ObjectId>
-      <StateNumber>2431</StateNumber>
+      <ObjectId>18417</ObjectId>
+      <StateNumber>2549</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18201</RefTableId>
+      <RefTableId>18322</RefTableId>
     </foreign-key>
     <index id="325" parent="277" name="rennenfahrer_pkey">
       <ColNames>fahrerid
 rennenid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18284</ObjectId>
+      <ObjectId>18405</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2431</StateNumber>
+      <StateNumber>2549</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="326" parent="277" name="rennenfahrer_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18285</ObjectId>
+      <ObjectId>18406</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2431</StateNumber>
-      <UnderlyingIndexId>18284</UnderlyingIndexId>
+      <StateNumber>2549</StateNumber>
+      <UnderlyingIndexId>18405</UnderlyingIndexId>
     </key>
     <column id="327" parent="278" name="rennstreckenid">
       <DefaultExpression>nextval(&apos;rennstrecke_rennstreckenid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2422</StateNumber>
+      <StateNumber>2540</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18181</SequenceId>
+      <SequenceId>18302</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="328" parent="278" name="ort">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2422</StateNumber>
+      <StateNumber>2540</StateNumber>
       <StoredType>varchar(30)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="329" parent="278" name="bundesland">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2422</StateNumber>
+      <StateNumber>2540</StateNumber>
       <StoredType>varchar(30)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <index id="330" parent="278" name="rennstrecke_pkey">
       <ColNames>rennstreckenid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18186</ObjectId>
+      <ObjectId>18307</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2422</StateNumber>
+      <StateNumber>2540</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="331" parent="278" name="rennstrecke_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18187</ObjectId>
+      <ObjectId>18308</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2422</StateNumber>
-      <UnderlyingIndexId>18186</UnderlyingIndexId>
+      <StateNumber>2540</StateNumber>
+      <UnderlyingIndexId>18307</UnderlyingIndexId>
     </key>
     <column id="332" parent="279" name="statusid">
       <DefaultExpression>nextval(&apos;status_statusid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2424</StateNumber>
+      <StateNumber>2542</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18200</SequenceId>
+      <SequenceId>18321</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="333" parent="279" name="statusbeschreibung">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2424</StateNumber>
+      <StateNumber>2542</StateNumber>
       <StoredType>varchar(15)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <index id="334" parent="279" name="status_pkey">
       <ColNames>statusid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18205</ObjectId>
+      <ObjectId>18326</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2424</StateNumber>
+      <StateNumber>2542</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="335" parent="279" name="status_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18206</ObjectId>
+      <ObjectId>18327</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2424</StateNumber>
-      <UnderlyingIndexId>18205</UnderlyingIndexId>
+      <StateNumber>2542</StateNumber>
+      <UnderlyingIndexId>18326</UnderlyingIndexId>
     </key>
     <column id="336" parent="280" name="teamid">
       <DefaultExpression>nextval(&apos;team_teamid_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>2428</StateNumber>
+      <StateNumber>2546</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>18228</SequenceId>
+      <SequenceId>18349</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="337" parent="280" name="teamname">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>2428</StateNumber>
+      <StateNumber>2546</StateNumber>
       <StoredType>varchar(60)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="338" parent="280" name="gruendungsjahr">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>2428</StateNumber>
+      <StateNumber>2546</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="339" parent="280" name="nationalitaetsid">
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>2428</StateNumber>
+      <StateNumber>2546</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="340" parent="280" name="sponsorid">
+    <column id="340" parent="280" name="hauptsponsorid">
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>2428</StateNumber>
+      <StateNumber>2546</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <foreign-key id="341" parent="280" name="team_nationalitaetsid_fkey">
       <ColNames>nationalitaetsid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18235</ObjectId>
-      <StateNumber>2428</StateNumber>
+      <ObjectId>18356</ObjectId>
+      <StateNumber>2546</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18208</RefTableId>
+      <RefTableId>18329</RefTableId>
     </foreign-key>
-    <foreign-key id="342" parent="280" name="team_sponsorid_fkey">
-      <ColNames>sponsorid</ColNames>
+    <foreign-key id="342" parent="280" name="team_hauptsponsorid_fkey">
+      <ColNames>hauptsponsorid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18240</ObjectId>
-      <StateNumber>2428</StateNumber>
+      <ObjectId>18361</ObjectId>
+      <StateNumber>2546</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>18215</RefTableId>
+      <RefTableId>18336</RefTableId>
     </foreign-key>
     <index id="343" parent="280" name="team_pkey">
       <ColNames>teamid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18233</ObjectId>
+      <ObjectId>18354</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2428</StateNumber>
+      <StateNumber>2546</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="344" parent="280" name="team_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18234</ObjectId>
+      <ObjectId>18355</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>2428</StateNumber>
-      <UnderlyingIndexId>18233</UnderlyingIndexId>
+      <StateNumber>2546</StateNumber>
+      <UnderlyingIndexId>18354</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

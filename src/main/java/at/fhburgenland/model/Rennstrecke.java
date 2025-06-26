@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 @Entity(name = "Rennstrecke")
 @Table(name = "rennstrecke")
@@ -13,7 +12,7 @@ public class Rennstrecke {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rennstreckenId", updatable = false, nullable = false)
-    private int rennstreckeId;
+    private int rennstreckenId;
 
     @Column(name = "ort", nullable = false, length = 30)
     private String ort;
@@ -45,7 +44,7 @@ public class Rennstrecke {
     }
 
     public int getRennstreckenId() {
-        return rennstreckeId;
+        return rennstreckenId;
     }
 
     public void setRennen(List<Rennen> rennen) {
