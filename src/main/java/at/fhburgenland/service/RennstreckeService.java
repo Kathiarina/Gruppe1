@@ -22,6 +22,8 @@ public class RennstreckeService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern der Rennstrecke: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }

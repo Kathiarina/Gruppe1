@@ -21,6 +21,8 @@ public class FahrzeugtypService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern des Fahrzeugtyps: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }

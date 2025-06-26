@@ -22,6 +22,8 @@ public class TeamService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern des Teams: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -159,12 +161,12 @@ public class TeamService {
                 first = false;
             }
             if (hatHauptsponsor) {
-                if (!first) grund.append(", ");
+                if (!first) grund.append(" & ");
                 grund.append("einem Hauptsponsor");
                 first = false;
             }
             if (besitztFahrzeug) {
-                if (!first) grund.append(" und ");
+                if (!first) grund.append(" & ");
                 grund.append("einem Fahrzeug");
             }
             grund.append(" zugeordnet ist.");

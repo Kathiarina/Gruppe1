@@ -3,6 +3,8 @@ package at.fhburgenland.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Rennen")
@@ -20,6 +22,9 @@ public class Rennen {
     @ManyToOne
     @JoinColumn(name = "rennstreckenId", nullable = false)
     private Rennstrecke rennstrecke;
+
+    @OneToMany(mappedBy = "rennen")
+    private List<RennenFahrer> fahrerZuordnungen;
 
     public Rennen() {
     }
@@ -41,6 +46,10 @@ public class Rennen {
         return rennstrecke;
     }
 
+    public List<RennenFahrer> getFahrerZuordnungen() {
+        return fahrerZuordnungen;
+    }
+
     public void setDatumUhrzeit(LocalDateTime datumUhrzeit) {
         this.datumUhrzeit = datumUhrzeit;
     }
@@ -51,6 +60,8 @@ public class Rennen {
 
     @Override
     public String toString() {
-        return String.format("Rennen: %s, %s", this.datumUhrzeit, this.rennstrecke);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        String formatiertesDatum = datumUhrzeit.format(formatter);
+        return String.format("Rennen: %s, %s", formatiertesDatum, this.rennstrecke);
     }
 }

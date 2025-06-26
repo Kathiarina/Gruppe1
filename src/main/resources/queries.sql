@@ -1,4 +1,4 @@
-DROP TABLE if exists Rennen_Fahrer;
+DROP TABLE if exists RennenFahrer;
 DROP TABLE if exists Fahrer;
 DROP TABLE if exists Fahrzeug;
 DROP TABLE if exists Team;
@@ -26,7 +26,7 @@ CREATE TABLE Rennen(
 
 CREATE TABLE Status(
 	statusId SERIAL,
-	beschreibung VARCHAR(15) not null,
+	statusBeschreibung VARCHAR(15) not null,
 	PRIMARY KEY (statusId)
 );
 
@@ -82,11 +82,12 @@ CREATE TABLE Fahrer(
 	FOREIGN KEY (fahrzeugId) REFERENCES Fahrzeug (fahrzeugId)
 );
 
-CREATE TABLE Rennen_Fahrer(
+CREATE TABLE RennenFahrer
+(
 	fahrerId INT not null,
 	rennenId INT not null,
 	statusId INT not null,
-	zeit INTERVAL,
+	zeit TEXT,
 	PRIMARY KEY (fahrerId, rennenId),
 	FOREIGN KEY (rennenId) REFERENCES Rennen (rennenId),
 	FOREIGN KEY (fahrerId) REFERENCES Fahrer (fahrerId),
@@ -94,20 +95,20 @@ CREATE TABLE Rennen_Fahrer(
 );
 
 
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Ineos', 23000000);
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'OKX', 28000000);
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Hewlett-Packard', 80000000);
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Oracle', 89000000);
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Lenovo', 15000000);
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Prima Assicurazioni', 10000000);
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Red Bull', 20000000);
-INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme) VALUES (default, 'Pertamina Lubricants', 20000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'Ineos', 23000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'OKX', 28000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'Hewlett-Packard', 80000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'Oracle', 89000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'Lenovo', 15000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'Prima Assicurazioni', 10000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'Red Bull', 20000000);
+INSERT INTO Hauptsponsor (hauptsponsorId, hauptsponsorName, jaehrlicheSponsorsumme)VALUES (default, 'Pertamina Lubricants', 20000000);
 
-INSERT INTO Status (statusId, beschreibung)VALUES (default, 'Erster Platz');
-INSERT INTO Status (statusId, beschreibung)VALUES (default, 'Zweiter Platz');
-INSERT INTO Status (statusId, beschreibung)VALUES (default, 'Dritter Platz');
-INSERT INTO Status (statusId, beschreibung)VALUES (default, 'Teilgenommen');
-INSERT INTO Status (statusId, beschreibung)VALUES (default, 'Ausgeschieden');
+INSERT INTO Status (statusId, statusBeschreibung)VALUES (default, 'Erster Platz');
+INSERT INTO Status (statusId, statusBeschreibung)VALUES (default, 'Zweiter Platz');
+INSERT INTO Status (statusId, statusBeschreibung)VALUES (default, 'Dritter Platz');
+INSERT INTO Status (statusId, statusBeschreibung)VALUES (default, 'Teilgenommen');
+INSERT INTO Status (statusId, statusBeschreibung)VALUES (default, 'Ausgeschieden');
 
 INSERT INTO Nationalitaet (nationalitaetsId, nationalitaetsBeschreibung)
 VALUES (default, 'Australien');
@@ -131,11 +132,12 @@ INSERT INTO Nationalitaet (nationalitaetsId, nationalitaetsBeschreibung)
 VALUES (default, 'Südafrika');
 
 INSERT INTO Rennstrecke (rennstreckenId, ort, bundesland) VALUES (default,'Spielberg', 'Steiermark');
+INSERT INTO Rennstrecke (rennstreckenId, ort, bundesland) VALUES (default,'Plainfeld', 'Salzburg');
 
 INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2024-06-20 15:00:00', 1);
 INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2023-07-02 15:00:00', 1);
-INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2024-08-18 14:00:00', 1);
-INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2023-08-20 14:00:00', 1);
+INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2024-08-18 14:00:00', 2);
+INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2023-08-20 14:00:00', 2);
 
 INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, sponsorId)
 VALUES (default, 'Mercedes', 2009, 2, 1);
@@ -223,25 +225,25 @@ VALUES (default, 'Jorge', 'Martin', 9, 9);
 INSERT INTO Fahrer (fahrerId, vorname, nachname, nationalitaetsId, fahrzeugId)
 VALUES (default, 'Enea', 'Bastianini', 4, 10);
 
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (1, 1, 1, '1 hour 24 minutes 22.798 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (2, 1, 2, '1 hour 24 minutes 24.704 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (3, 1, 3, '1 hour 24 minutes 27.331 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (4, 1, 5, NULL);
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (5, 2, 1, '1 hour 25 minutes 33.607 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (6, 2, 2, '1 hour 25 minutes 38.762 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (7, 2, 3, '1 hour 25 minutes 50.795 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (3, 2, 4, '1 hour 26 minutes 04.984 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (1, 2, 4, '1 hour 26 minutes 22.010 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (2, 2, 4, '1 hour 26 minutes 20.176 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (5, 1, 4, '1 hour 25 minutes 00.051 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (6, 1, 4, '1 hour 25 minutes 29.854 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (7, 1, 4, '1 hour 25 minutes 17.470 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (4, 2, 4, '1 hour 25 minutes 59.934 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (8, 3, 1, '0 hour 42 minutes 11.173 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (11, 3, 2, '0 hour 42 minutes 14.405 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (12, 3, 3, '0 hour 42 minutes 18.530 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (8, 4, 1, '0 hour 42 minutes 23.315 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (9, 4, 2, '0 hour 42 minutes 28.506 seconds');
-INSERT INTO Rennen_Fahrer (fahrerId, rennenId, statusId, zeit)VALUES (10, 4, 3, '0 hour 42 minutes 31.023 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (1, 1, 1, '1 hour 24 minutes 22.798 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (2, 1, 2, '1 hour 24 minutes 24.704 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (3, 1, 3, '1 hour 24 minutes 27.331 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (4, 1, 5, NULL);
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (5, 2, 1, '1 hour 25 minutes 33.607 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (6, 2, 2, '1 hour 25 minutes 38.762 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (7, 2, 3, '1 hour 25 minutes 50.795 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (3, 2, 4, '1 hour 26 minutes 04.984 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (1, 2, 4, '1 hour 26 minutes 22.010 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (2, 2, 4, '1 hour 26 minutes 20.176 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (5, 1, 4, '1 hour 25 minutes 00.051 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (6, 1, 4, '1 hour 25 minutes 29.854 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (7, 1, 4, '1 hour 25 minutes 17.470 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (4, 2, 4, '1 hour 25 minutes 59.934 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (8, 3, 1, '0 hour 42 minutes 11.173 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (11, 3, 2, '0 hour 42 minutes 14.405 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (12, 3, 3, '0 hour 42 minutes 18.530 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (8, 4, 1, '0 hour 42 minutes 23.315 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (9, 4, 2, '0 hour 42 minutes 28.506 seconds');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (10, 4, 3, '0 hour 42 minutes 31.023 seconds');
 
 

@@ -22,6 +22,8 @@ public class NationalitaetService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern der Nationalität: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }

@@ -2,7 +2,6 @@ package at.fhburgenland.service;
 
 import at.fhburgenland.model.Fahrer;
 import at.fhburgenland.model.Fahrzeug;
-import at.fhburgenland.model.Nationalitaet;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,6 +22,8 @@ public class FahrerService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern des Fahrers: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }

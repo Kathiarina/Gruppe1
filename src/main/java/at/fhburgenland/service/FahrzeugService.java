@@ -22,6 +22,8 @@ public class FahrzeugService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern des Fahrzeugs: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -129,7 +131,7 @@ public class FahrzeugService {
 
         try {
             String jpql = "SELECT COUNT(fz) FROM Fahrzeug fz WHERE fz.fahrer = :fahrer AND fz.fahrzeugId != :id";
-            Long count = em.createQuery(jpql, Long.class)
+            int count = em.createQuery(jpql, int.class)
                     .setParameter("fahrer", fahrer)
                     .setParameter("id", ausgenommeneFahrzeugId)
                     .getSingleResult();
@@ -158,12 +160,12 @@ public class FahrzeugService {
                 first = false;
             }
             if (istFahrzeugtyp) {
-                if (!first) grund.append(", ");
+                if (!first) grund.append(" & ");
                 grund.append("einem Fahrzeugtyp");
                 first = false;
             }
             if (hatFahrer) {
-                if (!first) grund.append(" und ");
+                if (!first) grund.append(" & ");
                 grund.append("einem Fahrer");
             }
             grund.append(" zugeordnet ist.");

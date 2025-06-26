@@ -4,17 +4,18 @@ public class Menu {
     private static final String hauptmenu = """
             Herzlich Willkommen zur Rennverwaltung!
             
-            Bitte eine Zahl zwischen 1 und 10 auswählen:
+            Bitte eine Zahl zwischen 1 und 11 auswählen:
             1 - Rennstrecken verwalten
             2 - Rennen verwalten
-            3 - Fahrer verwalten
-            4 - Fahrzeuge verwalten
-            5 - Fahrzeugtypen verwalten
-            6 - Teams verwalten
-            7 - Hauptsponsoren verwalten
-            8 - Nationalität verwalten
-            9 - Abfragen
-            10 - Rennverwaltung beenden
+            3 - Rennergebnisse verwalten
+            4 - Fahrer verwalten
+            5 - Fahrzeuge verwalten
+            6 - Fahrzeugtypen verwalten
+            7 - Teams verwalten
+            8 - Hauptsponsoren verwalten
+            9 - Nationalität verwalten
+            10 - Queries
+            11 - Rennverwaltung beenden
             """;
 
     private static final String rennstreckeMenu = """
@@ -36,6 +37,17 @@ public class Menu {
             2 - Neues Rennen anlegen
             3 - Rennen bearbeiten
             4 - Rennen löschen
+            5 - Zurück zum Hauptmenü
+            """;
+
+    private static final String rennenFahrerMenu = """
+            *** RENNERGEBNISSE ***
+            
+            Bitte eine Zahl zwischen 1 und 5 auswählen:
+            1 - Alle Rennergebnisse anzeigen
+            2 - Neues Rennergebnis anlegen
+            3 - Rennergebnis bearbeiten
+            4 - Rennergebnis löschen
             5 - Zurück zum Hauptmenü
             """;
     private static final String fahrerMenu = """
@@ -101,6 +113,15 @@ public class Menu {
             5 - Zurück zum Hauptmenü
             """;
 
+    private static final String queriesMenu = """
+            *** QUERIES ***
+            
+            Bitte eine Zahl zwischen 1 und 3 auswählen:
+            1 - Auflistung Team Platzierungen
+            2 - Auflistung aller Fahrzeuge nach Rennstrecke
+            3 - Zurück zum Hauptmenü
+            """;
+
     public static void hauptmenuAnzeigen() {
         System.out.println(hauptmenu);
     }
@@ -111,6 +132,10 @@ public class Menu {
 
     protected static void zeigeRennenMenu() {
         System.out.println(rennenMenu);
+    }
+
+    protected static void zeigeRennenFahrerMenu() {
+        System.out.println(rennenFahrerMenu);
     }
 
     protected static void zeigeFahrerMenu() {
@@ -135,5 +160,9 @@ public class Menu {
 
     protected static void zeigeNationalitaetsMenu() {
         System.out.println(nationalitaetsMenu);
+    }
+
+    protected static void zeigeQueriesMenu() {
+        System.out.println(queriesMenu);
     }
 }

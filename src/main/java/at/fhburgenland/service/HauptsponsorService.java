@@ -21,6 +21,8 @@ public class HauptsponsorService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern des Hauptsponsors: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }

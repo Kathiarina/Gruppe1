@@ -14,6 +14,8 @@ public class RennverwaltungDriver {
     private final NationalitaetsUI nationalitaetsUI = new NationalitaetsUI(scanner, menu);
     private final TeamUI teamUI = new TeamUI(scanner, menu);
     private final FahrzeugUI fahrzeugUI = new FahrzeugUI(scanner, menu);
+    private final RennenUI rennenUI = new RennenUI(scanner, menu);
+    private final RennenFahrerUI rennenFahrerUI = new RennenFahrerUI(scanner, menu);
     private boolean systemRunning = true;
 
     public void rennverwaltungStart() {
@@ -22,13 +24,15 @@ public class RennverwaltungDriver {
             String userEingabe = scanner.nextLine();
             switch (userEingabe) {
                 case "1" -> rennstreckeUI.rennstreckeMenu();
-                case "3" -> fahrerUI.fahrerMenu();
-                case "4" -> fahrzeugUI.fahrzeugMenu();
-                case "5" -> fahrzeugtypUI.fahrzeugtypMenu();
-                case "6" -> teamUI.teamMenu();
-                case "7" -> hauptsponsorUI.hauptsponsorMenu();
-                case "8" -> nationalitaetsUI.nationalitaetsMenu();
-                case "10" -> {
+                case "2" -> rennenUI.rennenMenu();
+                case "3" -> rennenFahrerUI.rennenFahrerMenu();
+                case "4" -> fahrerUI.fahrerMenu();
+                case "5" -> fahrzeugUI.fahrzeugMenu();
+                case "6" -> fahrzeugtypUI.fahrzeugtypMenu();
+                case "7" -> teamUI.teamMenu();
+                case "8" -> hauptsponsorUI.hauptsponsorMenu();
+                case "9" -> nationalitaetsUI.nationalitaetsMenu();
+                case "11" -> {
                     System.out.println("Auf Wiedersehen!");
                     systemRunning = false;
                 }

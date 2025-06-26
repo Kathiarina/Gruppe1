@@ -1,7 +1,5 @@
 package at.fhburgenland.service;
 
-import at.fhburgenland.model.Fahrzeug;
-import at.fhburgenland.model.Nationalitaet;
 import at.fhburgenland.model.Rennen;
 import jakarta.persistence.*;
 
@@ -23,6 +21,8 @@ public class RennenService {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler beim Speichern des Rennens: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -97,12 +97,21 @@ public class RennenService {
             et = em.getTransaction();
             et.begin();
             Rennen rennen = em.find(Rennen.class, rennenId);
-            if (rennen != null) {
-                em.remove(rennen);
-                et.commit();
-            } else {
+            if (rennen == null) {
                 System.err.println("Rennen nicht gefunden.");
+                et.rollback();
+                return;
             }
+            String begruendung = pruefeVerknuepfungMitRennen(rennen);
+            if (begruendung != null) {
+                System.err.println(begruendung);
+                et.rollback();
+                return;
+            }
+
+            em.remove(rennen);
+            et.commit();
+
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
@@ -112,5 +121,24 @@ public class RennenService {
         } finally {
             em.close();
         }
+    }
+
+    public static String pruefeVerknuepfungMitRennen(Rennen rennen) {
+        boolean verlaeuftAufRennstrecke = rennen.getRennstrecke() != null;
+        boolean hatFahrer = rennen.getDatumUhrzeit() != null;
+
+        if (verlaeuftAufRennstrecke || hatFahrer) {
+            StringBuilder grund = new StringBuilder("Rennen kann nicht gelöscht werden, da es ");
+            if (verlaeuftAufRennstrecke && hatFahrer) {
+                grund.append("einer Rennstrecke und einem Fahrer");
+            } else if (verlaeuftAufRennstrecke) {
+                grund.append("einer Rennstrecke ");
+            } else {
+                grund.append("einem Fahrer ");
+            }
+            grund.append("zugeordnet ist.");
+            return grund.toString();
+        }
+        return null;
     }
 }

@@ -2,6 +2,8 @@ package at.fhburgenland.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "Fahrer")
 @Table(name = "fahrer")
 public class Fahrer {
@@ -23,6 +25,9 @@ public class Fahrer {
     @ManyToOne
     @JoinColumn(name = "nationalitaetsId", nullable = false)
     private Nationalitaet nationalitaet;
+
+    @OneToMany(mappedBy = "fahrer")
+    private List<RennenFahrer> rennenZuordnungen;
 
     public Fahrer() {
     }
@@ -52,6 +57,10 @@ public class Fahrer {
 
     public int getFahrerId() {
         return fahrerId;
+    }
+
+    public List<RennenFahrer> getRennenZuordnungen() {
+        return rennenZuordnungen;
     }
 
     public void setVorname(String vorname) {
