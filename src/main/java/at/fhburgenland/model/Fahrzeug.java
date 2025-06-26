@@ -9,7 +9,7 @@ public class Fahrzeug {
     @Column(name = "fahrzeugId", updatable = false, nullable = false)
     private int fahrzeugId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fahrzeugtypId", nullable = false)
     private Fahrzeugtyp fahrzeugtyp;
 

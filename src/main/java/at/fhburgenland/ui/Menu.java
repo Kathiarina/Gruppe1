@@ -4,15 +4,17 @@ public class Menu {
     private static final String hauptmenu = """
             Herzlich Willkommen zur Rennverwaltung!
             
-            Bitte eine Zahl zwischen 1 und 8 auswählen:
+            Bitte eine Zahl zwischen 1 und 10 auswählen:
             1 - Rennstrecken verwalten
             2 - Rennen verwalten
             3 - Fahrer verwalten
             4 - Fahrzeuge verwalten
-            5 - Teams verwalten
-            6 - Hauptsponsoren verwalten
-            7 - Abfragen
-            8 - Rennverwaltung beenden
+            5 - Fahrzeugtypen verwalten
+            6 - Teams verwalten
+            7 - Hauptsponsoren verwalten
+            8 - Nationalität verwalten
+            9 - Abfragen
+            10 - Rennverwaltung beenden
             """;
 
     private static final String rennstreckeMenu = """
@@ -56,6 +58,17 @@ public class Menu {
             4 - Fahrzeug löschen
             5 - Zurück zum Hauptmenü
             """;
+
+    private static final String fahrzeugtypMenu = """
+            *** FAHRZEUGTYPEN ***
+            
+            Bitte eine Zahl zwischen 1 und 5 auswählen:
+            1 - Alle Fahrzeugtypen anzeigen
+            2 - Neuen Fahrzeugtyp anlegen
+            3 - Fahrzeugtyp bearbeiten
+            4 - Fahrzeugtyp löschen
+            5 - Zurück zum Hauptmenü
+            """;
     private static final String teamMenu = """
             *** TEAMS ***
             
@@ -74,6 +87,17 @@ public class Menu {
             2 - Neuen Hauptsponsor anlegen
             3 - Hauptsponsor bearbeiten
             4 - Hauptsponsor löschen
+            5 - Zurück zum Hauptmenü
+            """;
+
+    private static final String nationalitaetsMenu = """
+            *** NATIONALITÄTEN ***
+            
+            Bitte eine Zahl zwischen 1 und 5 auswählen:
+            1 - Alle Nationalitäten anzeigen
+            2 - Neue Nationalität anlegen
+            3 - Nationalität bearbeiten
+            4 - Nationalität löschen
             5 - Zurück zum Hauptmenü
             """;
 
@@ -97,11 +121,19 @@ public class Menu {
         System.out.println(fahrzeugMenu);
     }
 
+    protected static void zeigeFahrzeugtypMenu() {
+        System.out.println(fahrzeugtypMenu);
+    }
+
     protected static void zeigeTeamMenu() {
         System.out.println(teamMenu);
     }
 
     protected static void zeigeHauptsponsorMenu() {
         System.out.println(hauptsponsorMenu);
+    }
+
+    protected static void zeigeNationalitaetsMenu() {
+        System.out.println(nationalitaetsMenu);
     }
 }

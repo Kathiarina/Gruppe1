@@ -79,6 +79,11 @@ public class FahrerUI {
             if (fahrzeug == null) {
                 return;
             }
+            if(FahrerService.fahrzeugBereitsVergeben(fahrzeug, -1))
+            {
+                System.err.println("Dieses Fahrzeug ist bereits einem anderen Fahrer zugeordnet.");
+                return;
+            }
             fahrer.setFahrzeug(fahrzeug);
 
             FahrerService.fahrerHinzufuegen(fahrer);
@@ -130,6 +135,10 @@ public class FahrerUI {
             if (fahrzeugAendern.equals("j")) {
                 Fahrzeug neuesFahrzeug = fahrzeugAuswaehlen();
                 if (neuesFahrzeug != null) {
+                    if(FahrerService.fahrzeugBereitsVergeben(neuesFahrzeug, fahrer.getFahrerId())){
+                        System.err.println("Dieses Fahrzeug ist bereits vergeben.");
+                        return;
+                    }
                     fahrer.setFahrzeug(neuesFahrzeug);
                 }
             }
@@ -156,14 +165,11 @@ public class FahrerUI {
                 System.err.println("Fahrer nicht gefunden.");
                 return;
             }
-            if (fahrer.getNationalitaet() != null) {
-                System.err.println("Fahrer ist einer Nationalität zugeordnet und kann daher nicht gelöscht werden.");
+            if (fahrer.getNationalitaet() != null || fahrer.getFahrzeug() != null) {
+                System.err.println("Fahrer ist einer Nationalität oder einem Fahrzeug zugeordnet und kann daher nicht gelöscht werden.");
                 return;
             }
-            if (fahrer.getFahrzeug() != null) {
-                System.err.println("Fahrer ist einem Fahrzeug zugeordnet und kann daher nicht gelöscht werden.");
-                return;
-            }
+
             FahrerService.fahrerLoeschen(id);
             System.out.printf("Fahrer mit ID %d erfolgreich gelöscht.%n", id);
         } catch (Exception e) {
@@ -173,7 +179,7 @@ public class FahrerUI {
 
     private Fahrzeug fahrzeugAuswaehlen() {
         List<Fahrzeug> fahrzeuge = FahrzeugService.alleFahrzeugeAnzeigen();
-        if (fahrzeuge.isEmpty()) {
+        if (fahrzeuge == null || fahrzeuge.isEmpty()) {
             System.err.println("Es sind keine Fahrzeuge vorhanden. Bitte zuerst ein Fahrzeug anlegen.");
             return null;
         }
@@ -205,7 +211,7 @@ public class FahrerUI {
         }
         System.out.println("Verfügbare Nationalitäten:");
         for (Nationalitaet nationalitaet : nationalitaeten) {
-            System.out.println(nationalitaet);
+            System.out.println("Nationalität Nr: " + nationalitaet.getNationalitaetsId() + ", " + nationalitaet.getNationalitaetsBeschreibung());
         }
         System.out.println("Bitte Nationalitäts-ID auswählen:");
         int nationalitaetsId;

@@ -1,10 +1,10 @@
 package at.fhburgenland.service;
 
+import at.fhburgenland.model.Fahrzeugtyp;
 import at.fhburgenland.model.Nationalitaet;
 import jakarta.persistence.*;
 
 import java.util.List;
-
 
 public class NationalitaetService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
@@ -95,20 +95,47 @@ public class NationalitaetService {
             et = em.getTransaction();
             et.begin();
             Nationalitaet nationalitaet = em.find(Nationalitaet.class, nationalitaetsId);
-            if (nationalitaet != null) {
-                em.remove(nationalitaet);
-                et.commit();
-            } else {
+            if (nationalitaet == null) {
                 System.err.println("Nationalität nicht gefunden.");
+                return;
             }
+            String begruendung = pruefeVerknuepfungMitNationalitaet(nationalitaet);
+            if (begruendung != null) {
+                System.err.println(begruendung);
+                et.rollback();
+                return;
+            }
+
+            em.remove(nationalitaet);
+            et.commit();
+
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println("Fehler beim Löschen der Nationalitaet.");
+                System.out.println("Fehler beim Löschen der Nationalität.");
                 e.printStackTrace();
             }
         } finally {
             em.close();
         }
+    }
+
+    public static String pruefeVerknuepfungMitNationalitaet(Nationalitaet nationalitaet) {
+        boolean hatFahrer = nationalitaet.getFahrer() != null && !nationalitaet.getFahrer().isEmpty();
+        boolean hatTeam = nationalitaet.getTeam() != null && !nationalitaet.getTeam().isEmpty();
+
+        if (hatFahrer || hatTeam) {
+            StringBuilder grund = new StringBuilder("Nationalität kann nicht gelöscht werden, da sie ");
+            if (hatFahrer && hatTeam) {
+                grund.append("einem Fahrer und einem Team ");
+            } else if (hatFahrer) {
+                grund.append("einem Fahrer ");
+            } else {
+                grund.append("einem Team ");
+            }
+            grund.append("zugeordnet ist.");
+            return grund.toString();
+        }
+        return null;
     }
 }

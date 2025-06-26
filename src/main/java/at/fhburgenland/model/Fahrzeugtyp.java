@@ -1,6 +1,9 @@
 package at.fhburgenland.model;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "Fahrzeugtyp")
 @Table(name = "fahrzeugtyp")
 public class Fahrzeugtyp {
@@ -19,8 +22,8 @@ public class Fahrzeugtyp {
     @Column(name = "gewichtKg", nullable = false)
     private int gewichtKg;
 
-    @OneToOne(mappedBy = "fahrzeugtyp")
-    private Fahrzeug fahrzeug;
+    @OneToMany(mappedBy = "fahrzeugtyp", fetch = FetchType.EAGER)
+    List<Fahrzeug> fahrzeug = new ArrayList<>();
 
     public Fahrzeugtyp() {
     }
@@ -41,6 +44,10 @@ public class Fahrzeugtyp {
 
     public String getMotor() {
         return motor;
+    }
+
+    public List<Fahrzeug> getFahrzeug() {
+        return fahrzeug;
     }
 
     public int getGewichtKg() {

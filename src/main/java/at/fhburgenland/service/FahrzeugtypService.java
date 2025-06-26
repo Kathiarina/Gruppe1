@@ -1,17 +1,12 @@
 package at.fhburgenland.service;
 
-import at.fhburgenland.model.Fahrer;
-import at.fhburgenland.model.Fahrzeug;
 import at.fhburgenland.model.Fahrzeugtyp;
-import at.fhburgenland.model.Nationalitaet;
 import jakarta.persistence.*;
 
 import java.util.List;
 
-
 public class FahrzeugtypService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
-
 
     public static void fahrzeugtypHinzufuegen(Fahrzeugtyp fahrzeugtyp) {
         EntityManager em = EMF.createEntityManager();
@@ -36,16 +31,16 @@ public class FahrzeugtypService {
         String query = "SELECT ft FROM Fahrzeugtyp ft";
         TypedQuery<Fahrzeugtyp> tq = em.createQuery(query, Fahrzeugtyp.class);
 
-        List<Fahrzeugtyp> fahrzeugtypListe = null;
+        List<Fahrzeugtyp> fahrzeugtypenListe = null;
 
         try {
-            fahrzeugtypListe = tq.getResultList();
+            fahrzeugtypenListe = tq.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             em.close();
         }
-        return fahrzeugtypListe;
+        return fahrzeugtypenListe;
     }
 
     public static Fahrzeugtyp fahrzeugtypAnzeigenNachId(int fahrzeugtypId) {
@@ -59,7 +54,7 @@ public class FahrzeugtypService {
                 System.out.println("ID: " + fahrzeugtyp.getFahrzeugtypId());
                 System.out.println("Modell: " + fahrzeugtyp.getModell());
                 System.out.println("Motor: " + fahrzeugtyp.getMotor());
-                System.out.println("Gewicht: " + fahrzeugtyp.getGewichtKg());
+                System.out.println("Gewicht: " + fahrzeugtyp.getGewichtKg() + "kg");
             } else {
                 System.err.println("Kein Fahrzeugtyp mit dieser ID gefunden.");
             }
@@ -100,14 +95,20 @@ public class FahrzeugtypService {
         try {
             et = em.getTransaction();
             et.begin();
-            Fahrzeugtyp fahrzeugtyp= em.find(Fahrzeugtyp.class, fahrzeugtypId);
-            if (fahrzeugtyp != null) {
-                em.remove(fahrzeugtyp);
-                et.commit();
-            } else {
+            Fahrzeugtyp fahrzeugtyp = em.find(Fahrzeugtyp.class, fahrzeugtypId);
+            if (fahrzeugtyp == null) {
                 System.err.println("Fahrzeugtyp nicht gefunden.");
+                return;
             }
-        }catch (Exception e) {
+            if (fahrzeugtyp.getFahrzeug() != null && !fahrzeugtyp.getFahrzeug().isEmpty()) {
+                System.err.println("Fahrzeugtyp kann nicht gelöscht werden, da er einem Fahrzeug zugeordnet ist.");
+                et.rollback();
+                return;
+            }
+            em.remove(fahrzeugtyp);
+            et.commit();
+
+        } catch (Exception e) {
             if (et != null) {
                 et.rollback();
                 System.out.println("Fehler beim Löschen des Fahrzeugtyps.");

@@ -15,7 +15,7 @@ public class Nationalitaet {
     @Column(name = "nationalitaetsId", updatable = false, nullable = false)
     private int nationalitaetsId;
 
-    @Column(name = "nationalitaetsBeschreibung", updatable = false, nullable = false, length = 30)
+    @Column(name = "nationalitaetsBeschreibung", nullable = false, length = 30)
     private String nationalitaetsBeschreibung;
 
     @OneToMany(mappedBy = "nationalitaet", fetch = FetchType.EAGER)

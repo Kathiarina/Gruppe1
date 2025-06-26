@@ -10,7 +10,7 @@ public class StatusService {
 
     public static List<Status> alleStatusAnzeigen() {
         EntityManager em = EMF.createEntityManager();
-        String query = "SELECT hs FROM Hauptsponsor hs";
+        String query = "SELECT s FROM Status s";
         TypedQuery<Status> tq = em.createQuery(query, Status.class);
 
         List<Status> statusListe = null;

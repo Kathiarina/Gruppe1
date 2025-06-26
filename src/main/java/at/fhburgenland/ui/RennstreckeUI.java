@@ -1,8 +1,6 @@
 package at.fhburgenland.ui;
 
-import at.fhburgenland.model.Hauptsponsor;
 import at.fhburgenland.model.Rennstrecke;
-import at.fhburgenland.service.HauptsponsorService;
 import at.fhburgenland.service.RennstreckeService;
 
 import java.util.List;
@@ -117,11 +115,11 @@ public class RennstreckeUI {
 
             Rennstrecke rennstrecke = RennstreckeService.rennstreckeAnzeigenNachId(id);
             if (rennstrecke == null) {
-                System.err.println("Rennstrecke nicht gefunden.");
+                System.err.println("Rennstrecke kann nicht gelöscht werden, da sie nicht existiert.");
                 return;
             }
 
-            if(!rennstrecke.getRennen().isEmpty()) {
+            if (!rennstrecke.getRennen().isEmpty()) {
                 System.err.println("Rennstrecke ist einem Rennen zugeordnet und kann daher nicht gelöscht werden.");
                 return;
             }
@@ -135,12 +133,16 @@ public class RennstreckeUI {
 
     private void alleRennstreckenAnzeigen() {
         List<Rennstrecke> rennstrecken = RennstreckeService.alleRennstreckenAnzeigen();
-        if (rennstrecken != null && !rennstrecken.isEmpty()) {
-            for (Rennstrecke rennstrecke : rennstrecken) {
-                System.out.println("Rennstrecke Nr: " + rennstrecke.getRennstreckenId() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
+        try {
+            if (rennstrecken != null && !rennstrecken.isEmpty()) {
+                for (Rennstrecke rennstrecke : rennstrecken) {
+                    System.out.println("Rennstrecke Nr: " + rennstrecke.getRennstreckenId() + ", Ort " + rennstrecke.getOrt() + ", Bundesland " + rennstrecke.getBundesland());
+                }
+            } else {
+                System.err.println("Keine Rennstrecken gefunden.");
             }
-        } else {
-            System.err.println("Keine Rennstrecken gefunden.");
+        } catch (Exception e) {
+            System.err.println("Fehler beim Anzeigen der Rennstrecken." + e.getMessage());
         }
     }
 }

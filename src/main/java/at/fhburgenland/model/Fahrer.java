@@ -17,7 +17,7 @@ public class Fahrer {
     private String nachname;
 
     @OneToOne
-    @JoinColumn(name = "fahrzeugId", nullable = false)
+    @JoinColumn(name = "fahrzeugId", nullable = false, unique = true)
     private Fahrzeug fahrzeug;
 
     @ManyToOne

@@ -1,6 +1,7 @@
 package at.fhburgenland.service;
 
 import at.fhburgenland.model.Fahrer;
+import at.fhburgenland.model.Fahrzeug;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -98,16 +99,12 @@ public class FahrerService {
             et.begin();
             Fahrer fahrer = em.find(Fahrer.class, fahrerId);
             if (fahrer != null) {
-                if(fahrer.getNationalitaet() != null){
-                    System.err.println("Fahrer kann nicht gelöscht werden, da er einer Nationalität zugeordnet ist.");
+                if (fahrer.getNationalitaet() != null || fahrer.getFahrzeug() != null) {
+                    System.err.println("Fahrer kann nicht gelöscht werden, da er einer Nationalität oder einem Fahrzeug zugeordnet ist.");
                     et.rollback();
                     return;
                 }
-                if(fahrer.getFahrzeug() != null){
-                    System.err.println("Fahrer kann nicht gelöscht werden, da er einem Fahrzeug zugeordnet ist.");
-                    et.rollback();
-                    return;
-                }
+
                 em.remove(fahrer);
                 et.commit();
             } else {
@@ -122,5 +119,27 @@ public class FahrerService {
         } finally {
             em.close();
         }
+    }
+
+    public static boolean fahrzeugBereitsVergeben(Fahrzeug fahrzeug, int ausgenommeneFahrerId) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+
+        try {
+            String jpql = "SELECT COUNT(f) FROM Fahrer f WHERE f.fahrzeug = :fahrzeug AND f.fahrerId != :id";
+            Long count = em.createQuery(jpql, Long.class)
+                    .setParameter("fahrzeug", fahrzeug)
+                    .setParameter("id", ausgenommeneFahrerId)
+                    .getSingleResult();
+            return count > 0;
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return false;
     }
 }
