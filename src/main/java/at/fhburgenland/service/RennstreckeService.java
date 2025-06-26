@@ -1,5 +1,6 @@
 package at.fhburgenland.service;
 
+import at.fhburgenland.model.Hauptsponsor;
 import at.fhburgenland.model.Rennstrecke;
 import jakarta.persistence.*;
 
@@ -91,21 +92,21 @@ public class RennstreckeService {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
 
-        try {
-            et = em.getTransaction();
+        try {et = em.getTransaction();
             et.begin();
             Rennstrecke rennstrecke = em.find(Rennstrecke.class, rennstreckenId);
-            if (rennstrecke != null) {
-                if(!rennstrecke.getRennen().isEmpty()){
-                    System.err.println("Rennstrecke kann nicht gelöscht werden, da sie einem Rennen zugeordnet ist.");
-                    et.rollback();
-                    return;
-                }
-                em.remove(rennstrecke);
-                et.commit();
-            } else {
+            if (rennstrecke == null) {
                 System.err.println("Rennstrecke nicht gefunden.");
+                et.rollback();
+                return;
             }
+            if (rennstrecke.getRennen() != null && !rennstrecke.getRennen().isEmpty()) {
+                System.err.println("Rennstrecke kann nicht gelöscht werden, da sie einem Rennen zugeordnet ist.");
+                et.rollback();
+                return;
+            }
+            em.remove(rennstrecke);
+            et.commit();
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();

@@ -172,6 +172,7 @@ public class FahrzeugtypUI {
             }
         }catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Fahrzeugtypen" + e.getMessage());
+            e.printStackTrace();
         }
 
     }

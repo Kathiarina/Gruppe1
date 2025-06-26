@@ -2,6 +2,7 @@ package at.fhburgenland.service;
 
 import at.fhburgenland.model.Fahrer;
 import at.fhburgenland.model.Fahrzeug;
+import at.fhburgenland.model.Nationalitaet;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -98,19 +99,22 @@ public class FahrerService {
             et = em.getTransaction();
             et.begin();
             Fahrer fahrer = em.find(Fahrer.class, fahrerId);
-            if (fahrer != null) {
-                if (fahrer.getNationalitaet() != null || fahrer.getFahrzeug() != null) {
-                    System.err.println("Fahrer kann nicht gelöscht werden, da er einer Nationalität oder einem Fahrzeug zugeordnet ist.");
-                    et.rollback();
-                    return;
-                }
-
-                em.remove(fahrer);
-                et.commit();
-            } else {
+            if (fahrer == null) {
                 System.err.println("Fahrer nicht gefunden.");
+                et.rollback();
+                return;
             }
-        } catch (Exception e) {
+            String begruendung = pruefeVerknuepfungMitFahrer(fahrer);
+            if (begruendung != null) {
+                System.err.println(begruendung);
+                et.rollback();
+                return;
+            }
+
+            em.remove(fahrer);
+            et.commit();
+
+        }catch (Exception e) {
             if (et != null) {
                 et.rollback();
                 System.out.println("Fehler beim Löschen des Fahrers.");
@@ -141,5 +145,24 @@ public class FahrerService {
             em.close();
         }
         return false;
+    }
+
+    public static String pruefeVerknuepfungMitFahrer(Fahrer fahrer) {
+        boolean hatNationalitaet = fahrer.getNationalitaet() != null;
+        boolean faehrtFahrzeug = fahrer.getFahrzeug() != null;
+
+        if (hatNationalitaet || faehrtFahrzeug) {
+            StringBuilder grund = new StringBuilder("Fahrer kann nicht gelöscht werden, da er ");
+            if (hatNationalitaet && faehrtFahrzeug) {
+                grund.append("einer Nationalität und einem Fahrzeug");
+            } else if (hatNationalitaet) {
+                grund.append("einer Nationalität ");
+            } else {
+                grund.append("einem Fahrzeug ");
+            }
+            grund.append("zugeordnet ist.");
+            return grund.toString();
+        }
+        return null;
     }
 }

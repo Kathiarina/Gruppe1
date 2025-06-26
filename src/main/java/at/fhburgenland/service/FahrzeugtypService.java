@@ -98,6 +98,7 @@ public class FahrzeugtypService {
             Fahrzeugtyp fahrzeugtyp = em.find(Fahrzeugtyp.class, fahrzeugtypId);
             if (fahrzeugtyp == null) {
                 System.err.println("Fahrzeugtyp nicht gefunden.");
+                et.rollback();
                 return;
             }
             if (fahrzeugtyp.getFahrzeug() != null && !fahrzeugtyp.getFahrzeug().isEmpty()) {

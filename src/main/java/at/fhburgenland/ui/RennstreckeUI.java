@@ -143,6 +143,7 @@ public class RennstreckeUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Rennstrecken." + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

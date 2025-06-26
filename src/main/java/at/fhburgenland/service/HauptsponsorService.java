@@ -95,17 +95,18 @@ public class HauptsponsorService {
             et = em.getTransaction();
             et.begin();
             Hauptsponsor hauptsponsor = em.find(Hauptsponsor.class, hauptsponsorId);
-            if (hauptsponsor != null) {
-                if(hauptsponsor.getTeam() != null){
-                    System.err.println("Hauptsponsor kann nicht gelöscht werden, da er einem Team zugeordnet ist.");
-                    et.rollback();
-                    return;
-                }
-                em.remove(hauptsponsor);
-                et.commit();
-            } else {
+            if (hauptsponsor == null) {
                 System.err.println("Hauptsponsor nicht gefunden.");
+                et.rollback();
+                return;
             }
+            if (hauptsponsor.getTeam() != null) {
+                System.err.println("Hauptsponsor kann nicht gelöscht werden, da er einem Team zugeordnet ist.");
+                et.rollback();
+                return;
+            }
+            em.remove(hauptsponsor);
+            et.commit();
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();

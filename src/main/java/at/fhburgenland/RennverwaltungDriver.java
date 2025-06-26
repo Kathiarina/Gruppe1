@@ -12,6 +12,8 @@ public class RennverwaltungDriver {
     private final FahrerUI fahrerUI = new FahrerUI(scanner, menu);
     private final FahrzeugtypUI fahrzeugtypUI = new FahrzeugtypUI(scanner, menu);
     private final NationalitaetsUI nationalitaetsUI = new NationalitaetsUI(scanner, menu);
+    private final TeamUI teamUI = new TeamUI(scanner, menu);
+    private final FahrzeugUI fahrzeugUI = new FahrzeugUI(scanner, menu);
     private boolean systemRunning = true;
 
     public void rennverwaltungStart() {
@@ -21,7 +23,9 @@ public class RennverwaltungDriver {
             switch (userEingabe) {
                 case "1" -> rennstreckeUI.rennstreckeMenu();
                 case "3" -> fahrerUI.fahrerMenu();
+                case "4" -> fahrzeugUI.fahrzeugMenu();
                 case "5" -> fahrzeugtypUI.fahrzeugtypMenu();
+                case "6" -> teamUI.teamMenu();
                 case "7" -> hauptsponsorUI.hauptsponsorMenu();
                 case "8" -> nationalitaetsUI.nationalitaetsMenu();
                 case "10" -> {

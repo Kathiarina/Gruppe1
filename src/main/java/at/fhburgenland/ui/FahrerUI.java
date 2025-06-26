@@ -2,11 +2,9 @@ package at.fhburgenland.ui;
 
 import at.fhburgenland.model.Fahrer;
 import at.fhburgenland.model.Fahrzeug;
-import at.fhburgenland.model.Hauptsponsor;
 import at.fhburgenland.model.Nationalitaet;
 import at.fhburgenland.service.FahrerService;
 import at.fhburgenland.service.FahrzeugService;
-import at.fhburgenland.service.HauptsponsorService;
 import at.fhburgenland.service.NationalitaetService;
 
 import java.util.List;
@@ -79,8 +77,7 @@ public class FahrerUI {
             if (fahrzeug == null) {
                 return;
             }
-            if(FahrerService.fahrzeugBereitsVergeben(fahrzeug, -1))
-            {
+            if (FahrerService.fahrzeugBereitsVergeben(fahrzeug, -1)) {
                 System.err.println("Dieses Fahrzeug ist bereits einem anderen Fahrer zugeordnet.");
                 return;
             }
@@ -135,7 +132,7 @@ public class FahrerUI {
             if (fahrzeugAendern.equals("j")) {
                 Fahrzeug neuesFahrzeug = fahrzeugAuswaehlen();
                 if (neuesFahrzeug != null) {
-                    if(FahrerService.fahrzeugBereitsVergeben(neuesFahrzeug, fahrer.getFahrerId())){
+                    if (FahrerService.fahrzeugBereitsVergeben(neuesFahrzeug, fahrer.getFahrerId())) {
                         System.err.println("Dieses Fahrzeug ist bereits vergeben.");
                         return;
                     }
@@ -162,11 +159,13 @@ public class FahrerUI {
 
             Fahrer fahrer = FahrerService.fahrerAnzeigenNachId(id);
             if (fahrer == null) {
-                System.err.println("Fahrer nicht gefunden.");
+                System.err.println("Fahrer kann nicht gelöscht werden, da er nicht existiert.");
                 return;
             }
-            if (fahrer.getNationalitaet() != null || fahrer.getFahrzeug() != null) {
-                System.err.println("Fahrer ist einer Nationalität oder einem Fahrzeug zugeordnet und kann daher nicht gelöscht werden.");
+
+            String begruendung = FahrerService.pruefeVerknuepfungMitFahrer(fahrer);
+            if (begruendung != null) {
+                System.err.println(begruendung);
                 return;
             }
 
@@ -185,7 +184,7 @@ public class FahrerUI {
         }
         System.out.println("Verfügbare Fahrzeuge:");
         for (Fahrzeug fahrzeug : fahrzeuge) {
-            System.out.println(fahrzeug);
+            System.out.println("Fahrzeug Nr: " + fahrzeug.getFahrzeugId() + ", " + fahrzeug.getFahrzeugtyp() + ", " + fahrzeug.getTeam());
         }
         System.out.println("Bitte Fahrzeug-ID auswählen:");
         int fahrzeugId;
@@ -231,12 +230,17 @@ public class FahrerUI {
 
     private void alleFahrerAnzeigen() {
         List<Fahrer> fahrer = FahrerService.alleFahrerAnzeigen();
-        if (fahrer != null && !fahrer.isEmpty()) {
-            for (Fahrer f : fahrer) {
-                System.out.println("Fahrer Nr: " + f.getFahrerId() + ", Vorname " + f.getVorname() + ", Nachname " + f.getNachname() + ", Nationalität " + f.getNationalitaet() + ", Fahrzeug " + f.getFahrzeug());
+        try {
+            if (fahrer != null && !fahrer.isEmpty()) {
+                for (Fahrer f : fahrer) {
+                    System.out.println("Fahrer Nr: " + f.getFahrerId() + ", Vorname " + f.getVorname() + ", Nachname " + f.getNachname() + ", " + f.getNationalitaet() + ", " + f.getFahrzeug());
+                }
+            } else {
+                System.err.println("Keine Fahrer gefunden.");
             }
-        } else {
-            System.err.println("Keine Fahrer gefunden.");
+        } catch (Exception e) {
+            System.err.println("Fehler beim Anzeigen der Fahrer." + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

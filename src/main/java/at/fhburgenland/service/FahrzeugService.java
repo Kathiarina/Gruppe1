@@ -97,12 +97,21 @@ public class FahrzeugService {
             et = em.getTransaction();
             et.begin();
             Fahrzeug fahrzeug = em.find(Fahrzeug.class, fahrzeugId);
-            if (fahrzeug != null) {
-                em.remove(fahrzeug);
-                et.commit();
-            } else {
+            if (fahrzeug == null) {
                 System.err.println("Fahrzeug nicht gefunden.");
+                et.rollback();
+                return;
             }
+            String begruendung = pruefeVerknuepfungMitFahrzeug(fahrzeug);
+            if (begruendung != null) {
+                System.err.println(begruendung);
+                et.rollback();
+                return;
+            }
+
+            em.remove(fahrzeug);
+            et.commit();
+
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
@@ -112,5 +121,54 @@ public class FahrzeugService {
         } finally {
             em.close();
         }
+    }
+
+    public static boolean FahrerBereitsVergeben(Fahrer fahrer, int ausgenommeneFahrzeugId) {
+        EntityManager em = EMF.createEntityManager();
+        EntityTransaction et = null;
+
+        try {
+            String jpql = "SELECT COUNT(fz) FROM Fahrzeug fz WHERE fz.fahrer = :fahrer AND fz.fahrzeugId != :id";
+            Long count = em.createQuery(jpql, Long.class)
+                    .setParameter("fahrer", fahrer)
+                    .setParameter("id", ausgenommeneFahrzeugId)
+                    .getSingleResult();
+            return count > 0;
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return false;
+    }
+
+    public static String pruefeVerknuepfungMitFahrzeug(Fahrzeug fahrzeug) {
+        boolean gehoertZuTeam = fahrzeug.getTeam() != null;
+        boolean istFahrzeugtyp = fahrzeug.getFahrzeugtyp() != null;
+        boolean hatFahrer = fahrzeug.getFahrer() != null;
+
+        if (gehoertZuTeam || istFahrzeugtyp || hatFahrer) {
+            StringBuilder grund = new StringBuilder("Fahrzeug kann nicht gelöscht werden, da es ");
+            boolean first = true;
+            if (gehoertZuTeam) {
+                grund.append("einem Team");
+                first = false;
+            }
+            if (istFahrzeugtyp) {
+                if (!first) grund.append(", ");
+                grund.append("einem Fahrzeugtyp");
+                first = false;
+            }
+            if (hatFahrer) {
+                if (!first) grund.append(" und ");
+                grund.append("einem Fahrer");
+            }
+            grund.append(" zugeordnet ist.");
+            return grund.toString();
+        }
+        return null;
     }
 }

@@ -136,6 +136,7 @@ public class NationalitaetsUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Nationalitäten." + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

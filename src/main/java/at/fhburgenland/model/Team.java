@@ -19,7 +19,7 @@ public class Team {
     @Column(name = "gruendungsjahr", nullable = false)
     private int gruendungsjahr;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     List<Fahrzeug> fahrzeug = new ArrayList<>();
 
     @OneToOne
@@ -58,6 +58,10 @@ public class Team {
 
     public Nationalitaet getNationalitaet() {
         return nationalitaet;
+    }
+
+    public List<Fahrzeug> getFahrzeug() {
+        return fahrzeug;
     }
 
     public void setTeamName(String teamName) {

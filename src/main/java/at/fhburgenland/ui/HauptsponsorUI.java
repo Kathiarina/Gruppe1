@@ -157,6 +157,7 @@ public class HauptsponsorUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Hauptsponsoren." + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

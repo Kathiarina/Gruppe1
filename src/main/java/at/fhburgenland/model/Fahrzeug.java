@@ -36,6 +36,10 @@ public class Fahrzeug {
         return fahrzeugtyp;
     }
 
+    public Fahrer getFahrer() {
+        return fahrer;
+    }
+
     public Team getTeam() {
         return team;
     }

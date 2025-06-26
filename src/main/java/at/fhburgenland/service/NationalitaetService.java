@@ -97,6 +97,7 @@ public class NationalitaetService {
             Nationalitaet nationalitaet = em.find(Nationalitaet.class, nationalitaetsId);
             if (nationalitaet == null) {
                 System.err.println("Nationalität nicht gefunden.");
+                et.rollback();
                 return;
             }
             String begruendung = pruefeVerknuepfungMitNationalitaet(nationalitaet);
