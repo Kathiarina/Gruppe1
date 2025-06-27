@@ -12,16 +12,14 @@ import java.util.Scanner;
 
 public class RennenFahrerUI {
     private final Scanner scanner;
-    private final Menu menu;
 
     public RennenFahrerUI(Scanner scanner, Menu menu) {
         this.scanner = scanner;
-        this.menu = menu;
     }
 
     public void rennenFahrerMenu() {
         while (true) {
-            menu.zeigeRennenFahrerMenu();
+            Menu.zeigeRennenFahrerMenu();
             String userEingabe = scanner.nextLine();
 
             switch (userEingabe) {
@@ -71,6 +69,21 @@ public class RennenFahrerUI {
             }
             rennenFahrer.setStatus(status);
 
+            System.out.println("Bitte die Zeit für das gefahrene Rennen eingeben:");
+            String zeit = eingabeZeit();
+            if (zeit == null || zeit.isEmpty()) {
+                System.err.println("Zeit darf nicht leer sein.");
+                return;
+            }
+            if (!zeit.isBlank()) {
+                try {
+                    rennenFahrer.setZeit(zeit);
+                } catch (NumberFormatException e) {
+                    System.out.println("Ungültige Zeit.");
+                    return;
+                }
+            }
+
             RennenFahrerService.rennenFahrerHinzufuegen(rennenFahrer);
             System.out.println("Rennergebnis erfolgreich gespeichert.");
         } catch (Exception e) {
@@ -93,40 +106,75 @@ public class RennenFahrerUI {
                 return;
             }
             RennenFahrerId id = new RennenFahrerId(rennenId, fahrerId);
-            RennenFahrer rennenFahrer = RennenFahrerService.rennenFahrerAnzeigenNachId(id);
-            if (rennenFahrer == null) {
+            RennenFahrer rennenFahrerAlt = RennenFahrerService.rennenFahrerAnzeigenNachId(id);
+            if (rennenFahrerAlt == null) {
                 System.out.println("Rennergebnis nicht gefunden.");
                 return;
             }
 
+            Fahrer aktuellerFahrer = rennenFahrerAlt.getFahrer();
+            Rennen aktuellesRennen = rennenFahrerAlt.getRennen();
+            Status aktuellerStatus = rennenFahrerAlt.getStatus();
+            String aktuelleZeit = rennenFahrerAlt.getZeit();
+
             System.out.println("Möchten Sie den Fahrer ändern? (j/n):");
             String fahrerAendern = scanner.nextLine().toLowerCase();
+            Fahrer neuerFahrer;
             if (fahrerAendern.equals("j")) {
-                Fahrer neuerFahrer = fahrerAuswaehlen();
-                if (neuerFahrer != null) {
-                    rennenFahrer.setFahrer(neuerFahrer);
+                neuerFahrer = fahrerAuswaehlen();
+                if (neuerFahrer == null) {
+                    System.err.println("Kein gültiger Fahrer ausgewählt.");
+                    return;
                 }
+            } else {
+                neuerFahrer = aktuellerFahrer;
             }
 
             System.out.println("Möchten Sie das Rennen ändern? (j/n):");
             String rennenAendern = scanner.nextLine().toLowerCase();
+            Rennen neuesRennen;
             if (rennenAendern.equals("j")) {
-                Rennen neuesRennen = rennenAuswaehlen();
-                if (neuesRennen != null) {
-                    rennenFahrer.setRennen(neuesRennen);
+                neuesRennen = rennenAuswaehlen();
+                if (neuesRennen == null) {
+                    System.err.println("Kein gültiges Rennen ausgewählt.");
+                    return;
                 }
+            } else {
+                neuesRennen = aktuellesRennen;
             }
 
             System.out.println("Möchten Sie den Status ändern? (j/n):");
             String statusAendern = scanner.nextLine().toLowerCase();
+            Status neuerStatus;
             if (statusAendern.equals("j")) {
-                Status neuerStatus = statusAuswaehlen();
-                if (neuerStatus != null) {
-                    rennenFahrer.setStatus(neuerStatus);
+                neuerStatus = statusAuswaehlen();
+                if (neuerStatus == null) {
+                    System.err.println("Kein gültiger Status ausgewählt.");
+                    return;
                 }
+            } else {
+                neuerStatus = aktuellerStatus;
             }
 
-            RennenFahrerService.rennenFahrerUpdaten(rennenFahrer);
+            System.out.println("Möchten Sie die Zeit ändern? (j/n):");
+            String zeitAendern = scanner.nextLine().toLowerCase();
+            String neueZeit;
+            if (zeitAendern.equals("j")) {
+                neueZeit = eingabeZeit();
+                if (neueZeit == null) {
+                    System.err.println("Keine gültige Zeit ausgewählt.");
+                    return;
+                }
+            } else {
+                neueZeit = aktuelleZeit;
+            }
+
+            RennenFahrerService.rennenFahrerLoeschen(rennenFahrerAlt.getRennenFahrerId());
+
+            RennenFahrer neuerEintrag = new RennenFahrer(neuerFahrer, neuesRennen, neuerStatus, neueZeit);
+
+            RennenFahrerService.rennenFahrerHinzufuegen(neuerEintrag);
+            System.out.println("Rennergebnis erfolgreich aktualisiert.");
         } catch (Exception e) {
             System.err.println("Rennergebnis konnte nicht bearbeitet werden." + e.getMessage());
         }
@@ -150,11 +198,6 @@ public class RennenFahrerUI {
             RennenFahrer rennenFahrer = RennenFahrerService.rennenFahrerAnzeigenNachId(id);
             if (rennenFahrer == null) {
                 System.err.println("Rennergebnis kann nicht gelöscht werden, da es nicht existiert.");
-                return;
-            }
-
-            if (rennenFahrer.getRennen() != null && rennenFahrer.getFahrer() != null) {
-                System.err.println("Rennergebnis ist einem Rennen und einem Fahrer zugeordnet und kann daher nicht gelöscht werden.");
                 return;
             }
 
@@ -245,13 +288,44 @@ public class RennenFahrerUI {
         return null;
     }
 
+    private String eingabeZeit() {
+        try {
+            System.out.println("Stunden eingeben (z.B. 1): ");
+            int stunden = Integer.parseInt(scanner.nextLine());
+
+            System.out.println("Minuten eingeben (z.B. 22): ");
+            int minuten = Integer.parseInt(scanner.nextLine());
+
+            System.out.println("Sekunden mit Millisekunden eingeben (z.B. 22.798): ");
+            double sekundenKomplett = Double.parseDouble(scanner.nextLine());
+
+            int sekunden = (int) sekundenKomplett;
+            int millisekunden = (int) Math.round((sekundenKomplett - sekunden) * 1000);
+
+            if (stunden < 0 || minuten < 0 || minuten >= 60 ||
+                    sekunden < 0 || sekunden >= 60 ||
+                    millisekunden < 0 || millisekunden >= 1000) {
+                System.err.println("Ungültige Zeitangabe. Bitte gültige Werte eingeben.");
+                return null;
+            }
+
+            return String.format("%02d:%02d:%02d.%03d", stunden, minuten, sekunden, millisekunden);
+        } catch (NumberFormatException e) {
+            System.err.println("Ungültige Eingabe. Bitte Zahlen eingeben.");
+            return null;
+        }
+    }
+
     private void alleRennenFahrerAnzeigen() {
         List<RennenFahrer> rennenFahrer = RennenFahrerService.alleRennenFahrerAnzeigen();
         try {
             if (rennenFahrer != null && !rennenFahrer.isEmpty()) {
                 for (RennenFahrer rf : rennenFahrer) {
-                    System.out.println("Rennergebnis Nr: " + rf.getRennenFahrerId() + ", " + rf.getFahrer() + ", " + rf.getRennen() + ", " + rf.getStatus() + ", Zeit " + rf.getZeit());
-                }
+                    System.out.printf("RennenID: %2d | FahrerID: %2d | Status: %-13s | Zeit: %s%n",
+                            rf.getRennenFahrerId().getRennenId(),
+                            rf.getRennenFahrerId().getFahrerId(),
+                            rf.getStatus().getStatusBeschreibung(),
+                            rf.getZeit()); }
             } else {
                 System.err.println("Keine Rennergebnisse gefunden.");
             }

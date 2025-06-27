@@ -8,16 +8,14 @@ import java.util.Scanner;
 
 public class NationalitaetsUI {
     private final Scanner scanner;
-    private final Menu menu;
 
     public NationalitaetsUI(Scanner scanner, Menu menu) {
         this.scanner = scanner;
-        this.menu = menu;
     }
 
     public void nationalitaetsMenu() {
         while (true) {
-            menu.zeigeNationalitaetsMenu();
+            Menu.zeigeNationalitaetsMenu();
             String userEingabe = scanner.nextLine();
 
             switch (userEingabe) {

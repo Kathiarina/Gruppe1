@@ -56,9 +56,9 @@ public class RennenFahrerService {
             if (rennenFahrer != null) {
                 System.out.println("Rennergebnis gefunden:");
                 System.out.println("ID: " + rennenFahrer.getRennenFahrerId());
-                System.out.println("Fahrer: " + rennenFahrer.getFahrer());
-                System.out.println("Rennen: " + rennenFahrer.getRennen());
-                System.out.println("Status: " + rennenFahrer.getStatus());
+                System.out.println(rennenFahrer.getFahrer());
+                System.out.println(rennenFahrer.getRennen());
+                System.out.println(rennenFahrer.getStatus());
                 System.out.println("Zeit: " + rennenFahrer.getZeit());
             } else {
                 System.err.println("Kein Rennergebnis mit dieser ID gefunden.");
@@ -103,11 +103,6 @@ public class RennenFahrerService {
             RennenFahrer rennenFahrer = em.find(RennenFahrer.class, rennenFahrerId);
             if (rennenFahrer == null) {
                 System.err.println("Rennergebnis nicht gefunden.");
-                et.rollback();
-                return;
-            }
-            if (rennenFahrer.getRennen() != null && rennenFahrer.getFahrer() != null) {
-                System.err.println("Rennergebnis kann nicht gelöscht werden, da es einem Rennen und einem Fahrer zugeordnet ist.");
                 et.rollback();
                 return;
             }

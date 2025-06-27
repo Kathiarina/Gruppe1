@@ -117,7 +117,7 @@ public class Menu {
             *** QUERIES ***
             
             Bitte eine Zahl zwischen 1 und 3 auswählen:
-            1 - Auflistung Team Platzierungen
+            1 - Auflistung Team-Platzierungen
             2 - Auflistung aller Fahrzeuge nach Rennstrecke
             3 - Zurück zum Hauptmenü
             """;

@@ -1,9 +1,6 @@
 package at.fhburgenland.service;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -12,7 +9,7 @@ public class QueryService {
 
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
-    public static boolean teamPlatzierung() {
+    public static void teamPlatzierung() {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
         et = em.getTransaction();
@@ -29,49 +26,71 @@ public class QueryService {
                     JOIN fz.fahrer fa
                     JOIN fa.rennenZuordnungen rf
                     JOIN rf.status s
-                    GROUP BY t.teamName""";
+                    GROUP BY t.teamName
+                    ORDER BY ersterPlatz DESC, zweiterPlatz DESC, dritterPlatz DESC
+                    """;
 
-            List<Object[]> result = em.createQuery(query).getResultList();
+            TypedQuery<Object[]> tq = em.createQuery(query, Object[].class);
+            List<Object[]> result = tq.getResultList();
 
+            System.out.println("Team-Platzierungen:");
             for (Object[] row : result) {
                 String teamName = (String) row[0];
                 int erster = ((Number) row[1]).intValue();
                 int zweiter = ((Number) row[2]).intValue();
                 int dritter = ((Number) row[3]).intValue();
                 int ausgeschieden = ((Number) row[4]).intValue();
-                System.out.printf("%s: 1. Platz: %d, 2.: %d, 3.: %d, DNF: %d%n", teamName, erster, zweiter, dritter, ausgeschieden);
+                System.out.printf("Team: %-35s 1. Platz: %d | 2. Platz: %d | 3. Platz: %d | DNF: %d%n", teamName, erster, zweiter, dritter, ausgeschieden);
             }
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
             }
+            System.err.println("Fehler bei der Team-Platzierungsabfrage" + e.getMessage());
             e.printStackTrace();
         } finally {
             em.close();
         }
-        return false;
     }
 
     public static void beteiligteFahrzeugeAusgeben(int rennstreckenId) {
         EntityManager em = EMF.createEntityManager();
-        String query = """
-                SELECT DISTINCT ft.modell, ft.motor
-                    FROM Rennstrecke rs
-                    JOIN rs.rennen r
-                    JOIN r.fahrerZuordnungen rf
-                    JOIN rf.fahrer fa
-                    JOIN fa.fahrzeug fz
-                    JOIN fz.fahrzeugtyp ft
-                    WHERE rs.rennstreckenId = :rennstreckenId""";
-        List<Object[]> result = em.createQuery(query)
-                .setParameter("rennstreckenId", rennstreckenId)
-                .getResultList();
+        EntityTransaction et = null;
+        et = em.getTransaction();
+        et.begin();
+        try {
+            String query = """
+                    SELECT DISTINCT ft.modell, ft.motor
+                        FROM Rennstrecke rs
+                        JOIN rs.rennen r
+                        JOIN r.fahrerZuordnungen rf
+                        JOIN rf.fahrer fa
+                        JOIN fa.fahrzeug fz
+                        JOIN fz.fahrzeugtyp ft
+                        WHERE rs.rennstreckenId = :rennstreckenId""";
+            TypedQuery<Object[]> tq = em.createQuery(query, Object[].class);
+            List<Object[]> result = tq
+                    .setParameter("rennstreckenId", rennstreckenId)
+                    .getResultList();
 
-        for (Object[] row : result) {
-            String model = (String) row[0];
-            String motor = (String) row[1];
-            System.out.println("model: " + model + " motor: " + motor);
+            System.out.println("Gestartete Fahrzeuge auf dieser Rennstrecke: ");
+            for (Object[] row : result) {
+                String model = (String) row[0];
+                String motor = (String) row[1];
+                System.out.printf("Fahrzeug: Modell: %s, Motor: %s%n", model, motor);
+            }
+
+            if(result.isEmpty()) {
+                System.err.println("Keine Fahrzeuge auf dieser Rennstrecke gefunden.");
+            }
+        } catch (Exception e) {
+            if (et != null) {
+                et.rollback();
+            }
+            System.err.println("Fehler bei der Rennstrecken-Fahrzeugabfrage" + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            em.close();
         }
-        em.close();
     }
 }

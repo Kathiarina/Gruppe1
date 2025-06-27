@@ -12,16 +12,14 @@ import java.util.Scanner;
 
 public class TeamUI {
     private final Scanner scanner;
-    private final Menu menu;
 
     public TeamUI(Scanner scanner, Menu menu) {
         this.scanner = scanner;
-        this.menu = menu;
     }
 
     public void teamMenu() {
         while (true) {
-            menu.zeigeTeamMenu();
+            Menu.zeigeTeamMenu();
             String userEingabe = scanner.nextLine();
 
             switch (userEingabe) {

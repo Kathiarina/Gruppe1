@@ -23,12 +23,25 @@ public class RennenFahrerId implements Serializable {
         this.fahrerId = fahrerId;
     }
 
+    public int getFahrerId() {
+        return fahrerId;
+    }
+
+    public int getRennenId() {
+        return rennenId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RennenFahrerId that = (RennenFahrerId) o;
         return fahrerId == that.fahrerId && rennenId == that.rennenId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("RennenID: %s, FahrerID: %s", this.rennenId, this.fahrerId);
     }
 
     @Override

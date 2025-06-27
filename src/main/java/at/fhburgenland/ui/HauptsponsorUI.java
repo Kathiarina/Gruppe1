@@ -9,16 +9,14 @@ import java.util.Scanner;
 public class HauptsponsorUI {
 
     private final Scanner scanner;
-    private final Menu menu;
 
     public HauptsponsorUI(Scanner scanner, Menu menu) {
         this.scanner = scanner;
-        this.menu = menu;
     }
 
     public void hauptsponsorMenu() {
         while (true) {
-            menu.zeigeHauptsponsorMenu();
+            Menu.zeigeHauptsponsorMenu();
             String userEingabe = scanner.nextLine();
 
             switch (userEingabe) {

@@ -13,16 +13,14 @@ import java.util.Scanner;
 
 public class RennenUI {
     private final Scanner scanner;
-    private final Menu menu;
 
     public RennenUI(Scanner scanner, Menu menu) {
         this.scanner = scanner;
-        this.menu = menu;
     }
 
     public void rennenMenu() {
         while (true) {
-            menu.zeigeRennenMenu();
+            Menu.zeigeRennenMenu();
             String userEingabe = scanner.nextLine();
 
             switch (userEingabe) {

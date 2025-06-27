@@ -225,25 +225,24 @@ VALUES (default, 'Jorge', 'Martin', 9, 9);
 INSERT INTO Fahrer (fahrerId, vorname, nachname, nationalitaetsId, fahrzeugId)
 VALUES (default, 'Enea', 'Bastianini', 4, 10);
 
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (1, 1, 1, '1 hour 24 minutes 22.798 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (2, 1, 2, '1 hour 24 minutes 24.704 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (3, 1, 3, '1 hour 24 minutes 27.331 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (4, 1, 5, NULL);
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (5, 2, 1, '1 hour 25 minutes 33.607 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (6, 2, 2, '1 hour 25 minutes 38.762 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (7, 2, 3, '1 hour 25 minutes 50.795 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (3, 2, 4, '1 hour 26 minutes 04.984 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (1, 2, 4, '1 hour 26 minutes 22.010 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (2, 2, 4, '1 hour 26 minutes 20.176 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (5, 1, 4, '1 hour 25 minutes 00.051 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (6, 1, 4, '1 hour 25 minutes 29.854 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (7, 1, 4, '1 hour 25 minutes 17.470 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (4, 2, 4, '1 hour 25 minutes 59.934 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (8, 3, 1, '0 hour 42 minutes 11.173 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (11, 3, 2, '0 hour 42 minutes 14.405 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (12, 3, 3, '0 hour 42 minutes 18.530 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (8, 4, 1, '0 hour 42 minutes 23.315 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (9, 4, 2, '0 hour 42 minutes 28.506 seconds');
-INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit)VALUES (10, 4, 3, '0 hour 42 minutes 31.023 seconds');
-
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (1, 1, 1, '01:24:22.798');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (2, 1, 2, '01:24:24.704');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (3, 1, 3, '01:24:27.331');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (4, 1, 5, NULL);
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (5, 2, 1, '01:25:33.607');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (6, 2, 2, '01:25:38.762');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (7, 2, 3, '01:25:50.795');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (3, 2, 4, '01:26:04.984');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (1, 2, 4, '01:26:22.010');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (2, 2, 4, '01:26:20.176');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (5, 1, 4, '01:25:00.051');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (6, 1, 4, '01:25:29.854');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (7, 1, 4, '01:25:17.470');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (4, 2, 4, '01:25:59.934');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (8, 3, 1, '00:42:11.173');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (11, 3, 2, '00:42:14.405');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (12, 3, 3, '00:42:18.530');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (8, 4, 1, '00:42:23.315');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (9, 4, 2, '00:42:28.506');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (10, 4, 3, '00:42:31.023');
 

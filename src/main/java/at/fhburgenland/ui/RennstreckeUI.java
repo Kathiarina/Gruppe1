@@ -8,16 +8,14 @@ import java.util.Scanner;
 
 public class RennstreckeUI {
     private final Scanner scanner;
-    private final Menu menu;
 
     public RennstreckeUI(Scanner scanner, Menu menu) {
         this.scanner = scanner;
-        this.menu = menu;
     }
 
     public void rennstreckeMenu() {
         while (true) {
-            menu.zeigeRennstreckenMenu();
+            Menu.zeigeRennstreckenMenu();
             String userEingabe = scanner.nextLine();
 
             switch (userEingabe) {
