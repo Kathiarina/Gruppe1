@@ -63,6 +63,8 @@ public class RennenFahrerUI {
             }
             rennenFahrer.setRennen(rennen);
 
+            rennenFahrer.setRennenFahrerId(new RennenFahrerId(rennen.getRennenId(), fahrer.getFahrerId()));
+
             Status status = statusAuswaehlen();
             if (status == null) {
                 return;

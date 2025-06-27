@@ -76,6 +76,10 @@ public class RennenFahrer {
         this.rennen = rennen;
     }
 
+    public void setRennenFahrerId(RennenFahrerId rennenFahrerId) {
+        this.rennenFahrerId = rennenFahrerId;
+    }
+
     @Override
     public String toString() {
         return String.format("Fahrer %s - Rennen %s - Zeit: %s - Status: %s",

@@ -17,7 +17,7 @@ public class RennenFahrerService {
             et = em.getTransaction();
             et.begin();
             System.out.println("Rennen-Fahrer-Ergebnis erfolgreich gespeichert.");
-            em.persist(rennenFahrer);
+            em.merge(rennenFahrer);
             et.commit();
         } catch (Exception e) {
             if (et != null) {
