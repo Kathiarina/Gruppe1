@@ -6,9 +6,18 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+/**
+ * Service-Klasse zur Verwaltung von Fahrer-Entitäten
+ * Beinhaltet CRUD-Methoden und Überprüfung von Verknüpfungen
+ */
 public class FahrerService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
+    /**
+     * Speichert einen neuen Fahrer in der Datenbank
+     *
+     * @param fahrer Fahrer, der gespeichert wird
+     */
     public static void fahrerHinzufuegen(Fahrer fahrer) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -23,12 +32,16 @@ public class FahrerService {
                 et.rollback();
             }
             System.err.println("Fehler beim Speichern des Fahrers: " + e.getMessage());
-            e.printStackTrace();
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Gibt alle Fahrer aus der Datenbank zurück
+     *
+     * @return Liste aller Fahrer
+     */
     public static List<Fahrer> alleFahrerAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT f FROM Fahrer f";
@@ -39,13 +52,19 @@ public class FahrerService {
         try {
             fahrerListe = tq.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return fahrerListe;
     }
 
+    /**
+     * Sucht einen Fahrer anhand der ID und gibt ihn zurück und seine Informationen in der Konsole aus
+     *
+     * @param fahrerId ID des Fahrers
+     * @return Gefundener Fahrer oder null
+     */
     public static Fahrer fahrerAnzeigenNachId(int fahrerId) {
         EntityManager em = EMF.createEntityManager();
         Fahrer fahrer = null;
@@ -63,13 +82,18 @@ public class FahrerService {
                 System.err.println("Kein Fahrer mit dieser ID gefunden.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return fahrer;
     }
 
+    /**
+     * Aktualisiert einen Fahrer in der Datenbank
+     *
+     * @param fahrer Fahrer mit aktualisierten Werten
+     */
     public static void fahrerUpdaten(Fahrer fahrer) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -86,12 +110,17 @@ public class FahrerService {
             if (et != null) {
                 et.rollback();
             }
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Löscht einen Fahrer anhand seiner ID, wenn keine Verknüpfungen bestehen
+     *
+     * @param fahrerId ID des Fahrers, der gelöscht wird
+     */
     public static void fahrerLoeschen(int fahrerId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -115,17 +144,23 @@ public class FahrerService {
             em.remove(fahrer);
             et.commit();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println("Fehler beim Löschen des Fahrers.");
-                e.printStackTrace();
+                System.out.println("Fehler beim Löschen des Fahrers." + e.getMessage());
             }
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Prüft, ob ein Fahrzeug bereits einem anderen Fahrer zugeordnet ist
+     *
+     * @param fahrzeug             das zu überprüfende Fahrzeug
+     * @param ausgenommeneFahrerId ID des Fahrers, der ausgenommen werden soll
+     * @return true, wenn Fahrzeug vergeben ist, sonst false
+     */
     public static boolean fahrzeugBereitsVergeben(Fahrzeug fahrzeug, int ausgenommeneFahrerId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -141,29 +176,43 @@ public class FahrerService {
             if (et != null) {
                 et.rollback();
             }
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return false;
     }
 
+    /**
+     * Prüft, ob ein Fahrer mit anderen Entitäten verknüpft ist
+     * Wird verwendet, um das Löschen abzusichern
+     *
+     * @param fahrer Fahrer, der überprüft wird
+     * @return Rückgabe einer Begründung als String oder null, wenn keine Verknüpfung besteht
+     */
     public static String pruefeVerknuepfungMitFahrer(Fahrer fahrer) {
-        boolean hatNationalitaet = fahrer.getNationalitaet() != null;
-        boolean faehrtFahrzeug = fahrer.getFahrzeug() != null;
-
-        if (hatNationalitaet || faehrtFahrzeug) {
-            StringBuilder grund = new StringBuilder("Fahrer kann nicht gelöscht werden, da er ");
-            if (hatNationalitaet && faehrtFahrzeug) {
-                grund.append("einer Nationalität und einem Fahrzeug");
-            } else if (hatNationalitaet) {
-                grund.append("einer Nationalität ");
-            } else {
-                grund.append("einem Fahrzeug ");
+        if (fahrer == null) {
+            return "Fahrer ist null. Prüfung nicht möglich.";
+        }
+        try {
+            boolean hatNationalitaet = fahrer.getNationalitaet() != null;
+            boolean faehrtFahrzeug = fahrer.getFahrzeug() != null;
+            if (hatNationalitaet || faehrtFahrzeug) {
+                StringBuilder grund = new StringBuilder("Fahrer kann nicht gelöscht werden, da er ");
+                if (hatNationalitaet && faehrtFahrzeug) {
+                    grund.append("einer Nationalität und einem Fahrzeug");
+                } else if (hatNationalitaet) {
+                    grund.append("einer Nationalität ");
+                } else {
+                    grund.append("einem Fahrzeug ");
+                }
+                grund.append("zugeordnet ist.");
+                return grund.toString();
             }
-            grund.append("zugeordnet ist.");
-            return grund.toString();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
         return null;
     }
 }
+

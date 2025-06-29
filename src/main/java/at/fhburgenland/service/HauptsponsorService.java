@@ -4,10 +4,17 @@ import at.fhburgenland.model.Hauptsponsor;
 import jakarta.persistence.*;
 
 import java.util.List;
-
+/**
+ * Service-Klasse zur Verwaltung von Hauptsponsor-Entitäten
+ * Beinhaltet CRUD-Methoden und Überprüfung von Verknüpfungen
+ */
 public class HauptsponsorService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
+    /**
+     * Speichert einen neuen Hauptsponsor in der Datenbank
+     * @param hauptsponsor Hauptsponsor, der gespeichert wird
+     */
     public static void hauptsponsorHinzufuegen(Hauptsponsor hauptsponsor) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -22,12 +29,15 @@ public class HauptsponsorService {
                 et.rollback();
             }
             System.err.println("Fehler beim Speichern des Hauptsponsors: " + e.getMessage());
-            e.printStackTrace();
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Gibt alle Hauptsponsoren aus der Datenbank zurück
+     * @return Liste aller Hauptsponsoren
+     */
     public static List<Hauptsponsor> alleHauptsponsorenAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT hs FROM Hauptsponsor hs";
@@ -38,13 +48,18 @@ public class HauptsponsorService {
         try {
             hauptsponsorenListe = tq.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return hauptsponsorenListe;
     }
 
+    /**
+     * Sucht einen Hauptsponsor anhand der ID und gibt ihn zurück und seine Informationen in der Konsole aus
+     * @param hauptsponsorId ID des Hauptsponsors
+     * @return Gefundener Hauptsponsor oder null
+     */
     public static Hauptsponsor hauptsponsorAnzeigenNachId(int hauptsponsorId) {
         EntityManager em = EMF.createEntityManager();
         Hauptsponsor hauptsponsor = null;
@@ -60,13 +75,17 @@ public class HauptsponsorService {
                 System.err.println("Kein Hauptsponsor mit dieser ID gefunden.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return hauptsponsor;
     }
 
+    /**
+     * Aktualisiert einen Hauptsponsor in der Datenbank
+     * @param hauptsponsor Hauptsponsor mit aktualisierten Werten
+     */
     public static void hauptsponsorUpdaten(Hauptsponsor hauptsponsor) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -83,12 +102,16 @@ public class HauptsponsorService {
             if (et != null) {
                 et.rollback();
             }
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Löscht einen Hauptsponsor anhand der ID, wenn keine Verknüpfungen bestehen
+     * @param hauptsponsorId ID des Hauptsponsors, der gelöscht wird
+     */
     public static void hauptsponsorLoeschen(int hauptsponsorId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -112,8 +135,7 @@ public class HauptsponsorService {
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println("Fehler beim Löschen des Hauptsponsors.");
-                e.printStackTrace();
+                System.out.println("Fehler beim Löschen des Hauptsponsors." + e.getMessage());
             }
         } finally {
             em.close();

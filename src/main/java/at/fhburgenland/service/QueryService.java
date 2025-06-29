@@ -4,11 +4,17 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-
+/**
+ * Service-Klasse mit den Queries zur Teamplatzierung und zur Anzeige beteiligter Fahrzeugtypen auf einer bestimmten Rennstrecke
+ */
 public class QueryService {
 
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
+    /**
+     * Gibt eine Übersicht über die Platzierungen aller Teams aus
+     * Die Platzierungen (1. bis 3. Platz und Ausgeschieden) werden gezählt und pro Team aufgelistet
+     */
     public static void teamPlatzierung() {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -47,12 +53,16 @@ public class QueryService {
                 et.rollback();
             }
             System.err.println("Fehler bei der Team-Platzierungsabfrage" + e.getMessage());
-            e.printStackTrace();
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Gibt alle Fahrzeugtypen (Modell und Motor) aus, die auf einer bestimmten Rennstrecke gefahren sind
+     *
+     * @param rennstreckenId ID der Rennstrecke auf der die Fahrzeuge gefahren sind
+     */
     public static void beteiligteFahrzeugeAusgeben(int rennstreckenId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -80,7 +90,7 @@ public class QueryService {
                 System.out.printf("Fahrzeug: Modell: %s, Motor: %s%n", model, motor);
             }
 
-            if(result.isEmpty()) {
+            if (result.isEmpty()) {
                 System.err.println("Keine Fahrzeuge auf dieser Rennstrecke gefunden.");
             }
         } catch (Exception e) {
@@ -88,7 +98,6 @@ public class QueryService {
                 et.rollback();
             }
             System.err.println("Fehler bei der Rennstrecken-Fahrzeugabfrage" + e.getMessage());
-            e.printStackTrace();
         } finally {
             em.close();
         }

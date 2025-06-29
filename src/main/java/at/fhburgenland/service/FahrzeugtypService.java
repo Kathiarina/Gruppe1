@@ -5,9 +5,17 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+/**
+ * Service-Klasse zur Verwaltung von Fahrzeugtyp-Entitäten
+ * Beinhaltet CRUD-Methoden und Überprüfung von Verknüpfungen
+ */
 public class FahrzeugtypService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
+    /**
+     * Speichert einen neuen Fahrzeugtyp in der Datenbank
+     * @param fahrzeugtyp Fahrzeugtyp, der gespeichert wird
+     */
     public static void fahrzeugtypHinzufuegen(Fahrzeugtyp fahrzeugtyp) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -22,12 +30,15 @@ public class FahrzeugtypService {
                 et.rollback();
             }
             System.err.println("Fehler beim Speichern des Fahrzeugtyps: " + e.getMessage());
-            e.printStackTrace();
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Gibt alle Fahrzeugtypen aus der Datenbank zurück
+     * @return Liste aller Fahrzeugtypen
+     */
     public static List<Fahrzeugtyp> alleFahrzeugtypenAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT ft FROM Fahrzeugtyp ft";
@@ -38,13 +49,18 @@ public class FahrzeugtypService {
         try {
             fahrzeugtypenListe = tq.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return fahrzeugtypenListe;
     }
 
+    /**
+     * Sucht einen Fahrzeugtyp anhand der ID und gibt ihn zurück und seine Informationen in der Konsole aus
+     * @param fahrzeugtypId ID des Fahrzeugtyps
+     * @return Gefundener Fahrzeugtyp oder null
+     */
     public static Fahrzeugtyp fahrzeugtypAnzeigenNachId(int fahrzeugtypId) {
         EntityManager em = EMF.createEntityManager();
         Fahrzeugtyp fahrzeugtyp = null;
@@ -61,13 +77,17 @@ public class FahrzeugtypService {
                 System.err.println("Kein Fahrzeugtyp mit dieser ID gefunden.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return fahrzeugtyp;
     }
 
+    /**
+     * Aktualisiert einen Fahrzeugtyp in der Datenbank
+     * @param fahrzeugtyp Fahrzeugtyp mit aktualisierten Werten
+     */
     public static void fahrzeugtypUpdaten(Fahrzeugtyp fahrzeugtyp) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -84,12 +104,16 @@ public class FahrzeugtypService {
             if (et != null) {
                 et.rollback();
             }
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Löscht einen Fahrzeugtyp anhand der ID, wenn keine Verknüpfungen bestehen
+     * @param fahrzeugtypId ID des Fahrzeugtyps, der gelöscht wird
+     */
     public static void fahrzeugtypLoeschen(int fahrzeugtypId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -114,8 +138,7 @@ public class FahrzeugtypService {
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println("Fehler beim Löschen des Fahrzeugtyps.");
-                e.printStackTrace();
+                System.out.println("Fehler beim Löschen des Fahrzeugtyps." + e.getMessage());
             }
         } finally {
             em.close();

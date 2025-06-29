@@ -5,10 +5,18 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-
+/**
+ * Service-Klasse zur Verwaltung von Team-Entitäten
+ * Beinhaltet CRUD-Methoden und Überprüfung von Verknüpfungen
+ */
 public class TeamService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
+    /**
+     * Speichert ein neues Team in der Datenbank
+     *
+     * @param team Team, das gespeichert wird
+     */
     public static void teamHinzufuegen(Team team) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -23,12 +31,16 @@ public class TeamService {
                 et.rollback();
             }
             System.err.println("Fehler beim Speichern des Teams: " + e.getMessage());
-            e.printStackTrace();
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Gibt alle Teams aus der Datenbank zurück
+     *
+     * @return Liste aller Teams
+     */
     public static List<Team> alleTeamsAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT t FROM Team t";
@@ -39,13 +51,19 @@ public class TeamService {
         try {
             teamsListe = tq.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return teamsListe;
     }
 
+    /**
+     * Sucht ein Ream anhand der ID und gibt es zurück und seine Informationen in der Konsole aus
+     *
+     * @param teamId ID des Teams
+     * @return Gefundenes Team oder null
+     */
     public static Team teamAnzeigenNachId(int teamId) {
         EntityManager em = EMF.createEntityManager();
         Team team = null;
@@ -63,13 +81,18 @@ public class TeamService {
                 System.err.println("Kein Team mit dieser ID gefunden.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return team;
     }
 
+    /**
+     * Aktualisiert ein Team in der Datenbank
+     *
+     * @param team Team mit aktualisierten Werten
+     */
     public static void teamUpdaten(Team team) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -86,12 +109,17 @@ public class TeamService {
             if (et != null) {
                 et.rollback();
             }
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Löscht ein Team anhand der ID, wenn keine Verknüpfungen bestehen
+     *
+     * @param teamId ID des Teams, das gelöscht wird
+     */
     public static void teamLoeschen(int teamId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -118,14 +146,20 @@ public class TeamService {
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println("Fehler beim Löschen des Teams.");
-                e.printStackTrace();
+                System.out.println("Fehler beim Löschen des Teams." + e.getMessage());
             }
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Prüft, ob ein Hauptsponsor bereits einem anderen Team zugeordnet ist
+     *
+     * @param hauptsponsor       der zu überprüfende Hauptsponsor
+     * @param ausgenommeneTeamId ID des Teams, das ausgenommen werden soll
+     * @return true, wenn Hauptsponsor vergeben ist, sonst false
+     */
     public static boolean hauptsponsorBereitsVergeben(Hauptsponsor hauptsponsor, int ausgenommeneTeamId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -141,36 +175,51 @@ public class TeamService {
             if (et != null) {
                 et.rollback();
             }
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
         return false;
     }
 
+    /**
+     * Prüft, ob ein Team mit anderen Entitäten verknüpft ist
+     * Wird verwendet, um das Löschen abzusichern
+     *
+     * @param team Team, das überprüft wird
+     * @return Rückgabe einer Begründung als String oder null, wenn keine Verknüpfung besteht
+     */
     public static String pruefeVerknuepfungMitTeam(Team team) {
-        boolean hatNationalitaet = team.getNationalitaet() != null;
-        boolean hatHauptsponsor = team.getHauptsponsor() != null;
-        boolean besitztFahrzeug = team.getFahrzeug() != null && !team.getFahrzeug().isEmpty();
+        if (team == null) {
+            return "Team ist null. Prüfung nicht möglich.";
+        }
 
-        if (hatNationalitaet || hatHauptsponsor || besitztFahrzeug) {
-            StringBuilder grund = new StringBuilder("Team kann nicht gelöscht werden, da es ");
-            boolean first = true;
-            if (hatNationalitaet) {
-                grund.append("einer Nationalität");
-                first = false;
+        try {
+            boolean hatNationalitaet = team.getNationalitaet() != null;
+            boolean hatHauptsponsor = team.getHauptsponsor() != null;
+            boolean besitztFahrzeug = team.getFahrzeug() != null && !team.getFahrzeug().isEmpty();
+
+            if (hatNationalitaet || hatHauptsponsor || besitztFahrzeug) {
+                StringBuilder grund = new StringBuilder("Team kann nicht gelöscht werden, da es ");
+                boolean first = true;
+                if (hatNationalitaet) {
+                    grund.append("einer Nationalität");
+                    first = false;
+                }
+                if (hatHauptsponsor) {
+                    if (!first) grund.append(" & ");
+                    grund.append("einem Hauptsponsor");
+                    first = false;
+                }
+                if (besitztFahrzeug) {
+                    if (!first) grund.append(" & ");
+                    grund.append("einem Fahrzeug");
+                }
+                grund.append(" zugeordnet ist.");
+                return grund.toString();
             }
-            if (hatHauptsponsor) {
-                if (!first) grund.append(" & ");
-                grund.append("einem Hauptsponsor");
-                first = false;
-            }
-            if (besitztFahrzeug) {
-                if (!first) grund.append(" & ");
-                grund.append("einem Fahrzeug");
-            }
-            grund.append(" zugeordnet ist.");
-            return grund.toString();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
         return null;
     }

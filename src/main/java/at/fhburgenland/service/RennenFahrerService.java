@@ -6,16 +6,25 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+/**
+ * Service-Klasse zur Verwaltung von den Rennergebnissen
+ * Beinhaltet CRD-Methoden, keine Update-Methode, da das Rennergebnis gelöscht und dann ein neues geschrieben wird
+ */
 public class RennenFahrerService {
     private static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("project");
 
+    /**
+     * Speichert ein neues Rennergebnis in der Datenbank
+     *
+     * @param rennenFahrer Rennergebnis, das gespeichert wird
+     */
     public static void rennenFahrerHinzufuegen(RennenFahrer rennenFahrer) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
 
         try {
             RennenFahrer vorhandenesErgebnis = em.find(RennenFahrer.class, rennenFahrer.getRennenFahrerId());
-            if(vorhandenesErgebnis != null) {
+            if (vorhandenesErgebnis != null) {
                 throw new IllegalStateException("Rennergebnis existiert bereits.");
             }
             et = em.getTransaction();
@@ -32,6 +41,11 @@ public class RennenFahrerService {
         }
     }
 
+    /**
+     * Gibt alle Rennergebnisse aus der Datenbank zurück
+     *
+     * @return Liste aller Rennergebnisse
+     */
     public static List<RennenFahrer> alleRennenFahrerAnzeigen() {
         EntityManager em = EMF.createEntityManager();
         String query = "SELECT rf FROM RennenFahrer rf";
@@ -49,6 +63,12 @@ public class RennenFahrerService {
         return rennenFahrerListe;
     }
 
+    /**
+     * Sucht ein Rennergebnis anhand der ID und gibt es zurück und seine Informationen in der Konsole aus
+     *
+     * @param rennenFahrerId ID des Rennergebnisses
+     * @return Gefundenes Rennergebnis oder null
+     */
     public static RennenFahrer rennenFahrerAnzeigenNachId(RennenFahrerId rennenFahrerId) {
         EntityManager em = EMF.createEntityManager();
         RennenFahrer rennenFahrer = null;
@@ -73,28 +93,11 @@ public class RennenFahrerService {
         return rennenFahrer;
     }
 
-    public static void rennenFahrerUpdaten(RennenFahrer rennenFahrer) {
-        EntityManager em = EMF.createEntityManager();
-        EntityTransaction et = null;
-
-        try {
-            et = em.getTransaction();
-            et.begin();
-
-            em.merge(rennenFahrer);
-            et.commit();
-            System.out.println("Ergebnisse erfolgreich aktualisiert: " + rennenFahrer);
-
-        } catch (Exception e) {
-            if (et != null) {
-                et.rollback();
-            }
-            System.err.println(e.getMessage());
-        } finally {
-            em.close();
-        }
-    }
-
+    /**
+     * Löscht ein Rennergebnis anhand der ID
+     *
+     * @param rennenFahrerId ID des Rennergebnisses, das gelöscht wird
+     */
     public static void rennenFahrerLoeschen(RennenFahrerId rennenFahrerId) {
         EntityManager em = EMF.createEntityManager();
         EntityTransaction et = null;
@@ -108,7 +111,6 @@ public class RennenFahrerService {
                 et.rollback();
                 return;
             }
-
             em.remove(rennenFahrer);
             et.commit();
 
