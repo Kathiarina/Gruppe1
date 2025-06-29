@@ -10,6 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Rennergebnissen
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Rennergebnissen
+ */
 public class RennenFahrerUI {
     private final Scanner scanner;
 
@@ -17,6 +21,9 @@ public class RennenFahrerUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Rennergebnismenü und listet Optionen für User
+     */
     public void rennenFahrerMenu() {
         while (true) {
             Menu.zeigeRennenFahrerMenu();
@@ -47,6 +54,9 @@ public class RennenFahrerUI {
         }
     }
 
+    /**
+     * Erstellt ein neues Rennergebnis
+     */
     public void createRennenFahrer() {
         try {
             Fahrer fahrer = fahrerAuswaehlen();
@@ -74,7 +84,7 @@ public class RennenFahrerUI {
             String platzierung = status.getStatusBeschreibung();
 
             String zeit = zeitEingebenWennErforderlich(platzierung);
-            if(zeiteingabeErforderlichFuerStatus(platzierung) && zeit == null) {
+            if (zeiteingabeErforderlichFuerStatus(platzierung) && zeit == null) {
                 return;
             }
 
@@ -84,9 +94,11 @@ public class RennenFahrerUI {
         } catch (Exception e) {
             System.err.println("Rennergebnis konnte nicht angelegt werden." + e.getMessage());
         }
-
     }
 
+    /**
+     * Aktualisiert die Daten eines bereits existierenden Rennergebnisses
+     */
     public void updateRennenFahrer() {
         try {
             int rennenId;
@@ -157,7 +169,7 @@ public class RennenFahrerUI {
             if (zeitAendern.equals("j")) {
                 String platzierung = neuerStatus.getStatusBeschreibung();
                 neueZeit = zeitEingebenWennErforderlich(platzierung);
-                if(zeiteingabeErforderlichFuerStatus(platzierung) && neueZeit == null) {
+                if (zeiteingabeErforderlichFuerStatus(platzierung) && neueZeit == null) {
                     return;
                 }
             }
@@ -181,6 +193,9 @@ public class RennenFahrerUI {
         }
     }
 
+    /**
+     * Löscht ein Rennergebnis
+     */
     public void deleteRennenFahrer() {
         try {
             int rennenId;
@@ -209,6 +224,11 @@ public class RennenFahrerUI {
         }
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Fahrer zur Auswahl an
+     *
+     * @return der ausgewählte Fahrer oder null bei einem Fehler
+     */
     private Fahrer fahrerAuswaehlen() {
         List<Fahrer> fahrer = FahrerService.alleFahrerAnzeigen();
         if (fahrer.isEmpty()) {
@@ -235,6 +255,11 @@ public class RennenFahrerUI {
         return null;
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Rennen zur Auswahl an
+     *
+     * @return das ausgewählte Rennen oder null bei einem Fehler
+     */
     private Rennen rennenAuswaehlen() {
         List<Rennen> rennen = RennenService.alleRennenAnzeigen();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
@@ -263,6 +288,11 @@ public class RennenFahrerUI {
         return null;
     }
 
+    /**
+     * Zeigt eine Liste des verfügbaren Status zur Auswahl an
+     *
+     * @return der ausgewählte Status oder null bei einem Fehler
+     */
     private Status statusAuswaehlen() {
         List<Status> status = StatusService.alleStatusAnzeigen();
         if (status.isEmpty()) {
@@ -289,6 +319,11 @@ public class RennenFahrerUI {
         return null;
     }
 
+    /**
+     * Fragt eine präzise Zeitangabe vom Benutzer ab
+     * Prüft auf gültige numerische Eingaben
+     * Gibt die Zeit im Format HH:MM:SS.mmm zurück
+     */
     private String eingabeZeit() {
         try {
 
@@ -331,6 +366,12 @@ public class RennenFahrerUI {
         }
     }
 
+    /**
+     * Prüft, ob man für den Status eine Zeit eingeben muss
+     *
+     * @param statusBeschreibung Beschreibung des Status
+     * @return true, wenn eine Zeitangabe notwendig ist, sonst false
+     */
     private boolean zeiteingabeErforderlichFuerStatus(String statusBeschreibung) {
         return statusBeschreibung != null &&
                 (statusBeschreibung.equalsIgnoreCase("Erster Platz") ||
@@ -338,6 +379,13 @@ public class RennenFahrerUI {
                         statusBeschreibung.equalsIgnoreCase("Dritter Platz") ||
                         statusBeschreibung.equalsIgnoreCase("Teilgenommen"));
     }
+
+    /**
+     * Lässt den Benutzer Zeit eingeben, wenn sie für den gewählten Status erforderlich ist
+     *
+     * @param statusBeschreibung der gewählte Status
+     * @return Die eingegebene Zeit oder null bei ungültigen Werten
+     */
 
     private String zeitEingebenWennErforderlich(String statusBeschreibung) {
         if ("Ausgeschieden".equalsIgnoreCase(statusBeschreibung)) {
@@ -356,6 +404,9 @@ public class RennenFahrerUI {
         return null;
     }
 
+    /**
+     * Zeigt alle vorhandenen Rennergebnisse an
+     */
     private void alleRennenFahrerAnzeigen() {
         List<RennenFahrer> rennenFahrer = RennenFahrerService.alleRennenFahrerAnzeigen();
         try {
@@ -372,7 +423,6 @@ public class RennenFahrerUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Rennergebnisse" + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

@@ -11,6 +11,10 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Rennen
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Rennen
+ */
 public class RennenUI {
     private final Scanner scanner;
 
@@ -18,6 +22,9 @@ public class RennenUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Rennmenü und listet Optionen für User
+     */
     public void rennenMenu() {
         while (true) {
             Menu.zeigeRennenMenu();
@@ -48,6 +55,9 @@ public class RennenUI {
         }
     }
 
+    /**
+     * Erstellt ein neues Rennen mit zugewiesener Rennstrecke
+     */
     public void createRennen() {
         try {
             Rennen rennen = new Rennen();
@@ -79,6 +89,9 @@ public class RennenUI {
 
     }
 
+    /**
+     * Aktualisiert die Daten eines bereits existierenden Rennens
+     */
     public void updateRennen() {
         try {
             System.out.println("Bitte die ID des zu bearbeitenden Rennens eingeben:");
@@ -123,6 +136,9 @@ public class RennenUI {
         }
     }
 
+    /**
+     * Löscht ein Rennen, wenn keine Verknüpfungen bestehen
+     */
     public void deleteRennen() {
         try {
             System.out.println("Bitte die ID des zu löschenden Rennens eingeben:");
@@ -152,6 +168,11 @@ public class RennenUI {
         }
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Rennstrecken zur Auswahl an
+     *
+     * @return die ausgewählte Rennstrecke oder null bei einem Fehler
+     */
     private Rennstrecke rennstreckeAuswaehlen() {
         List<Rennstrecke> rennstrecken = RennstreckeService.alleRennstreckenAnzeigen();
         if (rennstrecken.isEmpty()) {
@@ -178,6 +199,9 @@ public class RennenUI {
         return null;
     }
 
+    /**
+     * Zeigt alle vorhandenen Rennen an
+     */
     private void alleRennenAnzeigen() {
         List<Rennen> rennen = RennenService.alleRennenAnzeigen();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
@@ -192,7 +216,6 @@ public class RennenUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Rennen" + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

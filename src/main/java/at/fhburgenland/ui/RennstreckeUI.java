@@ -6,6 +6,10 @@ import at.fhburgenland.service.RennstreckeService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Rennstrecken
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Rennstrecken
+ */
 public class RennstreckeUI {
     private final Scanner scanner;
 
@@ -13,6 +17,9 @@ public class RennstreckeUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Rennstreckenmenü und listet Optionen für User
+     */
     public void rennstreckeMenu() {
         while (true) {
             Menu.zeigeRennstreckenMenu();
@@ -43,6 +50,9 @@ public class RennstreckeUI {
         }
     }
 
+    /**
+     * Erstellt eine neue Rennstrecke
+     */
     public void createRennstrecke() {
         try {
             Rennstrecke rennstrecke = new Rennstrecke();
@@ -67,6 +77,9 @@ public class RennstreckeUI {
         }
     }
 
+    /**
+     * Aktualisiert die Daten einer bereits existierenden Rennstrecke
+     */
     public void updateRennstrecke() {
         try {
             System.out.println("Bitte die ID der zu bearbeitenden Rennstrecke eingeben:");
@@ -100,6 +113,9 @@ public class RennstreckeUI {
         }
     }
 
+    /**
+     * Löscht eine Rennstrecke, wenn keine Verknüpfungen bestehen
+     */
     public void deleteRennstrecke() {
         try {
             System.out.println("Bitte die ID der zu löschenden Rennstrecke eingeben:");
@@ -129,6 +145,9 @@ public class RennstreckeUI {
         }
     }
 
+    /**
+     * Zeigt alle vorhandenen Rennstrecken an
+     */
     private void alleRennstreckenAnzeigen() {
         List<Rennstrecke> rennstrecken = RennstreckeService.alleRennstreckenAnzeigen();
         try {
@@ -141,7 +160,6 @@ public class RennstreckeUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Rennstrecken." + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

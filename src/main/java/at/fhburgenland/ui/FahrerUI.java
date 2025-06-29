@@ -10,6 +10,10 @@ import at.fhburgenland.service.NationalitaetService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Fahrern
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Fahrern
+ */
 public class FahrerUI {
     private final Scanner scanner;
 
@@ -17,6 +21,9 @@ public class FahrerUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Fahrermenü und listet Optionen für User
+     */
     public void fahrerMenu() {
         while (true) {
             Menu.zeigeFahrerMenu();
@@ -47,6 +54,9 @@ public class FahrerUI {
         }
     }
 
+    /**
+     * Erstellt einen neuen Fahrer mit zugewiesener Nationalität und Fahrzeug
+     */
     public void createFahrer() {
         try {
             Fahrer fahrer = new Fahrer();
@@ -88,6 +98,9 @@ public class FahrerUI {
         }
     }
 
+    /**
+     * Aktualisiert die Daten eines bereits existierenden Fahrers
+     */
     public void updateFahrer() {
         try {
             System.out.println("Bitte die ID des zu bearbeitenden Fahrers eingeben:");
@@ -144,6 +157,9 @@ public class FahrerUI {
         }
     }
 
+    /**
+     * Löscht einen Fahrer, wenn keine Verknüpfungen bestehen
+     */
     public void deleteFahrer() {
         try {
             System.out.println("Bitte die ID des zu löschenden Fahrers eingeben:");
@@ -174,6 +190,10 @@ public class FahrerUI {
         }
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Fahrzeuge zur Auswahl an
+     * @return das ausgewählte Fahrzeug oder null bei einem Fehler
+     */
     private Fahrzeug fahrzeugAuswaehlen() {
         List<Fahrzeug> fahrzeuge = FahrzeugService.alleFahrzeugeAnzeigen();
         if (fahrzeuge == null || fahrzeuge.isEmpty()) {
@@ -195,11 +215,15 @@ public class FahrerUI {
                 System.err.println("Fahrzeug mit dieser ID wurde nicht gefunden.");
             }
         } catch (NumberFormatException e) {
-            System.err.println("Ungültige Fahrzeug-ID");
+            System.err.println("Ungültige Fahrzeug-ID" + e.getMessage());
         }
         return null;
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Nationalitäten zur Auswahl an
+     * @return die ausgewählte Nationalität oder null bei einem Fehler
+     */
     private Nationalitaet nationalitaetAuswaehlen() {
         List<Nationalitaet> nationalitaeten = NationalitaetService.alleNationalitaetenAnzeigen();
         if (nationalitaeten.isEmpty()) {
@@ -221,11 +245,14 @@ public class FahrerUI {
                 System.err.println("Nationalität mit dieser ID wurde nicht gefunden.");
             }
         } catch (NumberFormatException e) {
-            System.err.println("Ungültige Nationalitäts-ID");
+            System.err.println("Ungültige Nationalitäts-ID" + e.getMessage());
         }
         return null;
     }
 
+    /**
+     * Zeigt alle vorhandenen Fahrer an
+     */
     private void alleFahrerAnzeigen() {
         List<Fahrer> fahrer = FahrerService.alleFahrerAnzeigen();
         try {
@@ -238,7 +265,6 @@ public class FahrerUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Fahrer." + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

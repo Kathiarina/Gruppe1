@@ -10,6 +10,10 @@ import at.fhburgenland.service.TeamService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Fahrzeugen
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Fahrzeugen
+ */
 public class FahrzeugUI {
 
     private final Scanner scanner;
@@ -18,6 +22,9 @@ public class FahrzeugUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Fahrzeugmenü und listet Optionen für User
+     */
     public void fahrzeugMenu() {
         while (true) {
             Menu.zeigeFahrzeugMenu();
@@ -48,6 +55,9 @@ public class FahrzeugUI {
         }
     }
 
+    /**
+     * Erstellt ein neues Fahrzeug mit zugewiesenem Fahrzeugtyp und Team
+     */
     public void createFahrzeug() {
         try {
             Fahrzeug fahrzeug = new Fahrzeug();
@@ -71,6 +81,9 @@ public class FahrzeugUI {
         }
     }
 
+    /**
+     * Aktualisiert die Daten eines bereits existierenden Fahrzeugs
+     */
     public void updateFahrzeug() {
         try {
             System.out.println("Bitte die ID des zu bearbeitenden Fahrzeugs eingeben:");
@@ -112,6 +125,9 @@ public class FahrzeugUI {
         }
     }
 
+    /**
+     * Löscht ein Fahrzeug, wenn keine Verknüpfungen bestehen
+     */
     public void deleteFahrzeug() {
         try {
             System.out.println("Bitte die ID des zu löschenden Fahrzeugs eingeben:");
@@ -142,6 +158,11 @@ public class FahrzeugUI {
         }
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Fahrzeugtypen zur Auswahl an
+     *
+     * @return den ausgewählten Fahrzeugtyp oder null bei einem Fehler
+     */
     private Fahrzeugtyp fahrzeugtypAuswaehlen() {
         List<Fahrzeugtyp> fahrzeugtypen = FahrzeugtypService.alleFahrzeugtypenAnzeigen();
         if (fahrzeugtypen == null || fahrzeugtypen.isEmpty()) {
@@ -169,6 +190,11 @@ public class FahrzeugUI {
         return null;
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Teams zur Auswahl an
+     *
+     * @return das ausgewählte Team oder null bei einem Fehler
+     */
     private Team teamAuswaehlen() {
         List<Team> teams = TeamService.alleTeamsAnzeigen();
         if (teams.isEmpty()) {
@@ -195,6 +221,9 @@ public class FahrzeugUI {
         return null;
     }
 
+    /**
+     * Zeigt alle vorhandenen Fahrzeuge an
+     */
     private void alleFahrzeugeAnzeigen() {
         List<Fahrzeug> fahrzeuge = FahrzeugService.alleFahrzeugeAnzeigen();
         try {
@@ -207,7 +236,6 @@ public class FahrzeugUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Fahrzeuge." + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

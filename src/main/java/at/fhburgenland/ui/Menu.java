@@ -1,5 +1,8 @@
 package at.fhburgenland.ui;
 
+/**
+ * Stellt alle Menüanzeigen zur Verfügung
+ */
 public class Menu {
     private static final String hauptmenu = """
             Herzlich Willkommen zur Rennverwaltung!
@@ -122,6 +125,9 @@ public class Menu {
             3 - Zurück zum Hauptmenü
             """;
 
+    /**
+     * Display Methoden für die Menüs
+     */
     public static void hauptmenuAnzeigen() {
         System.out.println(hauptmenu);
     }

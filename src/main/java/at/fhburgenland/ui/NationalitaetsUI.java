@@ -6,6 +6,10 @@ import at.fhburgenland.service.NationalitaetService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Nationalitäten
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Nationalitäten
+ */
 public class NationalitaetsUI {
     private final Scanner scanner;
 
@@ -13,6 +17,9 @@ public class NationalitaetsUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Nationalitätsmenü und listet Optionen für User
+     */
     public void nationalitaetsMenu() {
         while (true) {
             Menu.zeigeNationalitaetsMenu();
@@ -43,6 +50,9 @@ public class NationalitaetsUI {
         }
     }
 
+    /**
+     * Erstellt eine neue Nationalität
+     */
     public void createNationalitaet() {
         try {
             Nationalitaet nationalitaet = new Nationalitaet();
@@ -63,6 +73,9 @@ public class NationalitaetsUI {
 
     }
 
+    /**
+     * Aktualisiert die Daten einer bereits existierenden Nationalität
+     */
     public void updateNationalitaet() {
         try {
             System.out.println("Bitte die ID der zu bearbeitenden Nationalität eingeben:");
@@ -92,6 +105,9 @@ public class NationalitaetsUI {
         }
     }
 
+    /**
+     * Löscht eine Nationalität, wenn keine Verknüpfungen bestehen
+     */
     public void deleteNationalitaet() {
         try {
             System.out.println("Bitte die ID der zu löschenden Nationalität eingeben:");
@@ -122,6 +138,9 @@ public class NationalitaetsUI {
         }
     }
 
+    /**
+     * Zeigt alle vorhandenen Nationalitäten an
+     */
     public void alleNationalitaetenAnzeigen() {
         List<Nationalitaet> nationalitaeten = NationalitaetService.alleNationalitaetenAnzeigen();
         try {
@@ -134,7 +153,6 @@ public class NationalitaetsUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Nationalitäten." + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

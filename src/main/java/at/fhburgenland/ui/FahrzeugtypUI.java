@@ -6,6 +6,10 @@ import at.fhburgenland.service.FahrzeugtypService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Fahrzeugtypen
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Fahrzeugtypen
+ */
 public class FahrzeugtypUI {
     private final Scanner scanner;
 
@@ -13,6 +17,9 @@ public class FahrzeugtypUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Fahrzeugtypmenü und listet Optionen für User
+     */
     public void fahrzeugtypMenu() {
         while (true) {
             Menu.zeigeFahrzeugtypMenu();
@@ -43,6 +50,9 @@ public class FahrzeugtypUI {
         }
     }
 
+    /**
+     * Erstellt einen neuen Fahrzeugtyp
+     */
     public void createFahrzeugtyp() {
         try {
             Fahrzeugtyp fahrzeugtyp = new Fahrzeugtyp();
@@ -80,6 +90,9 @@ public class FahrzeugtypUI {
 
     }
 
+    /**
+     * Aktualisiert die Daten eines bereits existierenden Fahrtyps
+     */
     public void updateFahrzeugtyp() {
         try {
             System.out.println("Bitte die ID des zu bearbeitenden Fahrzeugtyps eingeben:");
@@ -129,6 +142,9 @@ public class FahrzeugtypUI {
         }
     }
 
+    /**
+     * Löscht einen Fahrzeugtyp, wenn keine Verknüpfungen bestehen
+     */
     public void deleteFahrzeugtyp() {
         try {
             System.out.println("Bitte die ID des zu löschenden Fahrzeugtyps eingeben:");
@@ -146,7 +162,7 @@ public class FahrzeugtypUI {
                 return;
             }
 
-            if(!fahrzeugtyp.getFahrzeug().isEmpty()) {
+            if (!fahrzeugtyp.getFahrzeug().isEmpty()) {
                 System.err.println("Fahrzeugtyp ist einem Fahrzeug zugeordnet und kann daher nicht gelöscht werden.");
                 return;
             }
@@ -158,6 +174,9 @@ public class FahrzeugtypUI {
         }
     }
 
+    /**
+     * Zeigt alle vorhandenen Fahrzeugtypen an
+     */
     private void alleFahrzeugtypenAnzeigen() {
         List<Fahrzeugtyp> fahrzeugtypen = FahrzeugtypService.alleFahrzeugtypenAnzeigen();
         try {
@@ -168,10 +187,8 @@ public class FahrzeugtypUI {
             } else {
                 System.err.println("Keine Fahrzeugtypen gefunden.");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Fahrzeugtypen" + e.getMessage());
-            e.printStackTrace();
         }
-
     }
 }

@@ -10,6 +10,10 @@ import at.fhburgenland.service.TeamService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Teams
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Teams
+ */
 public class TeamUI {
     private final Scanner scanner;
 
@@ -17,6 +21,9 @@ public class TeamUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Teammenü und listet Optionen für User
+     */
     public void teamMenu() {
         while (true) {
             Menu.zeigeTeamMenu();
@@ -47,6 +54,9 @@ public class TeamUI {
         }
     }
 
+    /**
+     * Erstellt ein neues Team mit zugewiesenem Hauptsponsor
+     */
     public void createTeam() {
         try {
             Team team = new Team();
@@ -93,6 +103,9 @@ public class TeamUI {
         }
     }
 
+    /**
+     * Aktualisiert die Daten eines bereits existierenden Teams
+     */
     public void updateTeam() {
         try {
             System.out.println("Bitte die ID des zu bearbeitenden Teams eingeben:");
@@ -159,6 +172,9 @@ public class TeamUI {
         }
     }
 
+    /**
+     * Löscht ein Team, wenn keine Verknüpfungen bestehen
+     */
     public void deleteTeam() {
         try {
             System.out.println("Bitte die ID des zu löschenden Teams eingeben:");
@@ -189,6 +205,11 @@ public class TeamUI {
         }
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Hauptsponsoren zur Auswahl an
+     *
+     * @return den ausgewählten Hauptsponsor oder null bei einem Fehler
+     */
     private Hauptsponsor hauptsponsorAuswaehlen() {
         List<Hauptsponsor> hauptsponsoren = HauptsponsorService.alleHauptsponsorenAnzeigen();
         if (hauptsponsoren == null || hauptsponsoren.isEmpty()) {
@@ -215,6 +236,11 @@ public class TeamUI {
         return null;
     }
 
+    /**
+     * Zeigt eine Liste der verfügbaren Nationalitäten zur Auswahl an
+     *
+     * @return die ausgewählte Nationalität oder null bei einem Fehler
+     */
     private Nationalitaet nationalitaetAuswaehlen() {
         List<Nationalitaet> nationalitaeten = NationalitaetService.alleNationalitaetenAnzeigen();
         if (nationalitaeten.isEmpty()) {
@@ -241,6 +267,9 @@ public class TeamUI {
         return null;
     }
 
+    /**
+     * Zeigt alle vorhandenen Teams an
+     */
     private void alleTeamsAnzeigen() {
         List<Team> team = TeamService.alleTeamsAnzeigen();
         try {
@@ -253,7 +282,6 @@ public class TeamUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Teams." + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

@@ -6,6 +6,10 @@ import at.fhburgenland.service.HauptsponsorService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Benutzeroberfläche zur Verwaltung von Hauptsponsoren
+ * Bietet Funktionen zur Anzeige, Erstellung, Bearbeitung und Löschung von Hauptsponsoren
+ */
 public class HauptsponsorUI {
 
     private final Scanner scanner;
@@ -14,6 +18,9 @@ public class HauptsponsorUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Hauptsponsormenü und listet Optionen für User
+     */
     public void hauptsponsorMenu() {
         while (true) {
             Menu.zeigeHauptsponsorMenu();
@@ -44,6 +51,9 @@ public class HauptsponsorUI {
         }
     }
 
+    /**
+     * Erstellt einen neuen Hauptsponsor
+     */
     public void createHauptsponsor() {
         try {
             Hauptsponsor hauptsponsor = new Hauptsponsor();
@@ -72,6 +82,9 @@ public class HauptsponsorUI {
         }
     }
 
+    /**
+     * Aktualisiert die Daten eines bereits existierenden Hauptsponsors
+     */
     public void updateHauptsponsor() {
         try {
             System.out.println("Bitte die ID des zu bearbeitenden Hauptsponsors eingeben:");
@@ -115,6 +128,9 @@ public class HauptsponsorUI {
         }
     }
 
+    /**
+     * Löscht einen Hauptsponsor, wenn keine Verknüpfungen bestehen
+     */
     public void deleteHauptsponsor() {
         try {
             System.out.println("Bitte die ID des zu löschenden Hauptsponsors eingeben:");
@@ -143,6 +159,9 @@ public class HauptsponsorUI {
         }
     }
 
+    /**
+     * Zeigt alle vorhandenen Hauptsponsoren an
+     */
     private void alleHauptsponsorenAnzeigen() {
         List<Hauptsponsor> hauptsponsoren = HauptsponsorService.alleHauptsponsorenAnzeigen();
         try {
@@ -155,7 +174,6 @@ public class HauptsponsorUI {
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Anzeigen der Hauptsponsoren." + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

@@ -7,6 +7,9 @@ import at.fhburgenland.service.RennstreckeService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Die Benutzeroberfläche für die Abfragen wird in dieser Klasse dargestellt und die eingaben verarbeitet
+ */
 public class QueryUI {
     private final Scanner scanner;
 
@@ -14,6 +17,9 @@ public class QueryUI {
         this.scanner = scanner;
     }
 
+    /**
+     * Startet das Abfragenmenü und listet Optionen für User
+     */
     public void queriesMenu() {
         while (true) {
             Menu.zeigeQueriesMenu();
@@ -39,6 +45,11 @@ public class QueryUI {
         }
     }
 
+    /**
+     * Listet alle verfügbaren Rennstrecken auf und lässt eine auswählen
+     *
+     * @return die ausgewählte Rennstrecke oder null bei einem Fehler
+     */
     private Rennstrecke rennstreckeAuswaehlen() {
         List<Rennstrecke> rennstrecken = RennstreckeService.alleRennstreckenAnzeigen();
         if (rennstrecken.isEmpty()) {
@@ -60,7 +71,7 @@ public class QueryUI {
                 System.err.println("Rennstrecke mit dieser ID wurde nicht gefunden.");
             }
         } catch (NumberFormatException e) {
-            System.err.println("Ungültige Rennstrecken-ID");
+            System.err.println("Ungültige Rennstrecken-ID" + e.getMessage());
         }
         return null;
     }
