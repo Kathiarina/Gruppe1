@@ -4,6 +4,10 @@ import at.fhburgenland.ui.*;
 
 import java.util.Scanner;
 
+/**
+ * Klasse für die Steuerung des Rennverwaltungssystems
+ * Zeigt das Hauptmenü an und der Nutzer ruft dann die verschiedenen UI-Klassen auf
+ */
 public class RennverwaltungDriver {
     Scanner scanner = new Scanner(System.in);
     private final Menu menu = new Menu();
@@ -19,6 +23,10 @@ public class RennverwaltungDriver {
     private final QueryUI queryUI = new QueryUI(scanner, menu);
     private boolean systemRunning = true;
 
+    /**
+     * Startet die Hauptschleife der Rennverwaltung und zeigt das Hauptmenü
+     * Je nach Benutzereingabe wird das jeweilige Untermenü geöffnet
+     */
     public void rennverwaltungStart() {
         while (systemRunning) {
             Menu.hauptmenuAnzeigen();

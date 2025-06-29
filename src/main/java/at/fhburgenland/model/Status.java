@@ -2,6 +2,12 @@ package at.fhburgenland.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Repräsentiert einen Status im Rennen
+*/
 @Entity(name = "Status")
 @Table(name = "status")
 
@@ -14,6 +20,15 @@ public class Status {
     @Column(name = "statusBeschreibung", updatable = false, nullable = false)
     private String statusBeschreibung;
 
+    /**
+     * Liste der Rennergebnisse, die einen Status haben (1:n Beziehung)
+     */
+    @OneToMany(mappedBy = "status")
+    private List<RennenFahrer> rennenFahrerList = new ArrayList<>();
+
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Status() {
 
     }
@@ -30,10 +45,9 @@ public class Status {
         return statusBeschreibung;
     }
 
-    public void setStatusBeschreibung(String statusBeschreibung) {
-        this.statusBeschreibung = statusBeschreibung;
-    }
-
+    /**
+     * Gibt eine textuelle Darstellung des Status zurück
+     */
     @Override
     public String toString() {
         return String.format("Status: %s", this.statusBeschreibung);

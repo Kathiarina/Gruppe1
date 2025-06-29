@@ -3,7 +3,11 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Repräsentiert einen Fahrzeugtyp
+ * Ein Fahrzeugtyp beschreibt technische Merkmale wie Modell, Motor und Gewicht
+ * Ein Fahrzeugtyp kann mehreren Fahrzeugen zugeordnet sein
+ */
 @Entity(name = "Fahrzeugtyp")
 @Table(name = "fahrzeugtyp")
 public class Fahrzeugtyp {
@@ -22,9 +26,15 @@ public class Fahrzeugtyp {
     @Column(name = "gewichtKg", nullable = false)
     private int gewichtKg;
 
+    /**
+     * Liste aller Fahrzeuge die diesem Typ zugeordnet sind (1:n Beziehung)
+     */
     @OneToMany(mappedBy = "fahrzeugtyp", fetch = FetchType.EAGER)
     List<Fahrzeug> fahrzeug = new ArrayList<>();
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Fahrzeugtyp() {
     }
 
@@ -66,6 +76,9 @@ public class Fahrzeugtyp {
         this.gewichtKg = gewichtKg;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung des Fahrzeugtyps zurück
+     */
     @Override
     public String toString() {
         return String.format("Fahrzeugtyp: Modell %s, Motor %s, Gewicht %dkg", this.modell, this.motor, this.gewichtKg);

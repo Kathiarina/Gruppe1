@@ -1,7 +1,11 @@
 package at.fhburgenland.model;
 
 import jakarta.persistence.*;
-
+/**
+ * Repräsentiert einen Hauptsponsor von einem Team
+ * Ein Hauptsponsor hat einen Namen und die jährliche Sponsorsumme
+ * Ein Hauptsponsor kann genau einem Team zugeordnet sein
+*/
 @Entity(name = "Hauptsponsor")
 @Table(name = "hauptsponsor")
 public class Hauptsponsor {
@@ -17,9 +21,15 @@ public class Hauptsponsor {
     @Column(name = "jaehrlicheSponsorsumme", updatable = true, nullable = false)
     private int jaehrlicheSponsorsumme;
 
+    /**
+     * Team das dem Hauptsponsor zugeordnet ist (1:1 Beziehung)
+     */
     @OneToOne(mappedBy = "hauptsponsor")
     private Team team;
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Hauptsponsor() {
     }
 
@@ -52,6 +62,9 @@ public class Hauptsponsor {
         this.jaehrlicheSponsorsumme = jaehrlicheSponsorsumme;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung des Hauptsponsors zurück
+     */
     @Override
     public String toString() {
         return String.format("Hauptsponsor: %s, %d€ ", this.hauptsponsorName, this.jaehrlicheSponsorsumme);

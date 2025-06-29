@@ -138,6 +138,7 @@ INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '202
 INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2023-07-02 15:00:00', 1);
 INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2024-08-18 14:00:00', 2);
 INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2023-08-20 14:00:00', 2);
+INSERT INTO Rennen (rennenId, datumUhrzeit, rennstreckenId)VALUES (default, '2025-06-29 15:00:00', 1);
 
 INSERT INTO Team (teamId, teamName, gruendungsjahr, nationalitaetsId, hauptsponsorId)
 VALUES (default, 'Mercedes', 2009, 2, 1);
@@ -245,4 +246,9 @@ INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (12, 3, 3, 
 INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (8, 4, 1, '00:42:23.315');
 INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (9, 4, 2, '00:42:28.506');
 INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (10, 4, 3, '00:42:31.023');
-
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (5, 5, 5, NULL);
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (1, 5, 4, '01:24:50.089');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (2, 5, 2, '01:23:50.388');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (3, 5, 5, NULL);
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (4, 5, 1, '01:23:47.693');
+INSERT INTO RennenFahrer (fahrerId, rennenId, statusId, zeit) VALUES (6, 5, 3, '01:24:07.513');

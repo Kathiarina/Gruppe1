@@ -14,9 +14,12 @@ public class RennenFahrerService {
         EntityTransaction et = null;
 
         try {
+            RennenFahrer vorhandenesErgebnis = em.find(RennenFahrer.class, rennenFahrer.getRennenFahrerId());
+            if(vorhandenesErgebnis != null) {
+                throw new IllegalStateException("Rennergebnis existiert bereits.");
+            }
             et = em.getTransaction();
             et.begin();
-            System.out.println("Rennen-Fahrer-Ergebnis erfolgreich gespeichert.");
             em.merge(rennenFahrer);
             et.commit();
         } catch (Exception e) {
@@ -24,7 +27,6 @@ public class RennenFahrerService {
                 et.rollback();
             }
             System.err.println("Fehler beim Speichern des Ergebnisses: " + e.getMessage());
-            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -40,7 +42,7 @@ public class RennenFahrerService {
         try {
             rennenFahrerListe = tq.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
@@ -64,7 +66,7 @@ public class RennenFahrerService {
                 System.err.println("Kein Rennergebnis mit dieser ID gefunden.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
@@ -87,7 +89,7 @@ public class RennenFahrerService {
             if (et != null) {
                 et.rollback();
             }
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             em.close();
         }
@@ -113,8 +115,7 @@ public class RennenFahrerService {
         } catch (Exception e) {
             if (et != null) {
                 et.rollback();
-                System.out.println("Fehler beim Löschen des Rennergebnisses.");
-                e.printStackTrace();
+                System.err.println("Fehler beim Löschen des Rennergebnisses." + e.getMessage());
             }
         } finally {
             em.close();

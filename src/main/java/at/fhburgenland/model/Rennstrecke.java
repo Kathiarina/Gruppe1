@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repräsentiert eine Rennstrecke
+ * Eine Rennstrecke hat Ort und Bundesland
+ * Eine Rennstrecke kann mehrere Rennen austragen
+ */
 @Entity(name = "Rennstrecke")
 @Table(name = "rennstrecke")
 public class Rennstrecke {
@@ -20,9 +25,15 @@ public class Rennstrecke {
     @Column(name = "bundesland", nullable = false, length = 30)
     private String bundesland;
 
+    /**
+     * Liste der Rennen die auf dieser Rennstrecke ausgetragen werden (1:n Beziehung)
+     */
     @OneToMany(mappedBy = "rennstrecke", fetch = FetchType.EAGER)
     List<Rennen> rennen = new ArrayList<>();
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Rennstrecke() {
     }
 
@@ -59,6 +70,9 @@ public class Rennstrecke {
         this.bundesland = bundesland;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung der Rennstrecke zurück
+     */
     @Override
     public String toString() {
         return String.format("Rennstrecke: Ort: %s, Bundesland: %s", this.ort, this.bundesland);

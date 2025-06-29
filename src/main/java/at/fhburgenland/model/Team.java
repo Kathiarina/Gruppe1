@@ -3,7 +3,10 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Repräsentiert ein Rennteam
+ * Ein Team hat einen Namen, ein Gründungsjahr, eine Nationalität, mehrere Fahrzeuge und einen Hauptsponsor
+ */
 @Entity(name = "Team")
 @Table(name = "team")
 public class Team {
@@ -19,17 +22,30 @@ public class Team {
     @Column(name = "gruendungsjahr", nullable = false)
     private int gruendungsjahr;
 
+    /**
+     * Liste der Fahrzeuge, die diesem Team zugeordnet sind (1:n Beziehung)
+     */
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     List<Fahrzeug> fahrzeug = new ArrayList<>();
 
+    /**
+     * Hauptsponsor des Teams
+     * Jedes Team hat genau einen Hauptsponsor (1:1 Beziehung)
+     */
     @OneToOne
     @JoinColumn(name = "hauptsponsorId", nullable = false)
     private Hauptsponsor hauptsponsor;
 
+    /**
+     * Nationalität des Teams (1:n Beziehung)
+     */
     @ManyToOne
     @JoinColumn(name = "nationalitaetsId", nullable = false)
     private Nationalitaet nationalitaet;
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Team() {
     }
 
@@ -80,6 +96,9 @@ public class Team {
         this.nationalitaet = nationalitaet;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung des Teams zurück
+     */
     @Override
     public String toString() {
         return String.format("Team: %s, Gründungsjahr %d, %s, %s", this.teamName, this.gruendungsjahr, this.nationalitaet, this.hauptsponsor);

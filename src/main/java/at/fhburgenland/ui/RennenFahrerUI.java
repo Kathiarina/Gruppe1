@@ -49,43 +49,36 @@ public class RennenFahrerUI {
 
     public void createRennenFahrer() {
         try {
-            RennenFahrer rennenFahrer = new RennenFahrer();
-
             Fahrer fahrer = fahrerAuswaehlen();
             if (fahrer == null) {
                 return;
             }
-            rennenFahrer.setFahrer(fahrer);
 
             Rennen rennen = rennenAuswaehlen();
             if (rennen == null) {
                 return;
             }
-            rennenFahrer.setRennen(rennen);
 
-            rennenFahrer.setRennenFahrerId(new RennenFahrerId(rennen.getRennenId(), fahrer.getFahrerId()));
+            RennenFahrerId id = new RennenFahrerId(rennen.getRennenId(), fahrer.getFahrerId());
+            if (RennenFahrerService.rennenFahrerAnzeigenNachId(id) != null) {
+                System.err.println("Dieser Fahrer hat für dieses Rennen bereits ein Ergebnis eingetragen.");
+                System.err.println("Zum Ändern bitte Menüpunkt 3 auswählen.");
+                return;
+            }
 
             Status status = statusAuswaehlen();
             if (status == null) {
                 return;
             }
-            rennenFahrer.setStatus(status);
 
-            System.out.println("Bitte die Zeit für das gefahrene Rennen eingeben:");
-            String zeit = eingabeZeit();
-            if (zeit == null || zeit.isEmpty()) {
-                System.err.println("Zeit darf nicht leer sein.");
+            String platzierung = status.getStatusBeschreibung();
+
+            String zeit = zeitEingebenWennErforderlich(platzierung);
+            if(zeiteingabeErforderlichFuerStatus(platzierung) && zeit == null) {
                 return;
             }
-            if (!zeit.isBlank()) {
-                try {
-                    rennenFahrer.setZeit(zeit);
-                } catch (NumberFormatException e) {
-                    System.out.println("Ungültige Zeit.");
-                    return;
-                }
-            }
 
+            RennenFahrer rennenFahrer = new RennenFahrer(fahrer, rennen, status, zeit);
             RennenFahrerService.rennenFahrerHinzufuegen(rennenFahrer);
             System.out.println("Rennergebnis erfolgreich gespeichert.");
         } catch (Exception e) {
@@ -160,17 +153,23 @@ public class RennenFahrerUI {
 
             System.out.println("Möchten Sie die Zeit ändern? (j/n):");
             String zeitAendern = scanner.nextLine().toLowerCase();
-            String neueZeit;
+            String neueZeit = aktuelleZeit;
             if (zeitAendern.equals("j")) {
-                neueZeit = eingabeZeit();
-                if (neueZeit == null) {
-                    System.err.println("Keine gültige Zeit ausgewählt.");
+                String platzierung = neuerStatus.getStatusBeschreibung();
+                neueZeit = zeitEingebenWennErforderlich(platzierung);
+                if(zeiteingabeErforderlichFuerStatus(platzierung) && neueZeit == null) {
                     return;
                 }
-            } else {
-                neueZeit = aktuelleZeit;
             }
 
+            if (neuerFahrer.getFahrerId() != aktuellerFahrer.getFahrerId()
+                    || neuesRennen.getRennenId() != aktuellesRennen.getRennenId()) {
+                RennenFahrerId neueId = new RennenFahrerId(neuesRennen.getRennenId(), neuerFahrer.getFahrerId());
+                if (RennenFahrerService.rennenFahrerAnzeigenNachId(neueId) != null) {
+                    System.err.println("Ein Rennergebnis mit dieser Kombination aus Fahrer und Rennen existiert bereits. Änderung ist nicht möglich.");
+                    return;
+                }
+            }
             RennenFahrerService.rennenFahrerLoeschen(rennenFahrerAlt.getRennenFahrerId());
 
             RennenFahrer neuerEintrag = new RennenFahrer(neuerFahrer, neuesRennen, neuerStatus, neueZeit);
@@ -292,14 +291,28 @@ public class RennenFahrerUI {
 
     private String eingabeZeit() {
         try {
+
+            System.out.println("Bitte die Zeit für das gefahrene Rennen eingeben:");
             System.out.println("Stunden eingeben (z.B. 1): ");
-            int stunden = Integer.parseInt(scanner.nextLine());
+            String stundenEingabe = scanner.nextLine();
+            if (stundenEingabe.isBlank()) {
+                return null;
+            }
+            int stunden = Integer.parseInt(stundenEingabe);
 
             System.out.println("Minuten eingeben (z.B. 22): ");
-            int minuten = Integer.parseInt(scanner.nextLine());
+            String minutenEingabe = scanner.nextLine();
+            if (minutenEingabe.isBlank()) {
+                return null;
+            }
+            int minuten = Integer.parseInt(minutenEingabe);
 
             System.out.println("Sekunden mit Millisekunden eingeben (z.B. 22.798): ");
-            double sekundenKomplett = Double.parseDouble(scanner.nextLine());
+            String sekundenEingabe = scanner.nextLine();
+            if (sekundenEingabe.isBlank()) {
+                return null;
+            }
+            double sekundenKomplett = Double.parseDouble(sekundenEingabe);
 
             int sekunden = (int) sekundenKomplett;
             int millisekunden = (int) Math.round((sekundenKomplett - sekunden) * 1000);
@@ -318,6 +331,31 @@ public class RennenFahrerUI {
         }
     }
 
+    private boolean zeiteingabeErforderlichFuerStatus(String statusBeschreibung) {
+        return statusBeschreibung != null &&
+                (statusBeschreibung.equalsIgnoreCase("Erster Platz") ||
+                        statusBeschreibung.equalsIgnoreCase("Zweiter Platz") ||
+                        statusBeschreibung.equalsIgnoreCase("Dritter Platz") ||
+                        statusBeschreibung.equalsIgnoreCase("Teilgenommen"));
+    }
+
+    private String zeitEingebenWennErforderlich(String statusBeschreibung) {
+        if ("Ausgeschieden".equalsIgnoreCase(statusBeschreibung)) {
+            System.out.println("Fahrer ist ausgeschieden, keine Zeiteingabe möglich.");
+            return null;
+        }
+
+        if (zeiteingabeErforderlichFuerStatus(statusBeschreibung)) {
+            String zeit = eingabeZeit();
+            if (zeit == null) {
+                System.err.println("Bei diesem Status muss eine gültige Zeit eingegeben werden.");
+                return null;
+            }
+            return zeit;
+        }
+        return null;
+    }
+
     private void alleRennenFahrerAnzeigen() {
         List<RennenFahrer> rennenFahrer = RennenFahrerService.alleRennenFahrerAnzeigen();
         try {
@@ -327,7 +365,8 @@ public class RennenFahrerUI {
                             rf.getRennenFahrerId().getRennenId(),
                             rf.getRennenFahrerId().getFahrerId(),
                             rf.getStatus().getStatusBeschreibung(),
-                            rf.getZeit()); }
+                            rf.getZeit());
+                }
             } else {
                 System.err.println("Keine Rennergebnisse gefunden.");
             }

@@ -1,6 +1,10 @@
 package at.fhburgenland.model;
 import jakarta.persistence.*;
-
+/**
+ * Repräsentiert ein Fahrzeug
+ * Jedes Fahrzeug ist einem Fahrzeugtyp und einem Team zugeordnet
+ * Ein Fahrzeug kann genau einem Fahrer zugeordnet sein
+ */
 @Entity(name = "Fahrzeug")
 @Table(name = "fahrzeug")
 public class Fahrzeug {
@@ -9,17 +13,29 @@ public class Fahrzeug {
     @Column(name = "fahrzeugId", updatable = false, nullable = false)
     private int fahrzeugId;
 
+    /**
+     * Mehrere Fahrzeuge können denselben Fahrzeugtyp haben (1:n Beziehung)
+     */
     @ManyToOne
     @JoinColumn(name = "fahrzeugtypId", nullable = false)
     private Fahrzeugtyp fahrzeugtyp;
 
+    /**
+     * Mehrere Fahrzeuge können demselben Team zugewiesen sein (1:n Beziehung)
+     */
     @ManyToOne
     @JoinColumn(name = "teamId", nullable = false)
     private Team team;
 
+    /**
+     * Ein Fahrzeug kann von genau einem Fahrer genutzt werden (1:1 Beziehung)
+     */
     @OneToOne(mappedBy = "fahrzeug")
     private Fahrer fahrer;
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Fahrzeug() {
     }
 
@@ -52,6 +68,9 @@ public class Fahrzeug {
         this.fahrzeugtyp = fahrzeugtyp;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung des Fahrzeugs zurück
+     */
     @Override
     public String toString() {
         return String.format("Fahrzeug: %s, %s", this.fahrzeugtyp, this.team);

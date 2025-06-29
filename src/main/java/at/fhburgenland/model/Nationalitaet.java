@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
+/**
+ * Repräsentiert eine Nationalität
+ * Eine Nationalität hat eine Beschreibung
+ * Eine Nationalität kann mehreren Fahrern und mehreren Teams zugeordnet sein
+ */
 @Entity(name = "Nationalitaet")
 @Table(name = "nationalitaet")
 public class Nationalitaet {
@@ -18,12 +21,21 @@ public class Nationalitaet {
     @Column(name = "nationalitaetsBeschreibung", nullable = false, length = 30)
     private String nationalitaetsBeschreibung;
 
+    /**
+     * Liste aller Teams die dieser Nationalität zugeordnet sind (1:n Beziehung)
+     */
     @OneToMany(mappedBy = "nationalitaet", fetch = FetchType.EAGER)
     private List<Team> team = new ArrayList<>();
 
+    /**
+     * Liste aller Fahrer die dieser Nationalität zugeordnet sind (1:n Beziehung)
+     */
     @OneToMany(mappedBy = "nationalitaet", fetch = FetchType.EAGER)
     private List<Fahrer> fahrer = new ArrayList<>();
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Nationalitaet() {
     }
 
@@ -59,6 +71,9 @@ public class Nationalitaet {
         this.nationalitaetsBeschreibung = nationalitaetsBeschreibung;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung der Nationalität zurück
+     */
     @Override
     public String toString() {
         return String.format("Nationalität: %s", this.nationalitaetsBeschreibung);

@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Repräsentiert ein Rennen
+ * Ein Rennen hat ein Datum und eine Uhrzeit und eine zugehörige Rennstrecke
+ * Jedes Rennen ist einer Rennstrecke zugeordnet und ist mit einer Zwischentabelle mit mehreren Fahrern verbunden
+ */
 @Entity(name = "Rennen")
 @Table(name = "rennen")
 public class Rennen {
@@ -19,13 +22,22 @@ public class Rennen {
     @Column(name = "datumUhrzeit", nullable = false)
     private LocalDateTime datumUhrzeit;
 
+    /**
+     * Die Rennstrecke auf der das Rennen stattfindet (1:n Beziehung)
+     */
     @ManyToOne
     @JoinColumn(name = "rennstreckenId", nullable = false)
     private Rennstrecke rennstrecke;
 
+    /**
+     * Liste der Rennergebnisse, die auf diesem Rennen stattgefunden haben
+     */
     @OneToMany(mappedBy = "rennen")
     private List<RennenFahrer> fahrerZuordnungen;
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public Rennen() {
     }
 
@@ -46,10 +58,6 @@ public class Rennen {
         return rennstrecke;
     }
 
-    public List<RennenFahrer> getFahrerZuordnungen() {
-        return fahrerZuordnungen;
-    }
-
     public void setDatumUhrzeit(LocalDateTime datumUhrzeit) {
         this.datumUhrzeit = datumUhrzeit;
     }
@@ -58,6 +66,9 @@ public class Rennen {
         this.rennstrecke = rennstrecke;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung des Rennens zurück
+     */
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");

@@ -2,33 +2,46 @@ package at.fhburgenland.model;
 
 import jakarta.persistence.*;
 
-import java.time.Duration;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
+/**
+ * Zwischentabelle zwischen Fahrer und Rennen
+ * Repräsentiert die Teilnahme eines Fahrers an einem bestimmten Rennen
+ * Hat Status und Zeit als zusätzliche Attribute, daher keine reine m:n Beziehung
+ */
 @Entity(name = "RennenFahrer")
 @Table(name = "rennenFahrer")
 public class RennenFahrer {
     @EmbeddedId
     private RennenFahrerId rennenFahrerId;
 
+    /**
+     * Fahrer, der an dem Rennen teilgenommen hat (1:n Beziehung)
+     */
     @ManyToOne
     @MapsId("fahrerId")
     @JoinColumn(name = "fahrerId")
     private Fahrer fahrer;
 
+    /**
+     * Rennen, das stattgefunden hat (1:n Beziehung)
+     */
     @ManyToOne
     @MapsId("rennenId")
     @JoinColumn(name = "rennenId")
     private Rennen rennen;
 
+    /**
+     * Status der Rennergebnisse (1:n Beziehung)
+     */
     @ManyToOne
     @JoinColumn(name = "statusId", nullable = false)
     private Status status;
 
-    @Column(name = "zeit", nullable = false)
+    @Column(name = "zeit", nullable = true)
     private String zeit;
 
+    /**
+     * Konstruktoren und Getter und Setter für die Attribute
+     */
     public RennenFahrer() {
     }
 
@@ -80,6 +93,9 @@ public class RennenFahrer {
         this.rennenFahrerId = rennenFahrerId;
     }
 
+    /**
+     * Gibt eine textuelle Darstellung des Rennergebnisses zurück
+     */
     @Override
     public String toString() {
         return String.format("Fahrer %s - Rennen %s - Zeit: %s - Status: %s",
